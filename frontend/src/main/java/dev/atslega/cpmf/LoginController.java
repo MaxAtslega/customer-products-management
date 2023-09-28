@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 
 public class LoginController {
 
@@ -17,12 +18,12 @@ public class LoginController {
     @FXML
     private ImageView background;
 
-    private URL backgroundURL = getClass().getResource("Images/Mountains960x600.png");
-    private URL eye1URL = getClass().getResource("Images/eyeOpen.png");
-    private URL eye2URL = getClass().getResource("Images/eyeClose.png");
+    private final URL backgroundURL = getClass().getResource("Images/Mountains960x600.png");
+    private final URL eye1URL = getClass().getResource("Images/eyeOpen.png");
+    private final URL eye2URL = getClass().getResource("Images/eyeClose.png");
     private final Image background0 = new Image(backgroundURL.openStream());
     private final Image eye1 = new Image(eye1URL.openStream());
-    private final Image eye2 = new Image(eye2URL.openStream());
+    private final Image eye2 = new Image(Objects.requireNonNull(eye2URL).openStream());
 
     @FXML
     private PasswordField passwordField;
