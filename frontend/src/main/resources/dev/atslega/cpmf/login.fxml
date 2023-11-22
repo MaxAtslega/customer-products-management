@@ -13,6 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
+<?import com.sun.javafx.webkit.theme.RenderThemeImpl.FormButton?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.atslega.cpmf.LoginController">
     <ImageView fx:id="background"/>
     <Pane layoutX="355.0" layoutY="140.0" prefHeight="320.0" prefWidth="250.0"
@@ -57,7 +58,7 @@
         <Label fx:id="passwordFailure" visible="false" text="hello" layoutX="38" layoutY="215" prefHeight="10"
                prefWidth="175"
                style="-fx-text-fill: red;"/>
-        <Button layoutX="79.0" layoutY="254.0" onAction="#sendTo" prefHeight="30.0"
+        <Button fx:id="buttonSignIn" layoutX="79.0" layoutY="254.0" onAction="#sendTo" prefHeight="30.0"
                 prefWidth="90.0"
                 style="-fx-background-color: transparent; -fx-border-color: #000000; -fx-border-width: 3px; -fx-text-fill: white;"
                 text="Sign In"/>

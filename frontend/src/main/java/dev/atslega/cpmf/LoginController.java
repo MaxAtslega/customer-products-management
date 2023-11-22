@@ -1,6 +1,8 @@
 package dev.atslega.cpmf;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -12,7 +14,6 @@ import java.net.URL;
 import java.util.Objects;
 
 public class LoginController {
-
     @FXML
     private ImageView eye;
     @FXML
@@ -88,6 +89,9 @@ public class LoginController {
                 setUsernameFailure("", false);
                 setPasswordFailure("", false);
                 System.out.println(username + "\n" + password);
+                Main.primaryStageManager.setStageScene(Main.sceneLoadScreen);
+                Main.primaryStageManager.setStageCenter();
+
             }
             case 1 -> {
                 setUsernameFailure("Enter a Username", true);
@@ -108,10 +112,18 @@ public class LoginController {
             return 1;
         }else if(!(username.compareTo("")==0) && password.compareTo("")==0) {
             return 2;
-        }else if(username.compareTo("")==0 && password.compareTo("")==0){
+        }else if(username.compareTo("")==0 && password.compareTo("")==0) {
             return 3;
+        }else if(getFailureInStringUsername(username)){
+            return 4;
         }else{
             return 0;
         }
     }
+    private boolean getFailureInStringUsername (String username){
+        //unexpected char at Username like [ , ; @ . ! " § $ % & / ( ) = ? { } - _ > < | ^ ´ ` ° ]
+        return false;
+    }
+
+
 }
