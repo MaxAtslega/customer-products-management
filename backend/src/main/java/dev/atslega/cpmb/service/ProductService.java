@@ -1,5 +1,6 @@
 package dev.atslega.cpmb.service;
 
+import dev.atslega.cpmb.model.Order;
 import dev.atslega.cpmb.model.Product;
 import dev.atslega.cpmb.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,9 @@ public class ProductService {
 
     public Product saveProduct(Product product) {
         return productRepository.save(product);
+    }
+
+    public void deleteProduct(Product product) {
+        productRepository.delete(product);
     }
 }

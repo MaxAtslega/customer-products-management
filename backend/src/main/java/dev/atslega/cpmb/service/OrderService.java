@@ -1,5 +1,6 @@
 package dev.atslega.cpmb.service;
 
+import dev.atslega.cpmb.model.Customer;
 import dev.atslega.cpmb.model.Order;
 import dev.atslega.cpmb.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,9 @@ public class OrderService {
 
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
+    }
+
+    public void deleteOrder(Order order) {
+        orderRepository.delete(order);
     }
 }
