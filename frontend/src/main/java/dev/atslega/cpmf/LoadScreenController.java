@@ -11,34 +11,54 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class LoadScreenController {
+
     @FXML
     private Label loadingText;
+
     @FXML
-    private ImageView gearView;
-    @FXML
-    private ImageView background;
-    public Image gear = new Image(getClass().getResource("Images/gear.png").openStream());
-    public Image loadbackground = new Image(getClass().getResource("Images/loadbackground.png").openStream());
+    private ImageView gearView, background;
+
+    private final Image gear;
+    private final Image loadBackground;
+
     public LoadScreenController() throws IOException {
+        gear = loadImage("Images/gear.png");
+        loadBackground = loadImage("Images/loadbackground.png");
     }
 
-    public void initialize() throws InterruptedException {
+    private Image loadImage(String path) throws IOException {
+        return new Image(Objects.requireNonNull(getClass().getResource(path)).openStream());
+    }
+
+    public void initialize() {
         loadingText.setText("We are Working on it!");
-        background.setImage(loadbackground);
-        gearView.setImage(gear);
-        RotateTransition rotate = new RotateTransition();
-        rotate.setNode(gearView);
-        rotate.setDuration(Duration.millis(10000));
-        rotate.setCycleCount(TranslateTransition.INDEFINITE);
-        rotate.setInterpolator(Interpolator.LINEAR);
-        rotate.setByAngle(360);
-        rotate.play();
 
+        setupBackground();
+        setupGearAnimation();
     }
 
-    public void setWorkspace(){
+    private void setupBackground() {
+        background.setImage(loadBackground);
+        gearView.setImage(gear);
+    }
+
+    private void setupGearAnimation() {
+        RotateTransition rotate = createRotateTransition(gearView, Duration.millis(10000), 360);
+        rotate.play();
+    }
+
+    private RotateTransition createRotateTransition(ImageView imageView, Duration duration, double angle) {
+        RotateTransition rotate = new RotateTransition(duration, imageView);
+        rotate.setCycleCount(RotateTransition.INDEFINITE);
+        rotate.setInterpolator(Interpolator.LINEAR);
+        rotate.setByAngle(angle);
+        return rotate;
+    }
+
+    public void setWorkspace() {
         Main.primaryStageManager.setStageResizable(true);
         Main.primaryStageManager.setStageScene(Main.sceneWorkspace);
         Main.primaryStageManager.setStageCenter();

@@ -1,51 +1,29 @@
 package dev.atslega.cpmf.model;
 
+
 public class Customer {
+
+    // Getter-Methoden
     private String firstName;
     private String lastName;
-    private String iD;
+    private String id;
     private String mail;
     private String phoneNumber;
     private String address;
     private String companyName;
 
-    public Customer(String firstName, String lastName, String iD, String mail, String phoneNumber, String address, String companyName) {
+    public Customer(String firstName, String lastName, String id, String mail, String phoneNumber, String address, String companyName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.iD = iD;
+        this.id = id;
         this.mail = mail;
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.companyName = companyName;
     }
 
-    // Getter-Methoden
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
     public String getID() {
-        return iD;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getCompanyName() {
-        return companyName;
+        return id;
     }
 
     // Setter-Methoden
@@ -58,7 +36,7 @@ public class Customer {
     }
 
     public void setID(String iD) {
-        this.iD = iD;
+        this.id = iD;
     }
 
     public void setMail(String mail) {
@@ -75,6 +53,34 @@ public class Customer {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCompanyName() {
+        return companyName;
     }
 }
 

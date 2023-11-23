@@ -1,14 +1,12 @@
 package dev.atslega.cpmf;
 
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class StageManager {
-    private Stage stage;
-    //Contructor
+    private final Stage stage;
+
     public StageManager(Stage stage) {
         this.stage = stage;
     }
@@ -27,7 +25,7 @@ public class StageManager {
 
     public void setStageMinWidth(double width){stage.setMinWidth(width);}
 
-    public void setStageMinHight(double height) { stage.setMinHeight(height);}
+    public void setStageMinHeight(double height) { stage.setMinHeight(height);}
 
     public void setStageScene(Scene scene){
         stage.setScene(scene);
@@ -37,8 +35,8 @@ public class StageManager {
         stage.getIcons().add(icon);
     }
 
-    public void setStageResizable(boolean resizeble){
-        stage.setResizable(resizeble);
+    public void setStageResizable(boolean resizable){
+        stage.setResizable(resizable);
     }
 
     public void setStageCenter(){

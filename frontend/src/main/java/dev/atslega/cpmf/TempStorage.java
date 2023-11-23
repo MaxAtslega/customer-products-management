@@ -15,7 +15,7 @@ public class TempStorage {
     private String space ="               ";
 
     //test Objekte für Customer
-    TempStorage(){
+    public TempStorage(){
 
         // test
         Customer customer = new Customer("Lasse","Hüls","#3547","lassehuels@gmx.de","+49 1517 25542525","Bierweg 12a \n"+space+"32825 Bomberg \n"+space+"Germany","");

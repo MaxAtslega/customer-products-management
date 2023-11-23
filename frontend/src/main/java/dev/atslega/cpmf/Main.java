@@ -12,70 +12,67 @@ import java.awt.Toolkit;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 
 public class Main extends Application {
-    public Main() throws IOException {
-    }
-    //Main funktion
+
+    Toolkit toolkit;
+    Dimension screenSize;
+    
+    public static StageManager primaryStageManager;
+    public static Scene sceneLogin, sceneLoadScreen, sceneWorkspace;
+
+    public static TempStorage tempStorage = new TempStorage();
+    
     public static void main(String[] args) {
-       launch();
+        launch();
     }
 
-    Toolkit toolkit = Toolkit.getDefaultToolkit();
-    Dimension screenSize = toolkit.getScreenSize();
-    public int screenWidth = screenSize.width;
-    public int screenHeight = screenSize.height;
-    //Objekt
-    public static StageManager primaryStageManager,secondaryStageManager;
-    public static Scene sceneLogin,sceneLoadScreen,sceneWorkspace;
-    //Images in Main
-    Image programmicon = new Image(getClass().getResource("Images/CPMicon.png").openStream());
-
-    public static TempStorage tempStorage =new TempStorage();
-
-    //start screen
+    /*
+     * Entry point for the JavaFX application: sets up and displays the primary stage */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //Manager for the primaryStage
+
+        // Initialize variables for screen size retrieval
+        toolkit = Toolkit.getDefaultToolkit();
+        screenSize = toolkit.getScreenSize();
+
+        // Initialize the manager for the primaryStage to handle various stage operations
         primaryStageManager = new StageManager(primaryStage);
-        // load scene
+
+        // Load different scenes for the application
         sceneLogin = sceneLoginLoader();
         sceneLoadScreen = sceneLoadScreenLoader();
         sceneWorkspace = sceneWorkspaceLoader();
-        //primaryStage settings
+
+        // Configure primary stage properties
         primaryStageManager.setStageTitle("CPM Client");
-        primaryStageManager.setStageIcon(programmicon);
+        primaryStageManager.setStageIcon(new Image(Objects.requireNonNull(getClass().getResource("Images/CPMicon.png")).openStream()));
 
         primaryStageManager.setStageCenter();
-        //intro to login
-        //primaryStageManager.setStageScene(sceneLogin);
-        //primaryStageManager.setStageResizable(false);
-        //temp
         primaryStageManager.setStageScene(sceneWorkspace);
-        primaryStageManager.setStageMinHight(430);
+        //primaryStageManager.setStageResizable(false);
+
+        primaryStageManager.setStageMinHeight(430);
         primaryStageManager.setStageMinWidth(650);
-        // show the stage
+
+        // Display the primary stage to the user
         primaryStage.show();
     }
 
     public Scene sceneLoginLoader() throws IOException {
-        Scene l;
         URL loginURL = getClass().getResource("login.fxml");
         FXMLLoader login = new FXMLLoader(loginURL);
-        l= new Scene(login.load(),960,600);
-        return l;
+        return new Scene(login.load(),960,600);
     }
 
     public Scene sceneLoadScreenLoader() throws IOException {
-        Scene l;
         URL loadScreenURL = getClass().getResource("loadScreen.fxml");
         FXMLLoader load = new FXMLLoader(loadScreenURL);
-        l = new Scene(load.load(), 253, 450);
-        return l;
+        return new Scene(load.load(), 960, 600);
     }
 
     public Scene sceneWorkspaceLoader() {
-        Scene l = new Scene(WorkspacePattern.workspace());
-        return l;
+        return new Scene(WorkspacePattern.workspace(), 960, 600);
     }
 }

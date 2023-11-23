@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.util.Objects;
+
 public class SaleSidePane extends Pane {
 
     private Sale sale;
@@ -31,7 +33,7 @@ public class SaleSidePane extends Pane {
         saleSideFour = new SaleSideFour(sale.getProduct());
         saleSideFour.setVisible(false);
 
-        Image switchButton = new Image(getClass().getResourceAsStream("Images/switchSideButton.png"));
+        Image switchButton = new Image(Objects.requireNonNull(getClass().getResourceAsStream("Images/switchSideButton.png")));
         ImageView infoIconView = new ImageView(switchButton);
         infoIconView.setLayoutY(190);
         infoIconView.setLayoutX(170);

@@ -8,7 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.Button?>
-<AnchorPane maxHeight="450.0" maxWidth="253" minHeight="450.0" minWidth="300.0" prefHeight="450" prefWidth="300" style="-fx-background: linear-gradient(to bottom,#03162d 1%, #262e34 );" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.atslega.cpmf.LoadScreenController">
+<AnchorPane style="-fx-background: linear-gradient(to bottom,#03162d 1%, #262e34 );" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.atslega.cpmf.LoadScreenController">
     <ImageView fx:id="background"/>
     <Button fx:id="setScene" onAction="#setWorkspace" prefHeight="30" prefWidth="90"/>
     <Label fx:id="loadingText" maxWidth="253" maxHeight="30" minWidth="253" minHeight="20" layoutY="300" alignment="CENTER" textFill="#03afa2">

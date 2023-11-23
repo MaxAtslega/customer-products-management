@@ -16,7 +16,6 @@ public class WorkspaceHome extends Pane {
         setPrefHeight(400);
         setPrefWidth(400);
 
-
         // background picture
         Image backgroundImage = null;
         try {

@@ -14,25 +14,26 @@ import java.net.URL;
 import java.util.Objects;
 
 public class LoginController {
-    @FXML
-    private ImageView eye;
-    @FXML
-    private ImageView background;
 
-    private final URL backgroundURL = getClass().getResource("Images/Mountains960x600.png");
-    private final URL eye1URL = getClass().getResource("Images/eyeOpen.png");
-    private final URL eye2URL = getClass().getResource("Images/eyeClose.png");
-    private final Image background0 = new Image(backgroundURL.openStream());
-    private final Image eye1 = new Image(eye1URL.openStream());
-    private final Image eye2 = new Image(Objects.requireNonNull(eye2URL).openStream());
+    @FXML private ImageView eye, background;
+    @FXML private PasswordField passwordField;
+    @FXML private TextField passwordTextField, usernameTextField;
+    @FXML private Label usernameFailure, passwordFailure;
 
-    @FXML
-    private PasswordField passwordField;
-    @FXML
-    private TextField passwordTextField;
+    private final Image background0, eye1, eye2;
     private boolean isPasswordFieldVisible = true;
 
     public LoginController() throws IOException {
+        background0 = loadImage("Images/Mountains960x600.png");
+        eye1 = loadImage("Images/eyeOpen.png");
+        eye2 = loadImage("Images/eyeClose.png");
+    }
+
+    private Image loadImage(String path) throws IOException {
+        URL url = getClass().getResource(path);
+
+        assert url != null;
+        return new Image(url.openStream());
     }
 
     public void initialize() {
@@ -42,88 +43,65 @@ public class LoginController {
 
     @FXML
     void toggleVisibility() {
-        if(isPasswordFieldVisible){
-            String a = passwordField.getText();
-            passwordField.setVisible(false);
-            passwordTextField.setVisible(true);
-            passwordTextField.setText(a);
-            eye.setImage(eye2);
-            isPasswordFieldVisible = !isPasswordFieldVisible;
-        }else{
-            String a = passwordTextField.getText();
-            passwordTextField.setVisible(false);
-            passwordField.setVisible(true);
-            passwordField.setText(a);
-            eye.setImage(eye1);
-            isPasswordFieldVisible = !isPasswordFieldVisible;
+        isPasswordFieldVisible = !isPasswordFieldVisible;
+        if (isPasswordFieldVisible) {
+            syncPasswordFields(passwordTextField, passwordField, eye1);
+        } else {
+            syncPasswordFields(passwordField, passwordTextField, eye2);
         }
     }
 
+    private void syncPasswordFields(TextField from, TextField to, Image eyeImage) {
+        to.setText(from.getText());
+        from.setVisible(false);
+        to.setVisible(true);
+        eye.setImage(eyeImage);
+    }
 
     @FXML
-    private TextField usernameTextField;
-    @FXML
-    private Label usernameFailure,passwordFailure;
-    @FXML
-    private void setPasswordFailure(String text, boolean visible){
+    void sendTo() {
+        String username = usernameTextField.getText();
+        String password = isPasswordFieldVisible ? passwordField.getText() : passwordTextField.getText();
+
+        int failureCode = getFailure(username, password);
+        handleFailure(failureCode);
+    }
+
+    private void handleFailure(int code) {
+        switch (code) {
+            case 0 -> changeScenes();
+            case 1 -> setUsernameFailure("Enter a Username", true);
+            case 2 -> setPasswordFailure("Enter a Password", true);
+            case 3 -> setBothFailures();
+            // other cases...
+        }
+    }
+
+    private void changeScenes() {
+        setUsernameFailure("", false);
+        setPasswordFailure("", false);
+        Main.primaryStageManager.setStageScene(Main.sceneLoadScreen);
+        Main.primaryStageManager.setStageCenter();
+    }
+
+    private void setBothFailures() {
+        setUsernameFailure("Enter a Username", true);
+        setPasswordFailure("Enter a Password", true);
+    }
+
+    private void setPasswordFailure(String text, boolean visible) {
         passwordFailure.setText(text);
         passwordFailure.setVisible(visible);
     }
-    @FXML
-    private void setUsernameFailure(String text, boolean visible){
+
+    private void setUsernameFailure(String text, boolean visible) {
         usernameFailure.setText(text);
         usernameFailure.setVisible(visible);
     }
-    @FXML
-    void sendTo(){
-        String username,password;
-        username = usernameTextField.getText();
-        if(isPasswordFieldVisible){
-            password= passwordField.getText();
-        }else{
-            password = passwordTextField.getText();
-        }
-        switch (getFailure(username, password)) {
-            case 0 -> {
-                //
-                setUsernameFailure("", false);
-                setPasswordFailure("", false);
-                System.out.println(username + "\n" + password);
-                Main.primaryStageManager.setStageScene(Main.sceneLoadScreen);
-                Main.primaryStageManager.setStageCenter();
 
-            }
-            case 1 -> {
-                setUsernameFailure("Enter a Username", true);
-                setPasswordFailure("", false);
-            }
-            case 2 -> {
-                setUsernameFailure("", false);
-                setPasswordFailure("Enter a Password", true);
-            }
-            case 3 -> {
-                setUsernameFailure("Enter a Username", true);
-                setPasswordFailure("Enter a Password", true);
-            }
-        }
+    private int getFailure(String username, String password) {
+        if (username.isEmpty()) return password.isEmpty() ? 3 : 1;
+        return password.isEmpty() ? 2 : 0;
     }
-    private int getFailure(String username,String password){
-        if(username.compareTo("")==0 && !(password.compareTo("")==0)){
-            return 1;
-        }else if(!(username.compareTo("")==0) && password.compareTo("")==0) {
-            return 2;
-        }else if(username.compareTo("")==0 && password.compareTo("")==0) {
-            return 3;
-        }else if(getFailureInStringUsername(username)){
-            return 4;
-        }else{
-            return 0;
-        }
-    }
-    private boolean getFailureInStringUsername (String username){
-        //unexpected char at Username like [ , ; @ . ! " § $ % & / ( ) = ? { } - _ > < | ^ ´ ` ° ]
-        return false;
-    }
-
 
 }
