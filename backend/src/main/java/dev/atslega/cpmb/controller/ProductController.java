@@ -1,8 +1,10 @@
 package dev.atslega.cpmb.controller;
 
+import dev.atslega.cpmb.model.Customer;
 import dev.atslega.cpmb.model.Product;
 import dev.atslega.cpmb.model.User;
 import dev.atslega.cpmb.service.ProductService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +23,13 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/")
+    @RolesAllowed( {"ADMIN","USER"})
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
+    @RolesAllowed( {"ADMIN","USER"})
     public ResponseEntity<Object> getProductById(@PathVariable Long id) {
 
         Product product = productService.getProductById(id).orElse(null);
@@ -40,7 +44,25 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
+    @DeleteMapping("/{id}")
+    @RolesAllowed( {"ADMIN","USER"})
+    public ResponseEntity<Object> deleteProductById(@PathVariable Long id) {
+
+        Product product = productService.getProductById(id).orElse(null);
+        if(product == null){
+            Map<String, Object> body = new LinkedHashMap<>();
+            body.put("timestamp", LocalDateTime.now());
+            body.put("message","Product not found");
+
+            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        }
+
+        productService.deleteProduct(product);
+        return ResponseEntity.ok("Ok!");
+    }
+
     @PostMapping("/")
+    @RolesAllowed( {"ADMIN","USER"})
     public Product createProduct(@RequestBody Product product) {
         return productService.saveProduct(product);
     }
