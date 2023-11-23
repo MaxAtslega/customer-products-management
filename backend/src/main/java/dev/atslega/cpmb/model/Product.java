@@ -23,7 +23,7 @@ public class Product implements Serializable {
     private String category;
 
     @Column(name = "price", precision = 10, scale = 2, nullable = false)
-    private BigDecimal price;
+    private long price;
 
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;
@@ -39,13 +39,12 @@ public class Product implements Serializable {
 
     protected Product() {}
 
-    public Product(String productName, String category, BigDecimal price, Integer stockQuantity, String manufacturer, String imageUrl, List<Order> orders) {
+    public Product(String productName, String category, long price, Integer stockQuantity, String manufacturer, String imageUrl) {
         this.productName = productName;
         this.category = category;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.manufacturer = manufacturer;
         this.imageUrl = imageUrl;
-        this.orders = orders;
     }
 }
