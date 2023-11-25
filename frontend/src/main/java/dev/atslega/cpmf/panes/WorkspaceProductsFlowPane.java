@@ -3,6 +3,7 @@ package dev.atslega.cpmf.panes;
 import dev.atslega.cpmf.workspace.WorkspaceProducts;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.util.Duration;
@@ -54,7 +55,10 @@ public class WorkspaceProductsFlowPane extends FlowPane {
         workspaceProducts.setTotalPages(totalPages);
 
         workspaceProducts.getBtnBack().setDisable(currentPage <= 1);
+        workspaceProducts.getBtnBack().setCursor(currentPage <= 1 ? Cursor.DEFAULT : Cursor.HAND);
+
         workspaceProducts.getBtnNext().setDisable(currentPage >= totalPages);
+        workspaceProducts.getBtnNext().setCursor(currentPage >= totalPages ? Cursor.DEFAULT : Cursor.HAND);
     }
 
     private int calculateMaxProducts(double width, double height) {

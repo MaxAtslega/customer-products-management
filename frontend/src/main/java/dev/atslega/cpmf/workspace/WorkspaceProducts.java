@@ -3,6 +3,7 @@ package dev.atslega.cpmf.workspace;
 import dev.atslega.cpmf.panes.WorkspaceProductsFlowPane;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -33,10 +34,12 @@ public class WorkspaceProducts extends BorderPane {
 
     private HBox createPaginationBar() {
         btnBack = new Button("<");
+        btnBack.setCursor(Cursor.DEFAULT);
         btnBack.setOnAction(e -> changePage(-1));
         btnBack.setStyle("-fx-background-color: #18191C; -fx-background-radius: 5;");
 
         btnNext = new Button(">");
+        btnNext.setCursor(Cursor.HAND);
         btnNext.setOnAction(e -> changePage(1));
         btnNext.setStyle("-fx-background-color: #18191C; -fx-background-radius: 5;");
 
