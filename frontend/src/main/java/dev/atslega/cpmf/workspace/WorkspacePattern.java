@@ -21,7 +21,7 @@ public class WorkspacePattern {
         backPlate.setTop(new WorkspaceWorkstation(USERNAME, sidebarWidth));
 
         // set Center [Home, Costumer, Products,short´s,calendar] (switch function)
-        backPlate.setCenter(WorkspaceEnum.HOME.getPane());
+        backPlate.setCenter(Workspaces.HOME.getPane());
 
         // set Left [Tab´s]
         backPlate.setLeft(new WorkspaceNavigator(sidebarWidth));
@@ -29,7 +29,7 @@ public class WorkspacePattern {
         return backPlate;
     }
 
-    public static void setCenter(WorkspaceEnum workspace){
+    public static void setCenter(Workspaces workspace){
         backPlate.setCenter(workspace.getPane());
     }
 

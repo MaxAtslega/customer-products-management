@@ -18,5 +18,7 @@ module dev.atslega.cpmf {
     opens dev.atslega.cpmf.model to javafx.fxml;
     exports dev.atslega.cpmf.panes;
     opens dev.atslega.cpmf.panes to javafx.fxml;
+    exports dev.atslega.cpmf.controller;
+    opens dev.atslega.cpmf.controller to javafx.fxml;
 
 }

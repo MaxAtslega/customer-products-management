@@ -47,7 +47,7 @@ public class Main extends Application {
 
         // Configure primary stage properties
         primaryStageManager.setStageTitle("CPM Client");
-        primaryStageManager.setStageIcon(new Image(Objects.requireNonNull(getClass().getResource("Images/CPMicon.png")).openStream()));
+        primaryStageManager.setStageIcon(new Image(Objects.requireNonNull(getClass().getResource("cpm.png")).openStream()));
 
         primaryStageManager.setStageCenter();
         primaryStageManager.setStageScene(sceneWorkspace);

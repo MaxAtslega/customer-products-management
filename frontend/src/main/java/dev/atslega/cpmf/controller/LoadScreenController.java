@@ -1,5 +1,6 @@
-package dev.atslega.cpmf;
+package dev.atslega.cpmf.controller;
 
+import dev.atslega.cpmf.Main;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;

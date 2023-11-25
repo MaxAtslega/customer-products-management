@@ -1,5 +1,6 @@
-package dev.atslega.cpmf;
+package dev.atslega.cpmf.controller;
 
+import dev.atslega.cpmf.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
