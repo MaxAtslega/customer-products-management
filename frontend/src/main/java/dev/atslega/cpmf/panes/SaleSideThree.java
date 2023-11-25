@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.panes;
 
+import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.model.Customer;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
@@ -13,7 +14,7 @@ public class SaleSideThree extends Pane {
 
     public SaleSideThree(Customer customer){
         setStyle("-fx-background-radius: 15; -fx-background-color: #FF6A6A;");
-        setPrefSize(200,220);
+        setPrefSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
 
         name = creatLabel("Name: " + customer.getLastName() + " " + customer.getFirstName(), 10);
         iD = creatLabel("ID: " + customer.getID(), 30);

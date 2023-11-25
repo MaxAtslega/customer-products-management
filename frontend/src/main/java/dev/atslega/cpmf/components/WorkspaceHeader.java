@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.components;
 
+import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.workspace.WorkspacePattern;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -7,18 +8,16 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import static dev.atslega.cpmf.workspace.WorkspacePattern.DEFAULT_TEXT_COLOR;
-import static dev.atslega.cpmf.workspace.WorkspacePattern.HOOVER_TEXT_COLOR;
-
 public class WorkspaceHeader extends VBox {
 
     public WorkspaceHeader(String username, int sidebarWidth) {
-        setPadding(new Insets(0, 10, 0, 0));
-        setStyle("-fx-background-color: #18191C;");
+        setPadding(new Insets(0, AppStyles.GAP_SIZE, 0, 0));
+        setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR);
 
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);
@@ -26,13 +25,13 @@ public class WorkspaceHeader extends VBox {
 
         // Title
         Text title = new Text("CPM");
-        title.setFont(Font.font("Roboto", 20));
+        title.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H2));
         title.setStyle("-fx-font-weight: bold");
         title.setFill(Color.WHITE);
 
         // Title HBox
         HBox hboxTitle = new HBox(title);
-        hboxTitle.setPadding(new Insets(10, 10, 10, 10));
+        hboxTitle.setPadding(new Insets(AppStyles.GAP_SIZE));
         hboxTitle.setAlignment(Pos.CENTER_LEFT);
         hboxTitle.setMinWidth(sidebarWidth); // Minimum width for the title
         hboxTitle.setBorder(new Border(new BorderStroke(Color.BLACK,
@@ -48,7 +47,7 @@ public class WorkspaceHeader extends VBox {
         closeButtonSvgShape.setMinSize(20, 15);
         closeButtonSvgShape.setPrefSize(20, 15);
         closeButtonSvgShape.setMaxSize(20, 15);
-        closeButtonSvgShape.setStyle("-fx-background-color: #5E6673;");
+        closeButtonSvgShape.setStyle("-fx-background-color: " + AppStyles.INACTIVE_TEXT_COLOR);
 
         Button closeButton = new Button();
         closeButton.setCursor(Cursor.HAND);
@@ -64,8 +63,8 @@ public class WorkspaceHeader extends VBox {
             WorkspacePattern.toggleNavigator();
         });
 
-        closeButton.setOnMouseEntered(event -> updateTextColor(closeButton, HOOVER_TEXT_COLOR));
-        closeButton.setOnMouseExited(event -> updateTextColor(closeButton, DEFAULT_TEXT_COLOR));
+        closeButton.setOnMouseEntered(event -> updateTextColor(closeButton, Color.valueOf(AppStyles.DEFAULT_TEXT_COLOR)));
+        closeButton.setOnMouseExited(event -> updateTextColor(closeButton, Color.valueOf(AppStyles.INACTIVE_TEXT_COLOR)));
 
         // Spacer
         Pane spacer = new Pane();
@@ -73,9 +72,9 @@ public class WorkspaceHeader extends VBox {
 
         // Username text
         Text account = new Text(username);
-        account.setFont(Font.font("Roboto", 14));
+        account.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         account.setStyle("-fx-font-weight: bold");
-        account.setFill(Color.WHITE);
+        account.setFill(Paint.valueOf(AppStyles.DEFAULT_TEXT_COLOR));
 
         // Adding elements to the main HBox
         hbox.getChildren().addAll(hboxTitle, closeButton, spacer, account);

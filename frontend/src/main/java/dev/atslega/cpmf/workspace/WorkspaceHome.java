@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.workspace;
 
+import dev.atslega.cpmf.AppStyles;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
@@ -21,11 +22,11 @@ public class WorkspaceHome extends VBox {
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
 
         VBox contentVBox = new VBox();
-        contentVBox.setStyle("-fx-background-color: #26262B");
-        contentVBox.setPadding(new Insets(10, 10, 10, 10));
+        contentVBox.setStyle("-fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR);
+        contentVBox.setPadding(new Insets(AppStyles.GAP_SIZE));
 
         Text headerTitle = new Text("Home");
-        headerTitle.setFont(Font.font("Roboto", 25));
+        headerTitle.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H1));
         headerTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
         headerTitle.setFill(Color.WHITE);
 
@@ -33,7 +34,7 @@ public class WorkspaceHome extends VBox {
         FlowPane informationFlowPane = createInformationFlowPane();
 
         Text userManagementTitle = new Text("Users");
-        userManagementTitle.setFont(Font.font("Roboto", 20));
+        userManagementTitle.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H2));
         userManagementTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
         userManagementTitle.setFill(Color.WHITE);
 
@@ -49,13 +50,13 @@ public class WorkspaceHome extends VBox {
 
     private FlowPane createStatsFlowPane() {
         FlowPane statsFlowPane = new FlowPane();
-        statsFlowPane.setHgap(10);
-        statsFlowPane.setVgap(10);
-        statsFlowPane.setPadding(new Insets(10, 0, 10, 0));
+        statsFlowPane.setHgap(AppStyles.GAP_SIZE);
+        statsFlowPane.setVgap(AppStyles.GAP_SIZE);
+        statsFlowPane.setPadding(new Insets(AppStyles.GAP_SIZE, 0, AppStyles.GAP_SIZE, 0));
 
         // Add listener to dynamically adjust the width of each box
         statsFlowPane.widthProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            double width = newValue.doubleValue() / 3 - 10; // Divide by 3 and account for spacing
+            double width = newValue.doubleValue() / 3 - AppStyles.GAP_SIZE; // Divide by 3 and account for spacing
             width = Math.max(width, 200); // Ensure minimum width of 200
             for (var child : statsFlowPane.getChildren()) {
                 ((VBox) child).setPrefWidth(width);
@@ -75,9 +76,9 @@ public class WorkspaceHome extends VBox {
 
     private FlowPane createInformationFlowPane() {
         FlowPane informationFlowPane = new FlowPane();
-        informationFlowPane.setHgap(10);
-        informationFlowPane.setVgap(10);
-        informationFlowPane.setPadding(new Insets(10, 0, 10, 0));
+        informationFlowPane.setHgap(AppStyles.GAP_SIZE);
+        informationFlowPane.setVgap(AppStyles.GAP_SIZE);
+        informationFlowPane.setPadding(new Insets(AppStyles.GAP_SIZE, 0, AppStyles.GAP_SIZE, 0));
 
         // Add listener to dynamically adjust the width of each box
         informationFlowPane.widthProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
@@ -115,9 +116,9 @@ public class WorkspaceHome extends VBox {
 
     private VBox createStatsBox(String titleText, String numberText, Color color) {
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10));
+        vbox.setPadding(new Insets(AppStyles.GAP_SIZE));
         vbox.setSpacing(5);
-        vbox.setStyle("-fx-background-color: #18191C; -fx-background-radius: 5;");
+        vbox.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
 
         Text titleLabel = new Text(titleText);
         titleLabel.setFont(Font.font("Quicksand", 18));
@@ -134,28 +135,28 @@ public class WorkspaceHome extends VBox {
 
     private VBox createCompanyBox() {
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10));
+        vbox.setPadding(new Insets(AppStyles.GAP_SIZE));
         vbox.setSpacing(5);
-        vbox.setStyle("-fx-background-color: #18191C; -fx-background-radius: 5;");
+        vbox.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
 
         Text titleLabel = new Text("Information");
         titleLabel.setFont(Font.font("Quicksand", FontWeight.BOLD, 18));
         titleLabel.setFill(Color.WHITE);
 
         Text nameLabel = new Text("Name: Max Atslega");
-        nameLabel.setFont(Font.font("Roboto", 16));
+        nameLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         nameLabel.setFill(Color.WHITE);
 
         Text emailLabel = new Text("Email: max@atslega.de");
-        emailLabel.setFont(Font.font("Roboto", 16));
+        emailLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         emailLabel.setFill(Color.WHITE);
 
         Text roleLabel = new Text("Role: Admin");
-        roleLabel.setFont(Font.font("Roboto", 16));
+        roleLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         roleLabel.setFill(Color.WHITE);
 
         Text companyLabel = new Text("Company: Atslega Media GmbH");
-        companyLabel.setFont(Font.font("Roboto", 16));
+        companyLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         companyLabel.setFill(Color.WHITE);
 
         vbox.getChildren().addAll(titleLabel, nameLabel, emailLabel, roleLabel, companyLabel);
@@ -165,28 +166,28 @@ public class WorkspaceHome extends VBox {
 
     private VBox createCurrentStatsBox() {
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(10));
+        vbox.setPadding(new Insets(AppStyles.GAP_SIZE));
         vbox.setSpacing(5);
-        vbox.setStyle("-fx-background-color: #18191C; -fx-background-radius: 5;");
+        vbox.setStyle("-fx-background-color: "+ AppStyles.SECONDARY_BACKGROUND_COLOR +"; -fx-background-radius: 5;");
 
         Text titleLabel = new Text("Stats");
         titleLabel.setFont(Font.font("Quicksand", FontWeight.BOLD, 18));
         titleLabel.setFill(Color.WHITE);
 
         Text nameLabel = new Text("Latest Product: Dyson Vacuum cleaner");
-        nameLabel.setFont(Font.font("Roboto", 16));
+        nameLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         nameLabel.setFill(Color.WHITE);
 
         Text emailLabel = new Text("Last Customer: Lasse");
-        emailLabel.setFont(Font.font("Roboto", 16));
+        emailLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         emailLabel.setFill(Color.WHITE);
 
         Text roleLabel = new Text("Last Order: Order #10 by Lasse");
-        roleLabel.setFont(Font.font("Roboto", 16));
+        roleLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         roleLabel.setFill(Color.WHITE);
 
         Text companyLabel = new Text("User Count: 4");
-        companyLabel.setFont(Font.font("Roboto", 16));
+        companyLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         companyLabel.setFill(Color.WHITE);
 
         vbox.getChildren().addAll(titleLabel, nameLabel, emailLabel, roleLabel, companyLabel);
@@ -196,15 +197,15 @@ public class WorkspaceHome extends VBox {
 
     private VBox createUserBox(String id, String name, String email) {
         VBox vBox = new VBox();
-        vBox.setPadding(new Insets(10));
+        vBox.setPadding(new Insets(AppStyles.GAP_SIZE));
         vBox.setSpacing(5);
-        vBox.setStyle("-fx-background-color: #18191C; -fx-background-radius: 5;");
+        vBox.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR +"; -fx-background-radius: 5;");
         VBox.setMargin(vBox, new Insets(10, 0, 0, 0));
 
         HBox hBox = new HBox();
 
         Text title = new Text(id + " - " + name + " - " + email);
-        title.setFont(Font.font("Roboto", 16));
+        title.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         title.setFill(Color.WHITE);
 
         Pane spacer = new Pane();

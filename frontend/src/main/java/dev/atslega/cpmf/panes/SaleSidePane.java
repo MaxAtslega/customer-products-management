@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.panes;
 
+import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.model.Sale;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,7 +20,7 @@ public class SaleSidePane extends Pane {
 
     public SaleSidePane(Sale sale){
         this.sale = sale;
-        setPrefSize(200,220);
+        setPrefSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
         setStyle("-fx-background-radius: 15; -fx-background-color: #FF6A6A;");
         setStyle("-fx-background-radius: 15; -fx-background-color: transparent;");
 

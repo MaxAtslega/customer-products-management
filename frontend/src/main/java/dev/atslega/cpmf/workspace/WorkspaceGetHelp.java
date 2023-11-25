@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.workspace;
 
+import dev.atslega.cpmf.AppStyles;
 import javafx.geometry.Insets;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -7,6 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -23,18 +25,18 @@ public class WorkspaceGetHelp extends VBox {
         scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
 
-        VBox contentVBox = new VBox(10);
-        contentVBox.setStyle("-fx-background-color: #26262B");
-        contentVBox.setPadding(new Insets(10, 10, 10, 10));
+        VBox contentVBox = new VBox(AppStyles.GAP_SIZE);
+        contentVBox.setStyle("-fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR);
+        contentVBox.setPadding(new Insets(AppStyles.GAP_SIZE));
 
         // Title
         Label title = new Label("Get Help");
-        title.setStyle("-fx-text-fill: white; -fx-font-weight: bold; ");
-        title.setFont(Font.font("Roboto", 25));
+        title.setStyle("-fx-text-fill: "+ AppStyles.DEFAULT_TEXT_COLOR +"; -fx-font-weight: bold; ");
+        title.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H1));
 
         Label subTitle = new Label("Need Assistance? We're Here to Help!");
-        subTitle.setStyle("-fx-text-fill: white; -fx-font-weight: bold; ");
-        subTitle.setFont(Font.font("Roboto", 20));
+        subTitle.setStyle("-fx-text-fill: "+ AppStyles.DEFAULT_TEXT_COLOR +"; -fx-font-weight: bold; ");
+        subTitle.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H2));
 
         // Content text
         Label description = createLabel("If you're encountering challenges or have any questions about our services, our dedicated team is always ready to assist you. Here’s how you can get help:");
@@ -42,7 +44,7 @@ public class WorkspaceGetHelp extends VBox {
         // Hyperlinks and other information
         Hyperlink faqLink = new Hyperlink("Frequently Asked Questions (FAQs): Find answers on our FAQ page.");
         faqLink.setStyle("-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: white; -fx-underline: true");
-        faqLink.setFont(Font.font("Roboto", 18));
+        faqLink.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_NORMAL));
 
         faqLink.setOnAction(e -> openFAQPage());
 
@@ -58,12 +60,6 @@ public class WorkspaceGetHelp extends VBox {
 
         // Adding all elements to the VBox
         contentVBox.getChildren().addAll(title, subTitle, description, faqLink, userGuide, supportForum, contactSupport, socialMedia);
-
-        Text headerTitle = new Text("Get Help");
-        headerTitle.setFont(Font.font("Roboto", 25));
-        headerTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
-        headerTitle.setFill(Color.WHITE);
-
 
         scrollPane.setContent(contentVBox);
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
@@ -81,11 +77,11 @@ public class WorkspaceGetHelp extends VBox {
     }
 
     private Label createLabel(String text) {
-        String labelStyle = "-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: white;";
+        String labelStyle = "-fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-text-fill: " + AppStyles.DEFAULT_TEXT_COLOR;
 
         Label label = new Label(text);
         label.setStyle(labelStyle);
-        label.setFont(Font.font("Roboto", 18));
+        label.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_NORMAL));
         label.setWrapText(true); // Enable text wrapping
         return label;
     }

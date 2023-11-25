@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.panes;
 
+import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.model.Sale;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
@@ -12,7 +13,7 @@ public class SaleSideTwo extends Pane {
 
     public SaleSideTwo(Sale sale){
         setStyle("-fx-background-radius: 15; -fx-background-color: #FF6A6A;");
-        setPrefSize(200,220);
+        setPrefSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
 
 
     }

@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.panes;
 
+import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.model.Product;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -16,8 +17,9 @@ public class ProductContentPane extends Pane {
     boolean isFlipped=false, infoIconClicked=false;
 
     public ProductContentPane(Product product){
-        setPrefSize(200,220);
-        setStyle("-fx-background-radius: 5; -fx-background-color: #18191C;");
+        setPrefSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
+        setStyle("-fx-background-radius: 5;");
+        setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR);
         setCursor(Cursor.HAND);
         this.product = product;
 
@@ -92,7 +94,7 @@ public class ProductContentPane extends Pane {
                 inventoryB.setVisible(true);
                 priceB.setVisible(true);
                 isFlipped=true;
-                setStyle("-fx-background-radius: 5; -fx-background-color: #202225;");
+                setStyle("-fx-background-radius: 5; -fx-background-color: "+ AppStyles.THIRD_BACKGROUND_COLOR);
             }
         });
 
@@ -116,7 +118,7 @@ public class ProductContentPane extends Pane {
                 descriptionI.setVisible(false);
 
                 isFlipped=false;
-                setStyle("-fx-background-radius: 5; -fx-background-color: #18191C;");
+                setStyle("-fx-background-radius: 5; -fx-background-color: "+ AppStyles.SECONDARY_BACKGROUND_COLOR);
             }
         });
         //add front

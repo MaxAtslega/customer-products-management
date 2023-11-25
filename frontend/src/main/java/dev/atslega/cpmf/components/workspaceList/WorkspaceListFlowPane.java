@@ -1,25 +1,24 @@
 package dev.atslega.cpmf.components.workspaceList;
 
+import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.Main;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.layout.FlowPane;
 
 public class WorkspaceListFlowPane extends FlowPane {
-    private static final int PRODUCT_SIZE = 200;
-    private static final int GAP_SIZE = 10;
 
     private final WorkspaceListFramework workspaceListFramework;
 
     public WorkspaceListFlowPane(WorkspaceListFramework workspaceListFramework) {
         this.workspaceListFramework = workspaceListFramework;
 
-        setPadding(new Insets(GAP_SIZE));
-        setHgap(GAP_SIZE);
-        setVgap(GAP_SIZE);
+        setPadding(new Insets(AppStyles.GAP_SIZE));
+        setHgap(AppStyles.GAP_SIZE);
+        setVgap(AppStyles.GAP_SIZE);
         setMaxHeight(Double.MAX_VALUE);
 
-        setStyle("-fx-background-color: #26262B");
+        setStyle("-fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR);
 
         widthProperty().addListener(e -> updateProducts());
         Main.sceneWorkspace.heightProperty().addListener(e -> updateProducts());
@@ -27,7 +26,7 @@ public class WorkspaceListFlowPane extends FlowPane {
 
 
     private void updateProducts() {
-        int maxProductsPerPage = calculateMaxProducts(getWidth(), Main.sceneWorkspace.getHeight()-150);
+        int maxProductsPerPage = calculateMaxProducts(getWidth(), Main.sceneWorkspace.getHeight()-130);
 
         int currentPage = workspaceListFramework.getCurrentPage();
         int totalProducts = workspaceListFramework.getTotalProducts();
@@ -51,8 +50,8 @@ public class WorkspaceListFlowPane extends FlowPane {
     }
 
     private int calculateMaxProducts(double width, double height) {
-        int columns = Math.max(1, (int) (width - GAP_SIZE) / (PRODUCT_SIZE + GAP_SIZE));
-        int rows = Math.max(1, (int) (height - GAP_SIZE*2) / (PRODUCT_SIZE + GAP_SIZE));
+        int columns = Math.max(1, (int) (width - AppStyles.GAP_SIZE) / (AppStyles.BOX_SIZE_W + AppStyles.GAP_SIZE));
+        int rows = Math.max(1, (int) (height - AppStyles.GAP_SIZE*2) / (AppStyles.BOX_SIZE_H + AppStyles.GAP_SIZE));
 
         return columns * rows;
     }

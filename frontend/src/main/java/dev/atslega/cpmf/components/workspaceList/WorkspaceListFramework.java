@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.components.workspaceList;
 
+import dev.atslega.cpmf.AppStyles;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -43,13 +44,13 @@ public class WorkspaceListFramework extends BorderPane {
 
     private HBox createTitle(String title) {
         Text headerTitle = new Text(title);
-        headerTitle.setFont(Font.font("Roboto", 25));
+        headerTitle.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H1));
         headerTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
         headerTitle.setFill(Color.WHITE);
 
         HBox titleBar = new HBox(headerTitle);
-        titleBar.setStyle("-fx-background-color: #26262B");
-        titleBar.setPadding(new Insets(10, 0, 0, 10));
+        titleBar.setStyle("-fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR);
+        titleBar.setPadding(new Insets(AppStyles.GAP_SIZE, 0, 0, AppStyles.GAP_SIZE));
 
         return titleBar;
     }
@@ -58,21 +59,21 @@ public class WorkspaceListFramework extends BorderPane {
         btnBack = new Button("<");
         btnBack.setCursor(Cursor.DEFAULT);
         btnBack.setOnAction(e -> changePage(-1));
-        btnBack.setStyle("-fx-background-color: #18191C; -fx-background-radius: 5;");
+        btnBack.setStyle("-fx-background-color: "+ AppStyles.SECONDARY_BACKGROUND_COLOR +"; -fx-background-radius: 5;");
 
         btnNext = new Button(">");
         btnNext.setCursor(Cursor.HAND);
         btnNext.setOnAction(e -> changePage(1));
-        btnNext.setStyle("-fx-background-color: #18191C; -fx-background-radius: 5;");
+        btnNext.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR +"; -fx-background-radius: 5;");
 
         lblCurrentPage = new Label("Page: " + currentPage);
         lblCurrentPage.setStyle("-fx-text-fill: white;"); // Set label text color to white
 
-        HBox paginationBar = new HBox(10, btnBack, lblCurrentPage, btnNext);
-        paginationBar.setStyle("-fx-background-color: #26262B");
+        HBox paginationBar = new HBox(AppStyles.GAP_SIZE, btnBack, lblCurrentPage, btnNext);
+        paginationBar.setStyle("-fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR);
         paginationBar.setAlignment(Pos.CENTER); // Center the contents of the HBox
         paginationBar.setPrefHeight(50);
-        paginationBar.setPadding(new Insets(10));
+        paginationBar.setPadding(new Insets(AppStyles.GAP_SIZE));
 
         return paginationBar;
     }

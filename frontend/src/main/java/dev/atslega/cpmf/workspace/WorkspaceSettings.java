@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.workspace;
 
+import dev.atslega.cpmf.AppStyles;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
@@ -20,11 +21,11 @@ public class WorkspaceSettings extends VBox {
         scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
 
         VBox contentVBox = new VBox();
-        contentVBox.setStyle("-fx-background-color: #26262B");
-        contentVBox.setPadding(new Insets(10, 10, 10, 10));
+        contentVBox.setStyle("-fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR);
+        contentVBox.setPadding(new Insets(AppStyles.GAP_SIZE, AppStyles.GAP_SIZE, AppStyles.GAP_SIZE, AppStyles.GAP_SIZE));
 
         Text headerTitle = new Text("Settings");
-        headerTitle.setFont(Font.font("Roboto", 25));
+        headerTitle.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H1));
         headerTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
         headerTitle.setFill(Color.WHITE);
 

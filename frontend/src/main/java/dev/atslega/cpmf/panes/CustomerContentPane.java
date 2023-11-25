@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.panes;
 
+import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.model.Customer;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
@@ -17,8 +18,8 @@ public class CustomerContentPane extends Pane {
     private final Customer customer;
 
     public CustomerContentPane(Customer customer) {
-        setMaxSize(200,220);
-        setMinSize(200,220);
+        setMaxSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
+        setMinSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
         this.customer = customer;
         char firstChar = getFirstChar(customer.getFirstName());
 

@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.panes;
 
+import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.model.Product;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -17,7 +18,7 @@ public class SaleSideFour extends Pane {
 
     public SaleSideFour(Product product){
         setStyle("-fx-background-radius: 15; -fx-background-color: #FF6A6A;");
-        setPrefSize(200,220);
+        setPrefSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
 
         name = creatLabel("Name: "+product.getName(),10);
         iD = creatLabel("ID: "+product.getID(),30);
