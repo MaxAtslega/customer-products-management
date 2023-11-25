@@ -16,6 +16,9 @@ public class WorkspaceHome extends VBox {
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
         scrollPane.getStyleClass().clear();
+        scrollPane.pannableProperty().set(true);
+        scrollPane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
 
         VBox contentVBox = new VBox();
         contentVBox.setStyle("-fx-background-color: #26262B");
