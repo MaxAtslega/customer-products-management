@@ -1,19 +1,17 @@
 package dev.atslega.cpmf.panes;
 
+import dev.atslega.cpmf.Main;
 import dev.atslega.cpmf.model.Product;
 import dev.atslega.cpmf.workspace.WorkspaceProducts;
-import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.layout.FlowPane;
-import javafx.util.Duration;
 
 public class ProductsFlowPane extends FlowPane {
     private static final int PRODUCT_SIZE = 200;
     private static final int GAP_SIZE = 10;
 
     private WorkspaceProducts workspaceProducts;
-    private PauseTransition pauseTransition;
 
     public ProductsFlowPane(WorkspaceProducts workspaceProducts) {
         this.workspaceProducts = workspaceProducts;
@@ -25,20 +23,13 @@ public class ProductsFlowPane extends FlowPane {
 
         setStyle("-fx-background-color: #26262B");
 
-        pauseTransition = new PauseTransition(Duration.seconds(0.1));
-        pauseTransition.setOnFinished(event -> updateProducts());
-
-        widthProperty().addListener(e -> restartCooldown());
-        heightProperty().addListener(e -> restartCooldown());
+        widthProperty().addListener(e -> updateProducts());
+        Main.sceneWorkspace.heightProperty().addListener(e -> updateProducts());
     }
 
-    private void restartCooldown() {
-        pauseTransition.stop();
-        pauseTransition.playFromStart();
-    }
 
     private void updateProducts() {
-        int maxProductsPerPage = calculateMaxProducts(getWidth(), getHeight());
+        int maxProductsPerPage = calculateMaxProducts(getWidth(), Main.sceneWorkspace.getHeight()-120);
 
         int currentPage = workspaceProducts.getCurrentPage();
         int totalProducts = workspaceProducts.getTotalProducts();
