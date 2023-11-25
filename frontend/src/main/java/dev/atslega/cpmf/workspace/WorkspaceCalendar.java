@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 
 public class WorkspaceCalendar extends VBox {
 
-    public WorkspaceCalendar () {
+    public WorkspaceCalendar() {
         setStyle("-fx-background-color: #26262B");
         setPadding(new Insets(10));
 

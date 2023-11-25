@@ -10,7 +10,7 @@ public class Sale {
     private int numberOfPieces;
     private double totalPrice;
 
-    public Sale(Product product, Customer customer, String iD, Double taxPerHundred, int discount, Double pricePerPiece, int numberOfPieces, Double totalPrice){
+    public Sale(Product product, Customer customer, String iD, Double taxPerHundred, int discount, Double pricePerPiece, int numberOfPieces, Double totalPrice) {
         this.product = product;
         this.customer = customer;
         this.iD = iD;
@@ -20,7 +20,8 @@ public class Sale {
         this.numberOfPieces = numberOfPieces;
         this.totalPrice = totalPrice;
     }
-    public Sale(Product product, Customer customer, String iD, Double taxPerHundred, int discount, Double pricePerPiece, int numberOfPieces){
+
+    public Sale(Product product, Customer customer, String iD, Double taxPerHundred, int discount, Double pricePerPiece, int numberOfPieces) {
         this.product = product;
         this.customer = customer;
         this.iD = iD;
@@ -29,7 +30,8 @@ public class Sale {
         this.pricePerPiece = pricePerPiece;
         this.numberOfPieces = numberOfPieces;
     }
-    public Sale(Product product, Customer customer, String iD, Double taxPerHundred, Double pricePerPiece, int numberOfPieces){
+
+    public Sale(Product product, Customer customer, String iD, Double taxPerHundred, Double pricePerPiece, int numberOfPieces) {
         this.product = product;
         this.customer = customer;
         this.iD = iD;
@@ -37,7 +39,8 @@ public class Sale {
         this.pricePerPiece = pricePerPiece;
         this.numberOfPieces = numberOfPieces;
     }
-    public Sale(Product product, Customer customer, String iD, Double pricePerPiece, int numberOfPieces, Double totalPrice){
+
+    public Sale(Product product, Customer customer, String iD, Double pricePerPiece, int numberOfPieces, Double totalPrice) {
         this.product = product;
         this.customer = customer;
         this.iD = iD;
@@ -45,7 +48,8 @@ public class Sale {
         this.numberOfPieces = numberOfPieces;
         this.totalPrice = totalPrice;
     }
-    public Sale(Product product, Customer customer, String iD, int discount, Double pricePerPiece, int numberOfPieces, Double totalPrice){
+
+    public Sale(Product product, Customer customer, String iD, int discount, Double pricePerPiece, int numberOfPieces, Double totalPrice) {
         this.product = product;
         this.customer = customer;
         this.iD = iD;

@@ -1,8 +1,6 @@
 package dev.atslega.cpmf.components.workspaceList;
 
 import dev.atslega.cpmf.Main;
-import dev.atslega.cpmf.model.Product;
-import dev.atslega.cpmf.panes.ProductContentPane;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.layout.FlowPane;
@@ -11,7 +9,7 @@ public class WorkspaceListFlowPane extends FlowPane {
     private static final int PRODUCT_SIZE = 200;
     private static final int GAP_SIZE = 10;
 
-    private WorkspaceListFramework workspaceListFramework;
+    private final WorkspaceListFramework workspaceListFramework;
 
     public WorkspaceListFlowPane(WorkspaceListFramework workspaceListFramework) {
         this.workspaceListFramework = workspaceListFramework;

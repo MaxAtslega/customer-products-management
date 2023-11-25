@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 public class WorkspacePattern {
 
     private static final String USERNAME = "Max Atslega";
-    private static int sidebarWidth = 200;
+    private static final int sidebarWidth = 200;
 
     public static final Color DEFAULT_TEXT_COLOR = Color.valueOf("5E6673");
     public static final Color HOOVER_TEXT_COLOR = Color.WHITE;

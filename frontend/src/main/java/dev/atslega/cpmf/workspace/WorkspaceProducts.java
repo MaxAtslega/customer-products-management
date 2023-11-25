@@ -2,9 +2,7 @@ package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.TempStorage;
 import dev.atslega.cpmf.components.workspaceList.WorkspaceListFramework;
-import dev.atslega.cpmf.model.Customer;
 import dev.atslega.cpmf.model.Product;
-import dev.atslega.cpmf.panes.CustomerSidePane;
 import dev.atslega.cpmf.panes.ProductContentPane;
 import javafx.scene.layout.Pane;
 
@@ -21,7 +19,7 @@ public class WorkspaceProducts extends WorkspaceListFramework {
         List<Pane> paneList = new ArrayList<>();
 
         TempStorage tempStorage = new TempStorage();
-        for(Product product : tempStorage.productList){
+        for (Product product : tempStorage.productList) {
             paneList.add(new ProductContentPane(product));
         }
 

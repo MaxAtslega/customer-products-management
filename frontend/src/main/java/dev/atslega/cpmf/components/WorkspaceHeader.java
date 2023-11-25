@@ -56,9 +56,9 @@ public class WorkspaceHeader extends VBox {
         closeButton.setStyle("-fx-font-size: 11; -fx-font-weight: bold; -fx-background-color: transparent;");
 
         closeButton.setOnMouseClicked(event -> {
-            if (WorkspacePattern.getBackPlate().getLeft() != null){
+            if (WorkspacePattern.getBackPlate().getLeft() != null) {
                 closeButtonSvgPath.setContent("M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z");
-            }else{
+            } else {
                 closeButtonSvgPath.setContent("M120-240v-80h520v80H120Zm664-40L584-480l200-200 56 56-144 144 144 144-56 56ZM120-440v-80h400v80H120Zm0-200v-80h520v80H120Z");
             }
             WorkspacePattern.toggleNavigator();
@@ -86,6 +86,6 @@ public class WorkspaceHeader extends VBox {
 
     private void updateTextColor(Button button, Color color) {
         Region region = (Region) button.getGraphic();
-        region.setStyle("-fx-background-color: "+color.toString().replace("0x", "#")+";");
+        region.setStyle("-fx-background-color: " + color.toString().replace("0x", "#") + ";");
     }
 }

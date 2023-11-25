@@ -9,9 +9,7 @@ import java.util.Objects;
 
 public class SaleSidePane extends Pane {
 
-    private Sale sale;
-
-    int sideCounter=0;
+    private final Sale sale;
 
     SaleSideOne saleSideOne;
     SaleSideTwo saleSideTwo;
@@ -70,9 +68,4 @@ public class SaleSidePane extends Pane {
 
         getChildren().addAll(saleSideOne,saleSideTwo,saleSideThree,saleSideFour);
     }
-
-    public Sale getSale() {
-        return sale;
-    }
-
 }

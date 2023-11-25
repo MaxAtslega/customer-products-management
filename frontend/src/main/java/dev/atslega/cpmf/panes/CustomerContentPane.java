@@ -10,13 +10,13 @@ import javafx.scene.shape.Circle;
 
 import java.util.Random;
 
-public class CustomerSidePane extends Pane {
+public class CustomerContentPane extends Pane {
 
     private boolean isFlipped = false,customerIsCompany = false;
 
     private final Customer customer;
 
-    public CustomerSidePane(Customer customer) {
+    public CustomerContentPane(Customer customer) {
         setMaxSize(200,220);
         setMinSize(200,220);
         this.customer = customer;

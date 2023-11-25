@@ -1,6 +1,5 @@
 package dev.atslega.cpmf.workspace;
 
-import dev.atslega.cpmf.components.workspaceList.WorkspaceListFramework;
 import javafx.scene.layout.Pane;
 
 public enum Workspaces {

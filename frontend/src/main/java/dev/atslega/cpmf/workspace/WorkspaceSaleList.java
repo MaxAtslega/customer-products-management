@@ -20,7 +20,7 @@ public class WorkspaceSaleList extends WorkspaceListFramework {
         List<Pane> paneList = new ArrayList<>();
 
         TempStorage tempStorage = new TempStorage();
-        for(Sale sale : tempStorage.saleList){
+        for (Sale sale : tempStorage.saleList) {
             paneList.add(new SaleSidePane(sale));
         }
 

@@ -13,15 +13,13 @@ import java.util.List;
 
 public class WorkspaceListFramework extends BorderPane {
 
+    private final int totalProducts;
+    private final List<Pane> paneList;
     private Label lblCurrentPage;
     private Button btnNext;
     private Button btnBack;
-
     private int currentPage = 1;
-    private final int totalProducts;
     private int totalPages = 1;
-
-    private final List<Pane> paneList;
 
 
     public WorkspaceListFramework(List<Pane> paneList) {

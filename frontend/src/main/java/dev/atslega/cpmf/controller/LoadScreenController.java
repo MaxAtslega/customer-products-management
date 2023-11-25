@@ -3,9 +3,7 @@ package dev.atslega.cpmf.controller;
 import dev.atslega.cpmf.Main;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,14 +14,12 @@ import java.util.Objects;
 
 public class LoadScreenController {
 
-    @FXML
-    private Label loadingText;
-
-    @FXML
-    private ImageView gearView, background;
-
     private final Image gear;
     private final Image loadBackground;
+    @FXML
+    private Label loadingText;
+    @FXML
+    private ImageView gearView, background;
 
     public LoadScreenController() throws IOException {
         gear = loadImage("Images/gear.png");

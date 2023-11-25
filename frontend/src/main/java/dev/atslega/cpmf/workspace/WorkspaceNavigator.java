@@ -4,10 +4,13 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.shape.SVGPath;
+import javafx.scene.text.Font;
 
 import java.util.Objects;
 
@@ -22,7 +25,7 @@ public class WorkspaceNavigator extends VBox {
 
 
     private Button lastClickedButton = null;
-    private int sidebarWidth;
+    private final int sidebarWidth;
 
     public WorkspaceNavigator(int sidebarWidth) {
         this.sidebarWidth = sidebarWidth;

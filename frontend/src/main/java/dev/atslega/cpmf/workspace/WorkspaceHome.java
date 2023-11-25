@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.workspace;
 
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
@@ -7,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.beans.value.ObservableValue;
 
 public class WorkspaceHome extends VBox {
 
@@ -47,7 +47,7 @@ public class WorkspaceHome extends VBox {
     }
 
 
-    private FlowPane createStatsFlowPane(){
+    private FlowPane createStatsFlowPane() {
         FlowPane statsFlowPane = new FlowPane();
         statsFlowPane.setHgap(10);
         statsFlowPane.setVgap(10);
@@ -73,7 +73,7 @@ public class WorkspaceHome extends VBox {
         return statsFlowPane;
     }
 
-    private FlowPane createInformationFlowPane(){
+    private FlowPane createInformationFlowPane() {
         FlowPane informationFlowPane = new FlowPane();
         informationFlowPane.setHgap(10);
         informationFlowPane.setVgap(10);
@@ -97,7 +97,7 @@ public class WorkspaceHome extends VBox {
         return informationFlowPane;
     }
 
-    private VBox createUsersPane(){
+    private VBox createUsersPane() {
         VBox usersPane = new VBox();
 
         // Create and add boxes to the usersPane
@@ -143,7 +143,7 @@ public class WorkspaceHome extends VBox {
         titleLabel.setFill(Color.WHITE);
 
         Text nameLabel = new Text("Name: Max Atslega");
-        nameLabel.setFont(Font.font("Roboto",16));
+        nameLabel.setFont(Font.font("Roboto", 16));
         nameLabel.setFill(Color.WHITE);
 
         Text emailLabel = new Text("Email: max@atslega.de");
@@ -155,7 +155,7 @@ public class WorkspaceHome extends VBox {
         roleLabel.setFill(Color.WHITE);
 
         Text companyLabel = new Text("Company: Atslega Media GmbH");
-        companyLabel.setFont(Font.font("Roboto",16));
+        companyLabel.setFont(Font.font("Roboto", 16));
         companyLabel.setFill(Color.WHITE);
 
         vbox.getChildren().addAll(titleLabel, nameLabel, emailLabel, roleLabel, companyLabel);
@@ -174,7 +174,7 @@ public class WorkspaceHome extends VBox {
         titleLabel.setFill(Color.WHITE);
 
         Text nameLabel = new Text("Latest Product: Dyson Vacuum cleaner");
-        nameLabel.setFont(Font.font("Roboto",16));
+        nameLabel.setFont(Font.font("Roboto", 16));
         nameLabel.setFill(Color.WHITE);
 
         Text emailLabel = new Text("Last Customer: Lasse");
@@ -186,7 +186,7 @@ public class WorkspaceHome extends VBox {
         roleLabel.setFill(Color.WHITE);
 
         Text companyLabel = new Text("User Count: 4");
-        companyLabel.setFont(Font.font("Roboto",16));
+        companyLabel.setFont(Font.font("Roboto", 16));
         companyLabel.setFill(Color.WHITE);
 
         vbox.getChildren().addAll(titleLabel, nameLabel, emailLabel, roleLabel, companyLabel);
@@ -203,7 +203,7 @@ public class WorkspaceHome extends VBox {
 
         HBox hBox = new HBox();
 
-        Text title = new Text(id + " - "+name+" - "+email);
+        Text title = new Text(id + " - " + name + " - " + email);
         title.setFont(Font.font("Roboto", 16));
         title.setFill(Color.WHITE);
 

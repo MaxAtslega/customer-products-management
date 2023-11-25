@@ -6,25 +6,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
 public class Main extends Application {
 
-    Toolkit toolkit;
-    Dimension screenSize;
-    
     public static StageManager primaryStageManager;
     public static Scene sceneLogin, sceneLoadScreen, sceneWorkspace;
-
     public static TempStorage tempStorage = new TempStorage();
-    
+    Toolkit toolkit;
+    Dimension screenSize;
+
     public static void main(String[] args) {
         launch();
     }
@@ -65,7 +60,7 @@ public class Main extends Application {
     public Scene sceneLoginLoader() throws IOException {
         URL loginURL = getClass().getResource("login.fxml");
         FXMLLoader login = new FXMLLoader(loginURL);
-        return new Scene(login.load(),960,600);
+        return new Scene(login.load(), 960, 600);
     }
 
     public Scene sceneLoadScreenLoader() throws IOException {

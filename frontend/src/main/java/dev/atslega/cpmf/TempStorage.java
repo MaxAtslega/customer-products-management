@@ -10,14 +10,10 @@ public class TempStorage {
     public ArrayList<Customer> customerList = new ArrayList<>();
     public ArrayList<Product> productList = new ArrayList<>();
     public ArrayList<Sale> saleList = new ArrayList<>();
-    //public Calendar userCalendar = new Calendar();
 
-    private String space ="               ";
+    private final String space = "               ";
 
-    //test Objekte für Customer
     public TempStorage(){
-
-        // test
         Customer customer = new Customer("Lasse","Hüls","#3547","lassehuels@gmx.de","+49 1517 25542525","Bierweg 12a \n"+space+"32825 Bomberg \n"+space+"Germany","");
         Customer customer1 = new Customer("Keena-Sophie","Notzon","#2476","jasndja@jansda","+49 1547 51515515","eichenweg 3b \n"+space+"32805 Bad Meinberg \n"+space+"Germany","");
         Customer customer2 = new Customer("Paul","Nixmac","#6542","paulnixmac@gmx.de","+335 15542521","krumestraße 89b \n"+space+"2547 Bremen \n"+space+"Germany","IT mac");
@@ -38,7 +34,6 @@ public class TempStorage {
         customerList.add(customer7);
         customerList.add(customer8);
 
-        //test 2
         Product product = new Product("Handball","#2547","Phoenix Contact","A good Ball for every Handball Player",10,24.50);
         Product product1 = new Product("Bier","#5478","Kronbacher","Wiederliches Bier",1000,2.75);
         Product product2 = new Product("Bundstifte","#6258","Faberkastel","Bundstiffte fürs malen kleiner kinder",100,21.24);
@@ -59,7 +54,6 @@ public class TempStorage {
         productList.add(product7);
         productList.add(product8);
 
-        //test 3
         Sale sale = new Sale(product,customer,"#2457",19.0,2,product.getPrice(),4,300.2);
         Sale sale1 = new Sale(product2,customer1,"#8754",7.5,0,product2.getPrice(),50,400.54);
         Sale sale2 = new Sale(product3,customer4,"#3514",5.4,2,product3.getPrice(),54,201.20);
@@ -69,83 +63,5 @@ public class TempStorage {
         saleList.add(sale2);
 
     }
-
-
-    //load && save function
-    /*
-    public void loadConantFromServer(){
-
-    }
-
-    public void saveContantOfServer(){
-
-    }
-     */
-
-    //function of Customer
-    public void addCustomer(String firstName, String lastName, String iD, String mail, String phoneNumber, String address, String companyName) {
-        Customer newCustomer = new Customer(firstName, lastName, iD, mail, phoneNumber, address, companyName);
-        customerList.add(newCustomer);
-    }
-
-    public void removeCustomerByIndex(int index) {
-        if (index >= 0 && index < customerList.size()) {
-            customerList.remove(index);
-            System.out.println("Kunde an Index " + index + " wurde erfolgreich entfernt.");
-        } else {
-            System.out.println("Ungültiger Index. Kein Kunde wurde entfernt.");
-        }
-    }
-
-    //function of Product
-    public void addProduct(String name,String id,String manufacturer,String description, int inventory,int price){
-        Product newProduct = new Product(name,id,manufacturer,description,inventory,price);
-        productList.add((newProduct));
-    }
-
-    public void removeProductByIndex(int index){
-        if (index >= 0 && index < productList.size()) {
-            productList.remove(index);
-            System.out.println("Kunde an Index " + index + " wurde erfolgreich entfernt.");
-        } else {
-            System.out.println("Ungültiger Index. Kein Kunde wurde entfernt.");
-        }
-    }
-
-    //function of sales
-
-
-
-    //function to sort arraylist
-    // sort function for Customer
-    public void sortCustomerListById(ArrayList<Customer> customerList) {
-        for (int i = 0; i < customerList.size(); i++) {
-            for (int j = i + 1; j < customerList.size(); j++) {
-                if (customerList.get(i).getID().compareTo(customerList.get(j).getID()) > 0) {
-                    Customer temp = customerList.get(i);
-                    customerList.set(i, customerList.get(j));
-                    customerList.set(j, temp);
-                }
-            }
-        }
-    }
-
-
-    //sort function for Product
-    public void sortProductListById(ArrayList<Product> productList) {
-        for (int i = 0; i < productList.size(); i++) {
-            for (int j = i + 1; j < productList.size(); j++) {
-                if (productList.get(i).getID().compareTo(productList.get(j).getID()) > 0) {
-                    Product temp = productList.get(i);
-                    productList.set(i, productList.get(j));
-                    productList.set(j, temp);
-                }
-            }
-        }
-    }
-
-
-
-    // sort function for Sale
 
 }

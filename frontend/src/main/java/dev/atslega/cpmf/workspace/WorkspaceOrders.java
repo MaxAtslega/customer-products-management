@@ -19,7 +19,7 @@ public class WorkspaceOrders extends WorkspaceListFramework {
         List<Pane> paneList = new ArrayList<>();
 
         TempStorage tempStorage = new TempStorage();
-        for(Product product : tempStorage.productList){
+        for (Product product : tempStorage.productList) {
             paneList.add(new ProductContentPane(product));
         }
 
