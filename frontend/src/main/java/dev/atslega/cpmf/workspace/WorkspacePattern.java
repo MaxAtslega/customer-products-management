@@ -1,5 +1,6 @@
 package dev.atslega.cpmf.workspace;
 
+import dev.atslega.cpmf.components.WorkspaceHeader;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
@@ -14,17 +15,20 @@ public class WorkspacePattern {
 
     private static BorderPane backPlate;
 
+    private static WorkspaceNavigator workspaceNavigator;
+
     public static BorderPane workspace() {
         backPlate = new BorderPane();
+        workspaceNavigator = new WorkspaceNavigator(sidebarWidth);
 
         // set top [User, Toolbar, Program-Info]
-        backPlate.setTop(new WorkspaceWorkstation(USERNAME, sidebarWidth));
+        backPlate.setTop(new WorkspaceHeader(USERNAME, sidebarWidth));
 
         // set Center [Home, Costumer, Products,short´s,calendar] (switch function)
         backPlate.setCenter(Workspaces.HOME.getPane());
 
         // set Left [Tab´s]
-        backPlate.setLeft(new WorkspaceNavigator(sidebarWidth));
+        backPlate.setLeft(workspaceNavigator);
 
         return backPlate;
     }
@@ -38,6 +42,6 @@ public class WorkspacePattern {
     }
 
     public static void toggleNavigator(){
-        backPlate.setLeft(backPlate.getLeft() == null ? new WorkspaceNavigator(sidebarWidth) : null);
+        backPlate.setLeft(backPlate.getLeft() == null ? workspaceNavigator : null);
     }
 }

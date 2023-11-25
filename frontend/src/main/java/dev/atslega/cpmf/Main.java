@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -36,6 +37,7 @@ public class Main extends Application {
         // Initialize variables for screen size retrieval
         toolkit = Toolkit.getDefaultToolkit();
         screenSize = toolkit.getScreenSize();
+
 
         // Initialize the manager for the primaryStage to handle various stage operations
         primaryStageManager = new StageManager(primaryStage);

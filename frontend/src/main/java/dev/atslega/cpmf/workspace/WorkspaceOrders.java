@@ -2,18 +2,16 @@ package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.TempStorage;
 import dev.atslega.cpmf.components.workspaceList.WorkspaceListFramework;
-import dev.atslega.cpmf.model.Customer;
 import dev.atslega.cpmf.model.Product;
-import dev.atslega.cpmf.panes.CustomerSidePane;
 import dev.atslega.cpmf.panes.ProductContentPane;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkspaceProducts extends WorkspaceListFramework {
+public class WorkspaceOrders extends WorkspaceListFramework {
 
-    public WorkspaceProducts() {
+    public WorkspaceOrders() {
         super(initializePaneList());
     }
 

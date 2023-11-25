@@ -1,27 +1,22 @@
-package dev.atslega.cpmf.workspace;
+package dev.atslega.cpmf.components;
 
-import javafx.geometry.HPos;
+import dev.atslega.cpmf.workspace.WorkspacePattern;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
-
-import java.awt.*;
 
 import static dev.atslega.cpmf.workspace.WorkspacePattern.DEFAULT_TEXT_COLOR;
 import static dev.atslega.cpmf.workspace.WorkspacePattern.HOOVER_TEXT_COLOR;
 
-public class WorkspaceWorkstation extends VBox {
+public class WorkspaceHeader extends VBox {
 
-    public WorkspaceWorkstation(String username, int sidebarWidth) {
+    public WorkspaceHeader(String username, int sidebarWidth) {
         setPadding(new Insets(0, 10, 0, 0));
         setStyle("-fx-background-color: #18191C;");
 
