@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.atslega.cpmf.controller.LoginController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.atslega.cpmf.controller.LoginController">
     <ImageView fx:id="background"/>
     <Pane layoutX="355.0" layoutY="140.0" prefHeight="320.0" prefWidth="250.0" style="-fx-background-color: rgba(0, 0, 0, 0.3);">
         <effect>
