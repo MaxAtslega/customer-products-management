@@ -50,7 +50,7 @@ public class WorkspaceSaleList extends Pane {
     public WorkspaceSaleList () {
         setPrefHeight(400);
         setPrefWidth(400);
-        setStyle("-fx-background-color: gray");
+        setStyle("-fx-background-color: #26262B");
 
         grid.setLayoutX(10);
         grid.setLayoutY(10);
@@ -75,7 +75,6 @@ public class WorkspaceSaleList extends Pane {
         saleListViewer = new Pane();
         saleListViewer.setPrefWidth(getPrefWidth());
         saleListViewer.setPrefHeight(getPrefHeight());
-        saleListViewer.setStyle("-fx-background-color: green;");
 
         // buttomPane
         Pane buttomPane = new Pane();

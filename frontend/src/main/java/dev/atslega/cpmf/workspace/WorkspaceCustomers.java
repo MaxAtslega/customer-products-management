@@ -32,6 +32,7 @@ public class WorkspaceCustomers extends Pane {
     public WorkspaceCustomers() {
         setPrefHeight(400);
         setPrefWidth(500);
+        setStyle("-fx-background-color: #26262B");
 
         //Icons
         Image nextButtonRightIcon = new Image(getClass().getResourceAsStream("Images/nextsideButtonRight.png"));
@@ -47,7 +48,6 @@ public class WorkspaceCustomers extends Pane {
         Pane customerViewer = new Pane();
         customerViewer.setPrefWidth(getPrefWidth());
         customerViewer.setPrefHeight(getPrefHeight());
-        customerViewer.setStyle("-fx-background-color: purple;");
 
         // buttomPane
         Pane buttomPane = new Pane();
