@@ -1,21 +1,21 @@
 package dev.atslega.cpmf.panes;
 
+import dev.atslega.cpmf.model.Product;
 import dev.atslega.cpmf.workspace.WorkspaceProducts;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.util.Duration;
 
-public class WorkspaceProductsFlowPane extends FlowPane {
+public class ProductsFlowPane extends FlowPane {
     private static final int PRODUCT_SIZE = 200;
     private static final int GAP_SIZE = 10;
 
     private WorkspaceProducts workspaceProducts;
     private PauseTransition pauseTransition;
 
-    public WorkspaceProductsFlowPane(WorkspaceProducts workspaceProducts) {
+    public ProductsFlowPane(WorkspaceProducts workspaceProducts) {
         this.workspaceProducts = workspaceProducts;
 
         setPadding(new Insets(GAP_SIZE));
@@ -48,7 +48,7 @@ public class WorkspaceProductsFlowPane extends FlowPane {
 
         getChildren().clear();
         for (int i = start; i < end; i++) {
-            getChildren().add(createProductPane(i));
+            getChildren().add(new ProductContentPane(new Product("Test", i+"", "ewwe", "ewwe", 100, 10.5)));
         }
 
         int totalPages = (int) Math.ceil((double) totalProducts / maxProductsPerPage);
@@ -66,20 +66,5 @@ public class WorkspaceProductsFlowPane extends FlowPane {
         int rows = Math.max(1, (int) (height - GAP_SIZE*2) / (PRODUCT_SIZE + GAP_SIZE));
 
         return columns * rows;
-    }
-
-
-    private FlowPane createProductPane(int id){
-        FlowPane productPane = new FlowPane();
-        productPane.setPrefSize(PRODUCT_SIZE, PRODUCT_SIZE);
-        productPane.setStyle("-fx-background-color: #18191C; -fx-background-radius: 5;");
-        productPane.setPadding(new Insets(10));
-
-        Label label = new Label("Produkt ID " + id);
-        label.setStyle("-fx-text-fill: white;"); // Set label text color to white
-
-        productPane.getChildren().add(label);
-
-        return productPane;
     }
 }

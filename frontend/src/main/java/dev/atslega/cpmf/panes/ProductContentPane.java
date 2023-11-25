@@ -1,6 +1,7 @@
 package dev.atslega.cpmf.panes;
 
 import dev.atslega.cpmf.model.Product;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,15 +9,16 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Pane;
 
-public class ProductSidePane extends Pane {
+public class ProductContentPane extends Pane {
 
     private final Product product;
 
-    boolean isFlipped=false,isClicked=false,infoIconClicked=false;
+    boolean isFlipped=false, infoIconClicked=false;
 
-    public ProductSidePane(Product product){
+    public ProductContentPane(Product product){
         setPrefSize(200,220);
-        setStyle("-fx-background-radius: 15; -fx-background-color: white;");
+        setStyle("-fx-background-radius: 5; -fx-background-color: #18191C;");
+        setCursor(Cursor.HAND);
         this.product = product;
 
         //Label in front (name, Id , inventory,price)
@@ -74,7 +76,7 @@ public class ProductSidePane extends Pane {
         getChildren().add(infoIconView);
 
         setOnMouseEntered(event -> {
-            if(!isFlipped&& !isClicked){
+            if(!isFlipped){
                 nameF.setVisible(false);
                 nameFront.setVisible(false);
                 iDF.setVisible(false);
@@ -90,18 +92,12 @@ public class ProductSidePane extends Pane {
                 inventoryB.setVisible(true);
                 priceB.setVisible(true);
                 isFlipped=true;
-                setStyle("-fx-background-radius: 15; -fx-background-color: #FFDEAD;");
+                setStyle("-fx-background-radius: 5; -fx-background-color: #202225;");
             }
         });
-        setOnMouseClicked(event -> {
-            if(isClicked){
-                isClicked=false;
-            }else{
-                isClicked=true;
-            }
-        });
+
         setOnMouseExited(event -> {
-            if(isFlipped && !isClicked){
+            if(isFlipped){
                 nameF.setVisible(true);
                 nameFront.setVisible(true);
                 iDF.setVisible(true);
@@ -120,7 +116,7 @@ public class ProductSidePane extends Pane {
                 descriptionI.setVisible(false);
 
                 isFlipped=false;
-                setStyle("-fx-background-radius: 15; -fx-background-color: white;");
+                setStyle("-fx-background-radius: 5; -fx-background-color: #18191C;");
             }
         });
         //add front
@@ -137,7 +133,7 @@ public class ProductSidePane extends Pane {
         label.setText(text);
         label.setLayoutX(10);
         label.setLayoutY(y);
-        label.setStyle("-fx-font-size: 14; -fx-font-weight: bold; -fx-alignment: center;");
+        label.setStyle("-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-alignment: center;");
         label.setMaxWidth(180);
         label.setMinWidth(180);
 
@@ -149,7 +145,7 @@ public class ProductSidePane extends Pane {
         label.setText(text);
         label.setLayoutX(10);
         label.setLayoutY(y);
-        label.setStyle("-fx-font-size: 14; -fx-text-fill: black;");
+        label.setStyle("-fx-font-size: 14; -fx-text-fill: #ffffff;");
         label.setMaxWidth(180);
         label.setMinWidth(180);
 

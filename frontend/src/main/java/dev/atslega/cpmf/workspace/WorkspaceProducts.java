@@ -1,6 +1,6 @@
 package dev.atslega.cpmf.workspace;
 
-import dev.atslega.cpmf.panes.WorkspaceProductsFlowPane;
+import dev.atslega.cpmf.panes.ProductsFlowPane;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -21,7 +21,7 @@ public class WorkspaceProducts extends BorderPane {
 
 
     public WorkspaceProducts() {
-        this.setCenter(new WorkspaceProductsFlowPane(this));
+        this.setCenter(new ProductsFlowPane(this));
         this.setBottom(createPaginationBar());
     }
 
@@ -29,7 +29,7 @@ public class WorkspaceProducts extends BorderPane {
     private void changePage(int delta) {
         currentPage = Math.max(1, Math.min(totalPages, currentPage + delta));
         lblCurrentPage.setText("Page: " + currentPage);
-        this.setCenter(new WorkspaceProductsFlowPane(this));
+        this.setCenter(new ProductsFlowPane(this));
     }
 
     private HBox createPaginationBar() {

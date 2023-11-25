@@ -1,6 +1,6 @@
 package dev.atslega.cpmf;
 
-import dev.atslega.cpmf.panes.ProductSidePane;
+import dev.atslega.cpmf.panes.ProductContentPane;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.layout.Pane;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class TableOfPanesInProductViewer extends Pane {
 
-    private final ArrayList<ProductSidePane> paneList = new ArrayList<>();
+    private final ArrayList<ProductContentPane> paneList = new ArrayList<>();
 
     private int boundsOfBegin =0;
     private int boundsOfEnd =0;
@@ -26,7 +26,7 @@ public class TableOfPanesInProductViewer extends Pane {
         setStyle("-fx-background-color: transparent");
 
         for(int i=0; i<2;i++){
-            addPane(new ProductSidePane(Main.tempStorage.productList.get(i)));
+            addPane(new ProductContentPane(Main.tempStorage.productList.get(i)));
         }
         setPanesPosition();
 
@@ -43,7 +43,7 @@ public class TableOfPanesInProductViewer extends Pane {
 
     }
 
-    public void addPane( ProductSidePane pane) {
+    public void addPane( ProductContentPane pane) {
         paneList.add(pane);
         getChildren().add(pane);
     }
@@ -128,7 +128,7 @@ public class TableOfPanesInProductViewer extends Pane {
         //get All customers convert to Panes and add them to mainPane
         for(int i=boundsOfBegin;i<=boundsOfEnd;i++){
             if(i<Main.tempStorage.productList.size()){
-                addPane(new ProductSidePane(Main.tempStorage.productList.get(i)));
+                addPane(new ProductContentPane(Main.tempStorage.productList.get(i)));
             }
         }
         //set All the Layout X and Y of Panes
