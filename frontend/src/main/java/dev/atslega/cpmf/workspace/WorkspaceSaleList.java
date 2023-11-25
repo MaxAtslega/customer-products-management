@@ -13,7 +13,7 @@ import java.util.List;
 public class WorkspaceSaleList extends WorkspaceListFramework {
 
     public WorkspaceSaleList() {
-        super(initializePaneList());
+        super(initializePaneList(), "Sale List");
     }
 
     private static List<Pane> initializePaneList() {

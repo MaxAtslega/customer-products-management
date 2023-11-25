@@ -27,7 +27,7 @@ public class WorkspaceListFlowPane extends FlowPane {
 
 
     private void updateProducts() {
-        int maxProductsPerPage = calculateMaxProducts(getWidth(), Main.sceneWorkspace.getHeight()-120);
+        int maxProductsPerPage = calculateMaxProducts(getWidth(), Main.sceneWorkspace.getHeight()-150);
 
         int currentPage = workspaceListFramework.getCurrentPage();
         int totalProducts = workspaceListFramework.getTotalProducts();

@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.util.List;
 
@@ -22,10 +25,11 @@ public class WorkspaceListFramework extends BorderPane {
     private int totalPages = 1;
 
 
-    public WorkspaceListFramework(List<Pane> paneList) {
+    public WorkspaceListFramework(List<Pane> paneList, String title) {
         this.paneList = paneList;
         this.totalProducts = paneList.size();
 
+        this.setTop(createTitle(title));
         this.setCenter(new WorkspaceListFlowPane(this));
         this.setBottom(createPaginationBar());
     }
@@ -35,6 +39,19 @@ public class WorkspaceListFramework extends BorderPane {
         currentPage = Math.max(1, Math.min(totalPages, currentPage + delta));
         lblCurrentPage.setText("Page: " + currentPage);
         this.setCenter(new WorkspaceListFlowPane(this));
+    }
+
+    private HBox createTitle(String title) {
+        Text headerTitle = new Text(title);
+        headerTitle.setFont(Font.font("Roboto", 25));
+        headerTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+        headerTitle.setFill(Color.WHITE);
+
+        HBox titleBar = new HBox(headerTitle);
+        titleBar.setStyle("-fx-background-color: #26262B");
+        titleBar.setPadding(new Insets(10, 0, 0, 10));
+
+        return titleBar;
     }
 
     private HBox createPaginationBar() {

@@ -50,8 +50,8 @@ public class Main extends Application {
         primaryStageManager.setStageScene(sceneWorkspace);
         //primaryStageManager.setStageResizable(false);
 
-        primaryStageManager.setStageMinHeight(430);
-        primaryStageManager.setStageMinWidth(650);
+        primaryStageManager.setStageMinHeight(620);
+        primaryStageManager.setStageMinWidth(960);
 
         // Display the primary stage to the user
         primaryStage.show();
@@ -60,16 +60,16 @@ public class Main extends Application {
     public Scene sceneLoginLoader() throws IOException {
         URL loginURL = getClass().getResource("login.fxml");
         FXMLLoader login = new FXMLLoader(loginURL);
-        return new Scene(login.load(), 960, 600);
+        return new Scene(login.load(), 1050, 620);
     }
 
     public Scene sceneLoadScreenLoader() throws IOException {
         URL loadScreenURL = getClass().getResource("loadScreen.fxml");
         FXMLLoader load = new FXMLLoader(loadScreenURL);
-        return new Scene(load.load(), 960, 600);
+        return new Scene(load.load(), 1050, 620);
     }
 
     public Scene sceneWorkspaceLoader() {
-        return new Scene(WorkspacePattern.workspace(), 960, 600);
+        return new Scene(WorkspacePattern.workspace(), 1050, 620);
     }
 }
