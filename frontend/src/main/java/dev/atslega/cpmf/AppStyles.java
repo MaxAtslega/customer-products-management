@@ -1,8 +1,10 @@
 package dev.atslega.cpmf;
 
-import javafx.scene.paint.Color;
-
 public class AppStyles {
+
+    public static final int WINDOW_WIDTH = 1050;
+    public static final int WINDOW_HEIGHT = 620;
+
     public static final String MAIN_BACKGROUND_COLOR = "#202225";
     public static final String SECONDARY_BACKGROUND_COLOR = "#18191C";
     public static final String THIRD_BACKGROUND_COLOR = "#26262B";
