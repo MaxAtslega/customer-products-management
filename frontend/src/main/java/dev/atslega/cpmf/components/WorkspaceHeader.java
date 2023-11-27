@@ -18,6 +18,8 @@ public class WorkspaceHeader extends VBox {
     public WorkspaceHeader(String username, int sidebarWidth) {
         setPadding(new Insets(0, AppStyles.GAP_SIZE, 0, 0));
         setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR);
+        setPrefHeight(50);
+        setMaxHeight(50);
 
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_LEFT);

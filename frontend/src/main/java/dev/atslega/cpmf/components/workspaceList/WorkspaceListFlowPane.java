@@ -26,7 +26,7 @@ public class WorkspaceListFlowPane extends FlowPane {
 
 
     private void updateProducts() {
-        int maxProductsPerPage = calculateMaxProducts(getWidth(), Main.sceneWorkspace.getHeight()-130);
+        int maxProductsPerPage = calculateMaxProducts(getWidth(), Main.sceneWorkspace.getHeight()-120);
 
         int currentPage = workspaceListFramework.getCurrentPage();
         int totalProducts = workspaceListFramework.getTotalProducts();
@@ -50,7 +50,7 @@ public class WorkspaceListFlowPane extends FlowPane {
     }
 
     private int calculateMaxProducts(double width, double height) {
-        int columns = Math.max(1, (int) (width - AppStyles.GAP_SIZE) / (AppStyles.BOX_SIZE_W + AppStyles.GAP_SIZE));
+        int columns = Math.max(1, (int) (width - AppStyles.GAP_SIZE*2) / (AppStyles.BOX_SIZE_W + AppStyles.GAP_SIZE));
         int rows = Math.max(1, (int) (height - AppStyles.GAP_SIZE*2) / (AppStyles.BOX_SIZE_H + AppStyles.GAP_SIZE));
 
         return columns * rows;

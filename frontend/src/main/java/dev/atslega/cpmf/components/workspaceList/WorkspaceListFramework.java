@@ -51,7 +51,8 @@ public class WorkspaceListFramework extends BorderPane {
         HBox titleBar = new HBox(headerTitle);
         titleBar.setStyle("-fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR);
         titleBar.setPadding(new Insets(AppStyles.GAP_SIZE, 0, 0, AppStyles.GAP_SIZE));
-
+        titleBar.setMaxHeight(40);
+        titleBar.setPrefHeight(40);
         return titleBar;
     }
 
