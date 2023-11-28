@@ -1,73 +1,87 @@
 package dev.atslega.cpmb.controller;
 
+import dev.atslega.cpmb.dto.CustomerRequest;
+import dev.atslega.cpmb.dto.CustomerResponse;
 import dev.atslega.cpmb.model.Customer;
-import dev.atslega.cpmb.model.Order;
+import dev.atslega.cpmb.service.CompanyService;
 import dev.atslega.cpmb.service.CustomerService;
+import dev.atslega.cpmb.util.CustomerMapper;
+import dev.atslega.cpmb.util.EmailAuthenticationToken;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
+import java.net.URI;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final CompanyService companyService;
+
+    private final CustomerMapper customerMapper;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, CompanyService companyService, CustomerMapper customerMapper) {
         this.customerService = customerService;
+        this.companyService = companyService;
+        this.customerMapper = customerMapper;
     }
 
     @GetMapping("/")
-    @RolesAllowed( {"ADMIN","USER"})
-    public ResponseEntity<List<Customer>> getAllCustomers() {
-        return ResponseEntity.ok(customerService.getAllCustomers());
+    @RolesAllowed({"ADMIN", "USER"})
+    public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
+        EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        List<Customer> customers = customerService.getAllCustomers(authentication.getCompany());
+        var resp = customers.stream().map(customerMapper::toResponse).toList();
+
+        return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/{id}")
-    @RolesAllowed( {"ADMIN","USER"})
-    public ResponseEntity<Object> getCustomerById(@PathVariable Long id) {
-
-        Customer customer = customerService.getCustomerById(id).orElse(null);
-        if(customer == null){
-            Map<String, Object> body = new LinkedHashMap<>();
-            body.put("timestamp", LocalDateTime.now());
-            body.put("message","Customer not found");
-
-            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-        }
-
-        return ResponseEntity.ok(customer);
+    @RolesAllowed({"ADMIN", "USER"})
+    public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable Long id) {
+        EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = customerService.getCustomerById(id, authentication.getCompany()).orElse(null);
+        var resp = customerMapper.toResponse(customer);
+        return ResponseEntity.ok(resp);
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed( {"ADMIN","USER"})
-    public ResponseEntity<Object> deleteCustomerById(@PathVariable Long id) {
+    @RolesAllowed({"ADMIN", "USER"})
+    public ResponseEntity deleteCustomerById(@PathVariable Long id) {
+        EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        customerService.deleteCustomer(id, authentication.getCompany());
+        return ResponseEntity.noContent().build();
+    }
 
-        Customer customer = customerService.getCustomerById(id).orElse(null);
-        if(customer == null){
-            Map<String, Object> body = new LinkedHashMap<>();
-            body.put("timestamp", LocalDateTime.now());
-            body.put("message","Customer not found");
-
-            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-        }
-
-        customerService.deleteCustomer(customer);
-        return ResponseEntity.ok("Ok!");
+    @PutMapping("/{id}")
+    @RolesAllowed({"ADMIN", "USER"})
+    public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable("id") Long id, @RequestBody @Valid CustomerRequest request) {
+        EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        var customer = customerMapper.toModel(request);
+        customer.setId(id);
+        customer.setCompany(companyService.getCompanyById(authentication.getCompany()).orElse(null));
+        customer = customerService.updateCustomer(customer, authentication.getCompany());
+        var resp = customerMapper.toResponse(customer);
+        return ResponseEntity.ok(resp);
     }
 
     @PostMapping("/")
     @RolesAllowed( {"ADMIN","USER"})
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.saveCustomer(customer);
+    public ResponseEntity<CustomerResponse> createCustomer(@RequestBody @Valid CustomerRequest request) {
+        EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = customerMapper.toModel(request);
+        customer.setCompany(companyService.getCompanyById(authentication.getCompany()).orElse(null));
+
+        customer = customerService.saveCustomer(customer);
+        var resp = customerMapper.toResponse(customer);
+
+        return ResponseEntity.created(URI.create(customer.getId().toString())).body(resp);
     }
 }

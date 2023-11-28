@@ -3,6 +3,7 @@ package dev.atslega.cpmb.security;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.atslega.cpmb.service.TokenService;
+import dev.atslega.cpmb.util.EmailAuthenticationToken;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,14 +42,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String token = tokenService.getTokenFrom(authorizationHeader);
             String userEmail = tokenService.getSubjectFrom(token);
             UserDetails user = userService.loadUserByUsername(userEmail);
-            var authenticationToken = new UsernamePasswordAuthenticationToken(userEmail, null, user.getAuthorities());
+
+            EmailAuthenticationToken authenticationToken = new EmailAuthenticationToken(userEmail, tokenService.getCompanyFrom(token), user.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
         } catch (JWTVerificationException ex) {
             ex.printStackTrace();  // log error
             response.setHeader("error", ex.getMessage());
-            //response.sendError(HttpStatus.FORBIDDEN.value());
             response.setStatus(HttpStatus.FORBIDDEN.value());
             Map<String, String> error = new HashMap<>();
             error.put("error", ex.getMessage());
@@ -57,5 +59,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
     }
-
 }

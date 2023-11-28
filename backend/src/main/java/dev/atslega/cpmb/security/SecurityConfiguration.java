@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true) // to allow roles validated by methods annotations
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true) // to allow roles validated by methods annotations
 public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -35,8 +36,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/", "/swagger-ui/**", "/api-docs", "/api-docs/**").permitAll() // white list (swagger and root entry point)
                     .requestMatchers(HttpMethod.GET, "/api/users").permitAll()  // white list: fetch users list
-                    .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll() // white list: login endpoint
-//                      .requestMatchers(HttpMethod.POST, "/books").hasRole("ADMIN") // it pre-prends with "ROLE_" when validating role allowed
+                    .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
                     .anyRequest().authenticated()  // all others endpoints should be authenticated
                 )
                 .authenticationProvider(authenticationProvider())

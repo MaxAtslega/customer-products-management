@@ -36,6 +36,13 @@ public class TokenService {
         return decodedJWT.getSubject();
     }
 
+    public Long getCompanyFrom(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = verifier.verify(token);  // throws JWTVerificationException if not valid
+        return decodedJWT.getClaim("company").asLong();
+    }
+
     public String generateToken(User user) {
         Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
         Instant expiration = generateExpirationTimeIn(3600);  // expires in 10 min
@@ -43,6 +50,7 @@ public class TokenService {
                 .withSubject(user.getEmail())
                 .withExpiresAt(expiration)
                 .withIssuer("CPM")
+                .withClaim("company", user.getCompany().getId())
                 .withClaim("roles", user.getRole().name())
                 .sign(algorithm);
         return token;

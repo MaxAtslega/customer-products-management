@@ -1,5 +1,6 @@
 package dev.atslega.cpmb;
 
+import dev.atslega.cpmb.model.Company;
 import dev.atslega.cpmb.model.User;
 import dev.atslega.cpmb.service.UserService;
 import dev.atslega.cpmb.model.Role;

@@ -1,6 +1,5 @@
-package dev.atslega.cpmb.utils;
+package dev.atslega.cpmb.util;
 
-import dev.atslega.cpmb.BackendApplication;
 import dev.atslega.cpmb.dto.UserRequest;
 import dev.atslega.cpmb.dto.UserResponse;
 import dev.atslega.cpmb.model.User;

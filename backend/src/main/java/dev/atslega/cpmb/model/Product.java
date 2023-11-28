@@ -1,12 +1,20 @@
 package dev.atslega.cpmb.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "products")
@@ -31,20 +39,24 @@ public class Product implements Serializable {
     @Column(name = "manufacturer")
     private String manufacturer;
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
     @ManyToMany(mappedBy = "products")
     private List<Order> orders;
 
-    protected Product() {}
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Company company;
 
-    public Product(String productName, String category, long price, Integer stockQuantity, String manufacturer, String imageUrl) {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Product(String productName, String category, long price, Integer stockQuantity, String manufacturer, Company company) {
         this.productName = productName;
         this.category = category;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.manufacturer = manufacturer;
-        this.imageUrl = imageUrl;
+        this.company = company;
     }
 }

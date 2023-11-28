@@ -4,17 +4,14 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class UserRequest {
-
-    @NotEmpty(message = "{required.field}")
-    private String lastName;
+public class CustomerRequest {
 
     @NotEmpty(message = "{required.field}")
     private String firstName;
 
     @NotEmpty(message = "{required.field}")
-    private String email;
+    private String lastName;
 
     @NotEmpty(message = "{required.field}")
-    private String password;
+    private String email;
 }
