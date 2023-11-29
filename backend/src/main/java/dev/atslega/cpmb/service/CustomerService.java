@@ -1,11 +1,13 @@
 package dev.atslega.cpmb.service;
 
+import dev.atslega.cpmb.exception.ResourceNotFoundException;
 import dev.atslega.cpmb.model.Customer;
 import dev.atslega.cpmb.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -18,20 +20,30 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    public List<Customer> getAllCustomers(Long companyId) {
+        return customerRepository.findAll().stream().filter(c -> Objects.equals(c.getCompany().getId(), companyId)).toList();
     }
 
-    public Optional<Customer> getCustomerById(Long id) {
-        return customerRepository.findById(id);
+    public Optional<Customer> getCustomerById(Long id, Long companyId) {
+        abortIfCustomerDoesNotExist(id, companyId);
+        return customerRepository.findById(id).filter(c -> Objects.equals(c.getCompany().getId(), companyId));
     }
 
     public Customer saveCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
-    public void deleteCustomer(Customer customer) {
-        customerRepository.delete(customer);
+    public void deleteCustomer(Long id, Long companyId) {
+        abortIfCustomerDoesNotExist(id, companyId);
+        customerRepository.deleteById(id);
     }
 
+    public Customer updateCustomer(Customer customer, Long companyId) {
+        abortIfCustomerDoesNotExist(customer.getId(), companyId);
+        return customerRepository.save(customer);
+    }
+
+    private void abortIfCustomerDoesNotExist(Long id, Long companyId) {
+        customerRepository.findById(id).filter(c -> Objects.equals(c.getCompany().getId(), companyId)).orElseThrow(() -> new ResourceNotFoundException(Customer.class.getSimpleName(), id));
+    }
 }

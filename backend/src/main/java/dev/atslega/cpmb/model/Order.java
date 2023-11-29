@@ -1,12 +1,20 @@
 package dev.atslega.cpmb.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Entity
 @Table(name = "orders")
@@ -14,6 +22,7 @@ public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
@@ -31,11 +40,8 @@ public class Order implements Serializable {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
-    protected Order() {}
-
-    public Order(Customer customer, List<Product> products, LocalDateTime orderDate) {
-        this.customer = customer;
-        this.products = products;
-        this.orderDate = orderDate;
-    }
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Company company;
 }

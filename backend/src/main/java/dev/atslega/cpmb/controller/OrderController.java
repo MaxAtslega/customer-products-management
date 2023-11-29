@@ -66,6 +66,4 @@ public class OrderController {
     public Order createOrder(@RequestBody Order order) {
         return orderService.saveOrder(order);
     }
-
-    // Add PUT and DELETE endpoints as needed...
 }

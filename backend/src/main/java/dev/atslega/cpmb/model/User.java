@@ -6,11 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.security.cert.CertPath;
 import java.util.Collection;
 import java.util.List;
 
@@ -43,6 +46,11 @@ public class User implements Serializable, UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "company_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Company company;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
@@ -51,6 +59,10 @@ public class User implements Serializable, UserDetails {
     @Override
     public String getUsername() {
         return firstName + " " + lastName;
+    }
+
+    public Company getCompany() {
+        return company;
     }
 
     @Override

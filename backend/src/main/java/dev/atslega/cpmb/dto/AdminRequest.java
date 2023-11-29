@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class UserRequest {
+public class AdminRequest {
 
     @NotEmpty(message = "{required.field}")
     private String lastName;
@@ -17,4 +17,10 @@ public class UserRequest {
 
     @NotEmpty(message = "{required.field}")
     private String password;
+
+    @NotEmpty(message = "{required.field}")
+    private String company_name;
+
+    @NotEmpty(message = "{required.field}")
+    private String company_address;
 }
