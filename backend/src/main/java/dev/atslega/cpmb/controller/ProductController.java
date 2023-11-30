@@ -38,9 +38,13 @@ public class ProductController {
 
     @GetMapping("/")
     @RolesAllowed( {"ADMIN","USER"})
-    public List<Product> getAllProducts() {
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        return productService.getAllProducts(authentication.getCompany());
+
+        List<Product> products = productService.getAllProducts(authentication.getCompany());
+        var resp = products.stream().map(productMapper::toResponse).toList();
+
+        return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/{id}")
@@ -66,6 +70,7 @@ public class ProductController {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         var product = productMapper.toModel(request);
         product.setId(id);
+        product.setCompany(companyService.getCompanyById(authentication.getCompany()).orElse(null));
         product = productService.updateProduct(product, authentication.getCompany());
         var resp = productMapper.toResponse(product);
         return ResponseEntity.ok(resp);
