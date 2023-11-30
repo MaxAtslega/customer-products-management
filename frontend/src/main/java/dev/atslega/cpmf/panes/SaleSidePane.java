@@ -10,17 +10,14 @@ import java.util.Objects;
 
 public class SaleSidePane extends Pane {
 
-    private final Sale sale;
-
     SaleSideOne saleSideOne;
     SaleSideTwo saleSideTwo;
     SaleSideThree saleSideThree;
-    SaleSideFour saleSideFour ;
+    SaleSideFour saleSideFour;
 
 
-    public SaleSidePane(Sale sale){
-        this.sale = sale;
-        setPrefSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
+    public SaleSidePane(Sale sale) {
+        setPrefSize(AppStyles.BOX_SIZE_W, AppStyles.BOX_SIZE_H);
         setStyle("-fx-background-radius: 15; -fx-background-color: #FF6A6A;");
         setStyle("-fx-background-radius: 15; -fx-background-color: transparent;");
 
@@ -66,7 +63,6 @@ public class SaleSidePane extends Pane {
         });
 
 
-
-        getChildren().addAll(saleSideOne,saleSideTwo,saleSideThree,saleSideFour);
+        getChildren().addAll(saleSideOne, saleSideTwo, saleSideThree, saleSideFour);
     }
 }

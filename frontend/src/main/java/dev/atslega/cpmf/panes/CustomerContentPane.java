@@ -13,21 +13,20 @@ import java.util.Random;
 
 public class CustomerContentPane extends Pane {
 
-    private boolean isFlipped = false,customerIsCompany = false;
-
     private final Customer customer;
+    private boolean isFlipped = false, customerIsCompany = false;
 
     public CustomerContentPane(Customer customer) {
-        setMaxSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
-        setMinSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
+        setMaxSize(AppStyles.BOX_SIZE_W, AppStyles.BOX_SIZE_H);
+        setMinSize(AppStyles.BOX_SIZE_W, AppStyles.BOX_SIZE_H);
         this.customer = customer;
         char firstChar = getFirstChar(customer.getFirstName());
 
         Label nameTextLabel = creatLabelWithOutCopyAction("Name:", 110);
-        Label nameOfCustomer = creatLabelWithOutCopyAction(customer.getLastName()+ " " + customer.getFirstName(), 130);
+        Label nameOfCustomer = creatLabelWithOutCopyAction(customer.getLastName() + " " + customer.getFirstName(), 130);
         Label iDOfCustomer = creatLabelWithOutCopyAction("ID: " + customer.getID(), 150);
-        Label mailTextLabel = creatLabelWithOutCopyAction("Mail:",170);
-        Label mailOfCustomer = creatLabelWithOutCopyAction(customer.getMail(),190);
+        Label mailTextLabel = creatLabelWithOutCopyAction("Mail:", 170);
+        Label mailOfCustomer = creatLabelWithOutCopyAction(customer.getMail(), 190);
 
         // customer Icon
         Circle circle = new Circle(100, 60, 40, getRandomColor());
@@ -35,8 +34,8 @@ public class CustomerContentPane extends Pane {
         getChildren().add(circle);
 
         Label firstCharLabel = new Label(String.valueOf(firstChar));
-        firstCharLabel.setLayoutX(86-(firstCharLabel.getWidth()/2));
-        firstCharLabel.setLayoutY(34-(firstCharLabel.getHeight()/2));
+        firstCharLabel.setLayoutX(86 - (firstCharLabel.getWidth() / 2));
+        firstCharLabel.setLayoutY(34 - (firstCharLabel.getHeight() / 2));
         firstCharLabel.setStyle("-fx-font-size: 36; -fx-text-fill: black; -fx-alignment: center;");
 
         Label backName = creatLabel("Name: " + customer.getLastName() + " " + customer.getFirstName(), 10);
@@ -45,13 +44,13 @@ public class CustomerContentPane extends Pane {
         Label backID = creatLabel("ID: " + customer.getID(), 30);
         backID.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
         backID.setVisible(false);
-        Label backMail = creatLabel("Mail: "+customer.getMail(), 50);
+        Label backMail = creatLabel("Mail: " + customer.getMail(), 50);
         backMail.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
         backMail.setVisible(false);
-        Label backPhoneNumber = creatLabel("Phonenumber: \n"+customer.getPhoneNumber(), 70);
+        Label backPhoneNumber = creatLabel("Phonenumber: \n" + customer.getPhoneNumber(), 70);
         backPhoneNumber.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
         backPhoneNumber.setVisible(false);
-        Label backAdress = creatLabel("Address: "+customer.getAddress(), 110);
+        Label backAdress = creatLabel("Address: " + customer.getAddress(), 110);
         backAdress.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
         backAdress.setVisible(false);
         Label backCompanyName = new Label();
@@ -59,20 +58,20 @@ public class CustomerContentPane extends Pane {
         backCompanyName.setLayoutY(170);
         backCompanyName.setMaxWidth(160);
         backCompanyName.setMinWidth(160);
-        if(customer.getCompanyName().compareTo("")==0){
+        if (customer.getCompanyName().compareTo("") == 0) {
             backCompanyName.setText("Company: \nPrivate Customer");
             customerIsCompany = true;
-        }else{
-            backCompanyName.setText("Company: \n"+customer.getCompanyName());
+        } else {
+            backCompanyName.setText("Company: \n" + customer.getCompanyName());
             customerIsCompany = false;
         }
         backCompanyName.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
         backCompanyName.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 ClipboardContent content = new ClipboardContent();
-                if(!customerIsCompany) {
+                if (!customerIsCompany) {
                     content.putString(customer.getCompanyName());
-                }else{
+                } else {
                     content.putString("Private Customer");
                 }
                 Clipboard.getSystemClipboard().setContent(content);
@@ -131,12 +130,12 @@ public class CustomerContentPane extends Pane {
 
         // add front
         getChildren().add(firstCharLabel);
-        getChildren().addAll(nameTextLabel,nameOfCustomer, iDOfCustomer,mailTextLabel,mailOfCustomer);
+        getChildren().addAll(nameTextLabel, nameOfCustomer, iDOfCustomer, mailTextLabel, mailOfCustomer);
         //add back
-        getChildren().addAll(backName,backID,backMail, backPhoneNumber,backAdress,backCompanyName);
+        getChildren().addAll(backName, backID, backMail, backPhoneNumber, backAdress, backCompanyName);
     }
 
-    private Label creatLabelWithOutCopyAction(String text, int y){
+    private Label creatLabelWithOutCopyAction(String text, int y) {
         Label label = new Label();
         label.setText(text);
         label.setLayoutX(10);
@@ -148,7 +147,7 @@ public class CustomerContentPane extends Pane {
         return label;
     }
 
-    private Label creatLabel (String text, int y){
+    private Label creatLabel(String text, int y) {
         Label label = new Label();
         label.setText(text);
         label.setLayoutX(10);
@@ -175,12 +174,13 @@ public class CustomerContentPane extends Pane {
         }
         return input.charAt(0);
     }
+
     private Color getRandomColor() {
         Random random = new Random();
         return Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
     }
 
-    private String getTextFormLabel(String text){
+    private String getTextFormLabel(String text) {
         char[] charArray = text.toCharArray();
         int spaceIndex = -1;
         for (int i = 0; i < charArray.length; i++) {
@@ -189,29 +189,29 @@ public class CustomerContentPane extends Pane {
                 break;
             }
         }
-        String a=charArrayToStringFromIndex(charArray,spaceIndex);
+        String a = charArrayToStringFromIndex(charArray, spaceIndex);
         return a;
     }
 
     private String charArrayToStringFromIndex(char[] charArray, int startIndex) {
         StringBuilder stringBuilder = new StringBuilder();
-        int e=0;
+        int e = 0;
         for (int i = startIndex; i < charArray.length; i++) {
-            if(charArray[i]=='\n'){
+            if (charArray[i] == '\n') {
                 stringBuilder.append(' ');
-            }else if(charArray[i] ==' '&& e==0){
+            } else if (charArray[i] == ' ' && e == 0) {
                 e++;
-            }else if(charArray[i] ==' '&& e!=0){
+            } else if (charArray[i] == ' ' && e != 0) {
                 e++;
                 stringBuilder.append(charArray[i]);
-            }else{
+            } else {
                 stringBuilder.append(charArray[i]);
             }
         }
         return stringBuilder.toString();
     }
 
-    public Customer getCustomer(){
+    public Customer getCustomer() {
         return customer;
     }
 }

@@ -13,20 +13,20 @@ public class SaleSideFour extends Pane {
 
     boolean infoIconClicked = false;
 
-    Label name,iD,manufacturer,inventory,price,descriptionI;
+    Label name, iD, manufacturer, inventory, price, descriptionI;
     ImageView infoIconView;
 
-    public SaleSideFour(Product product){
+    public SaleSideFour(Product product) {
         setStyle("-fx-background-radius: 15; -fx-background-color: #FF6A6A;");
-        setPrefSize(AppStyles.BOX_SIZE_W,AppStyles.BOX_SIZE_H);
+        setPrefSize(AppStyles.BOX_SIZE_W, AppStyles.BOX_SIZE_H);
 
-        name = creatLabel("Name: "+product.getName(),10);
-        iD = creatLabel("ID: "+product.getID(),30);
-        manufacturer = creatLabel("Manufacturer: \n"+product.getManufacturer(),50);
-        inventory = creatLabel("Inventory: "+product.getInventory(),90);
-        price = creatLabel("Price: "+product.getPrice()+"€",110);
+        name = creatLabel("Name: " + product.getName(), 10);
+        iD = creatLabel("ID: " + product.getID(), 30);
+        manufacturer = creatLabel("Manufacturer: \n" + product.getManufacturer(), 50);
+        inventory = creatLabel("Inventory: " + product.getInventory(), 90);
+        price = creatLabel("Price: " + product.getPrice() + "€", 110);
         //Label for description
-        descriptionI = creatLabel("Description: "+product.getDescription(),10);
+        descriptionI = creatLabel("Description: " + product.getDescription(), 10);
         descriptionI.setWrapText(true);
         descriptionI.setVisible(false);
 
@@ -35,7 +35,7 @@ public class SaleSideFour extends Pane {
         infoIconView.setLayoutY(190);
         infoIconView.setLayoutX(170);
         infoIconView.setOnMouseClicked(event -> {
-            if(infoIconClicked){
+            if (infoIconClicked) {
                 descriptionI.setVisible(false);
 
                 name.setVisible(true);
@@ -43,9 +43,9 @@ public class SaleSideFour extends Pane {
                 manufacturer.setVisible(true);
                 inventory.setVisible(true);
                 price.setVisible(true);
-                infoIconClicked= false;
+                infoIconClicked = false;
                 System.out.println("Contant del from Pane");
-            }else{
+            } else {
                 name.setVisible(false);
                 iD.setVisible(false);
                 manufacturer.setVisible(false);
@@ -58,13 +58,13 @@ public class SaleSideFour extends Pane {
             }
         });
         getChildren().add(infoIconView);
-        getChildren().addAll(name,iD,manufacturer,inventory,price);
+        getChildren().addAll(name, iD, manufacturer, inventory, price);
         //add info
         getChildren().add(descriptionI);
 
     }
 
-    private Label creatLabel (String text, int y){
+    private Label creatLabel(String text, int y) {
         Label label = new Label();
         label.setText(text);
         label.setLayoutX(10);
@@ -85,7 +85,7 @@ public class SaleSideFour extends Pane {
         return label;
     }
 
-    private String getTextFormLabel(String text){
+    private String getTextFormLabel(String text) {
         char[] charArray = text.toCharArray();
         int spaceIndex = -1;
         for (int i = 0; i < charArray.length; i++) {
@@ -94,22 +94,22 @@ public class SaleSideFour extends Pane {
                 break;
             }
         }
-        String a=charArrayToStringFromIndex(charArray,spaceIndex);
+        String a = charArrayToStringFromIndex(charArray, spaceIndex);
         return a;
     }
 
     private String charArrayToStringFromIndex(char[] charArray, int startIndex) {
         StringBuilder stringBuilder = new StringBuilder();
-        int e=0;
+        int e = 0;
         for (int i = startIndex; i < charArray.length; i++) {
-            if(charArray[i]=='\n'){
+            if (charArray[i] == '\n') {
                 stringBuilder.append(' ');
-            }else if(charArray[i] ==' '&& e==0){
+            } else if (charArray[i] == ' ' && e == 0) {
                 e++;
-            }else if(charArray[i] ==' '&& e!=0){
+            } else if (charArray[i] == ' ' && e != 0) {
                 e++;
                 stringBuilder.append(charArray[i]);
-            }else{
+            } else {
                 stringBuilder.append(charArray[i]);
             }
         }

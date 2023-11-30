@@ -60,12 +60,12 @@ public class WorkspaceListFramework extends BorderPane {
         btnBack = new Button("<");
         btnBack.setCursor(Cursor.DEFAULT);
         btnBack.setOnAction(e -> changePage(-1));
-        btnBack.setStyle("-fx-background-color: "+ AppStyles.SECONDARY_BACKGROUND_COLOR +"; -fx-background-radius: 5;");
+        btnBack.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
 
         btnNext = new Button(">");
         btnNext.setCursor(Cursor.HAND);
         btnNext.setOnAction(e -> changePage(1));
-        btnNext.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR +"; -fx-background-radius: 5;");
+        btnNext.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
 
         lblCurrentPage = new Label("Page: " + currentPage);
         lblCurrentPage.setStyle("-fx-text-fill: white;"); // Set label text color to white

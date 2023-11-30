@@ -3,7 +3,6 @@ package dev.atslega.cpmf.workspace;
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.components.WorkspaceHeader;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 
 public class WorkspacePattern {
 
@@ -29,7 +28,7 @@ public class WorkspacePattern {
         return backPlate;
     }
 
-    public static void setCenter(Workspaces workspace){
+    public static void setCenter(Workspaces workspace) {
         backPlate.setCenter(workspace.getPane());
     }
 
@@ -37,7 +36,7 @@ public class WorkspacePattern {
         return backPlate;
     }
 
-    public static void toggleNavigator(){
+    public static void toggleNavigator() {
         backPlate.setLeft(backPlate.getLeft() == null ? workspaceNavigator : null);
     }
 }

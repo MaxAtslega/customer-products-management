@@ -16,17 +16,13 @@ import javafx.scene.text.Font;
 
 import java.util.Objects;
 
-import static dev.atslega.cpmf.workspace.WorkspacePattern.*;
-
 public class WorkspaceNavigator extends VBox {
 
-    private static final String BUTTON_STYLE = "-fx-font-size: 14; -fx-background-radius: 5px; -fx-font-weight: bold; -fx-background-color: "+AppStyles.MAIN_BACKGROUND_COLOR;
-    private static final Insets BUTTON_PADDING = new Insets(AppStyles.GAP_SIZE, AppStyles.GAP_SIZE*2, AppStyles.GAP_SIZE, AppStyles.GAP_SIZE*2);
+    private static final String BUTTON_STYLE = "-fx-font-size: 14; -fx-background-radius: 5px; -fx-font-weight: bold; -fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR;
+    private static final Insets BUTTON_PADDING = new Insets(AppStyles.GAP_SIZE, AppStyles.GAP_SIZE * 2, AppStyles.GAP_SIZE, AppStyles.GAP_SIZE * 2);
     private static final Insets BUTTON_MARGIN = new Insets(AppStyles.GAP_SIZE, AppStyles.GAP_SIZE, 0, AppStyles.GAP_SIZE);
-
-
-    private Button lastClickedButton = null;
     private final int sidebarWidth;
+    private Button lastClickedButton = null;
 
     public WorkspaceNavigator(int sidebarWidth) {
         this.sidebarWidth = sidebarWidth;
@@ -42,12 +38,12 @@ public class WorkspaceNavigator extends VBox {
 
             Button button = createButton(workspaceEnum.getName(), workspaceEnum.getIcon(), workspaceEnum);
 
-            if (i == 0){
+            if (i == 0) {
                 Label label = (Label) ((HBox) button.getGraphic()).getChildren().get(1);
                 label.setTextFill(Paint.valueOf(AppStyles.PRIMARY_TEXT_COLOR));
 
                 Region region = (Region) ((HBox) button.getGraphic()).getChildren().get(0);
-                region.setStyle("-fx-background-color: "+AppStyles.PRIMARY_TEXT_COLOR+";");
+                region.setStyle("-fx-background-color: " + AppStyles.PRIMARY_TEXT_COLOR + ";");
 
                 lastClickedButton = button;
             }
@@ -85,7 +81,7 @@ public class WorkspaceNavigator extends VBox {
         Button button = new Button();
         button.setCursor(Cursor.HAND);
         button.setPadding(BUTTON_PADDING);
-        button.setPrefWidth(sidebarWidth-AppStyles.GAP_SIZE*2);
+        button.setPrefWidth(sidebarWidth - AppStyles.GAP_SIZE * 2);
         button.setGraphic(hbox);
         button.setStyle(BUTTON_STYLE);
         VBox.setMargin(button, BUTTON_MARGIN);
@@ -106,7 +102,7 @@ public class WorkspaceNavigator extends VBox {
 
         Button button = new Button();
         button.setCursor(Cursor.HAND);
-        button.setPrefWidth(sidebarWidth-AppStyles.GAP_SIZE*2);
+        button.setPrefWidth(sidebarWidth - AppStyles.GAP_SIZE * 2);
         button.setGraphic(hbox);
         button.setStyle("-fx-font-size: 11; -fx-font-weight: bold; -fx-background-color: transparent;");
         VBox.setMargin(button, new Insets(0, AppStyles.GAP_SIZE, AppStyles.GAP_SIZE, AppStyles.GAP_SIZE));
@@ -131,7 +127,7 @@ public class WorkspaceNavigator extends VBox {
         svgShape.setMinSize(15, 15);
         svgShape.setPrefSize(15, 15);
         svgShape.setMaxSize(15, 15);
-        svgShape.setStyle("-fx-background-color: "+AppStyles.INACTIVE_TEXT_COLOR+";");
+        svgShape.setStyle("-fx-background-color: " + AppStyles.INACTIVE_TEXT_COLOR + ";");
 
         return svgShape;
     }
@@ -157,7 +153,7 @@ public class WorkspaceNavigator extends VBox {
             label.setTextFill(color);
 
             Region region = (Region) ((HBox) button.getGraphic()).getChildren().get(0);
-            region.setStyle("-fx-background-color: "+color.toString().replace("0x", "#")+";");
+            region.setStyle("-fx-background-color: " + color.toString().replace("0x", "#") + ";");
         }
     }
 
@@ -167,7 +163,7 @@ public class WorkspaceNavigator extends VBox {
             lastClickedButtonLabel.setTextFill(Color.valueOf(AppStyles.INACTIVE_TEXT_COLOR.replace("#", "")));
 
             Region region = (Region) ((HBox) lastClickedButton.getGraphic()).getChildren().get(0);
-            region.setStyle("-fx-background-color: "+ AppStyles.INACTIVE_TEXT_COLOR+";");
+            region.setStyle("-fx-background-color: " + AppStyles.INACTIVE_TEXT_COLOR + ";");
 
             WorkspacePattern.setCenter(workspaceEnum);
         }
@@ -177,6 +173,6 @@ public class WorkspaceNavigator extends VBox {
         clickedButtonLabel.setTextFill(Color.valueOf(AppStyles.PRIMARY_TEXT_COLOR.replace("#", "")));
 
         Region region = (Region) ((HBox) lastClickedButton.getGraphic()).getChildren().get(0);
-        region.setStyle("-fx-background-color: "+ AppStyles.PRIMARY_TEXT_COLOR +";");
+        region.setStyle("-fx-background-color: " + AppStyles.PRIMARY_TEXT_COLOR + ";");
     }
 }

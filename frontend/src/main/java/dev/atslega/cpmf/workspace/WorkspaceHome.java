@@ -168,7 +168,7 @@ public class WorkspaceHome extends VBox {
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(AppStyles.GAP_SIZE));
         vbox.setSpacing(5);
-        vbox.setStyle("-fx-background-color: "+ AppStyles.SECONDARY_BACKGROUND_COLOR +"; -fx-background-radius: 5;");
+        vbox.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
 
         Text titleLabel = new Text("Stats");
         titleLabel.setFont(Font.font("Quicksand", FontWeight.BOLD, 18));
@@ -199,7 +199,7 @@ public class WorkspaceHome extends VBox {
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(AppStyles.GAP_SIZE));
         vBox.setSpacing(5);
-        vBox.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR +"; -fx-background-radius: 5;");
+        vBox.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
         VBox.setMargin(vBox, new Insets(10, 0, 0, 0));
 
         HBox hBox = new HBox();

@@ -23,27 +23,31 @@ public class StageManager {
         stage.setHeight(height);
     }
 
-    public void setStageMinWidth(double width){stage.setMinWidth(width);}
+    public void setStageMinWidth(double width) {
+        stage.setMinWidth(width);
+    }
 
-    public void setStageMinHeight(double height) { stage.setMinHeight(height);}
+    public void setStageMinHeight(double height) {
+        stage.setMinHeight(height);
+    }
 
-    public void setStageScene(Scene scene){
+    public void setStageScene(Scene scene) {
         stage.setScene(scene);
     }
 
-    public void setStageIcon(Image icon){
+    public void setStageIcon(Image icon) {
         stage.getIcons().add(icon);
     }
 
-    public void setStageResizable(boolean resizable){
+    public void setStageResizable(boolean resizable) {
         stage.setResizable(resizable);
     }
 
-    public void setStageCenter(){
+    public void setStageCenter() {
         stage.centerOnScreen();
     }
 
-    public void setStageMaximized(){
+    public void setStageMaximized() {
         stage.setMaximized(true);
     }
 }

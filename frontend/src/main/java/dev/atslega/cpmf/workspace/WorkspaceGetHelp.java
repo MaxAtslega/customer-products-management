@@ -7,10 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 import java.awt.*;
 import java.net.URI;
@@ -31,11 +28,11 @@ public class WorkspaceGetHelp extends VBox {
 
         // Title
         Label title = new Label("Get Help");
-        title.setStyle("-fx-text-fill: "+ AppStyles.DEFAULT_TEXT_COLOR +"; -fx-font-weight: bold; ");
+        title.setStyle("-fx-text-fill: " + AppStyles.DEFAULT_TEXT_COLOR + "; -fx-font-weight: bold; ");
         title.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H1));
 
         Label subTitle = new Label("Need Assistance? We're Here to Help!");
-        subTitle.setStyle("-fx-text-fill: "+ AppStyles.DEFAULT_TEXT_COLOR +"; -fx-font-weight: bold; ");
+        subTitle.setStyle("-fx-text-fill: " + AppStyles.DEFAULT_TEXT_COLOR + "; -fx-font-weight: bold; ");
         subTitle.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H2));
 
         // Content text
