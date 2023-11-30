@@ -21,7 +21,7 @@ public class AuthenticationService {
             // The authentication manager provides secure authentication and throws exception if it fails
             var authToken = new UsernamePasswordAuthenticationToken(email, password);
             Authentication authenticate = authenticationManager.authenticate(authToken);
-            var user  = (User) authenticate.getPrincipal();
+            var user = (User) authenticate.getPrincipal();
             String token = tokenService.generateToken(user);
             return token;
         } catch (AuthenticationException e) {

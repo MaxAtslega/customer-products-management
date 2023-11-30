@@ -2,8 +2,6 @@ package dev.atslega.cpmb.service;
 
 import dev.atslega.cpmb.exception.ResourceAlreadyExistsException;
 import dev.atslega.cpmb.exception.ResourceNotFoundException;
-import dev.atslega.cpmb.model.Order;
-import dev.atslega.cpmb.model.Product;
 import dev.atslega.cpmb.model.User;
 import dev.atslega.cpmb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public List<User> getAllUser(Long companyId){
+    public List<User> getAllUser(Long companyId) {
         return userRepository.findAll().stream().filter(c -> Objects.equals(c.getCompany().getId(), companyId)).toList();
     }
 

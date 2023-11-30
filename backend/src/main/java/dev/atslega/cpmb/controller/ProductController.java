@@ -1,10 +1,8 @@
 package dev.atslega.cpmb.controller;
 
-import dev.atslega.cpmb.dto.*;
-import dev.atslega.cpmb.exception.ResourceNotFoundException;
-import dev.atslega.cpmb.model.Customer;
+import dev.atslega.cpmb.dto.ProductRequest;
+import dev.atslega.cpmb.dto.ProductResponse;
 import dev.atslega.cpmb.model.Product;
-import dev.atslega.cpmb.model.User;
 import dev.atslega.cpmb.service.CompanyService;
 import dev.atslega.cpmb.service.ProductService;
 import dev.atslega.cpmb.util.EmailAuthenticationToken;
@@ -12,16 +10,12 @@ import dev.atslega.cpmb.util.ProductMapper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")
@@ -37,7 +31,7 @@ public class ProductController {
     private ProductMapper productMapper;
 
     @GetMapping("/")
-    @RolesAllowed( {"ADMIN","USER"})
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<List<ProductResponse>> getAllProducts() {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
@@ -48,7 +42,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    @RolesAllowed( {"ADMIN","USER"})
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         Product product = productService.getProductById(id, authentication.getCompany());
@@ -57,8 +51,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed( {"ADMIN","USER"})
-    public ResponseEntity<Object>  deleteProductById(@PathVariable Long id) {
+    @RolesAllowed({"ADMIN", "USER"})
+    public ResponseEntity<Object> deleteProductById(@PathVariable Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         productService.deleteProduct(id, authentication.getCompany());
         return ResponseEntity.noContent().build();
@@ -77,7 +71,7 @@ public class ProductController {
     }
 
     @PostMapping("/")
-    @RolesAllowed( {"ADMIN","USER"})
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid ProductRequest request) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         var product = productMapper.toModel(request);

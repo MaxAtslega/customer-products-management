@@ -54,7 +54,7 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     @RolesAllowed({"ADMIN", "USER"})
-    public ResponseEntity<Object>  deleteCustomerById(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteCustomerById(@PathVariable Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         customerService.deleteCustomer(id, authentication.getCompany());
         return ResponseEntity.noContent().build();
@@ -73,7 +73,7 @@ public class CustomerController {
     }
 
     @PostMapping("/")
-    @RolesAllowed( {"ADMIN","USER"})
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<CustomerResponse> createCustomer(@RequestBody @Valid CustomerRequest request) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerMapper.toModel(request);

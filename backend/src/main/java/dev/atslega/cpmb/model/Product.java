@@ -9,7 +9,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -47,10 +46,6 @@ public class Product implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Product(String productName, String category, long price, Integer stockQuantity, String manufacturer, Company company) {
         this.productName = productName;
         this.category = category;
@@ -58,5 +53,9 @@ public class Product implements Serializable {
         this.stockQuantity = stockQuantity;
         this.manufacturer = manufacturer;
         this.company = company;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

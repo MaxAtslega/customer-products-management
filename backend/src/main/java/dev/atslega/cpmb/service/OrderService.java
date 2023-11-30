@@ -3,9 +3,7 @@ package dev.atslega.cpmb.service;
 import dev.atslega.cpmb.dto.OrderResponse;
 import dev.atslega.cpmb.dto.ProductResponse;
 import dev.atslega.cpmb.exception.ResourceNotFoundException;
-import dev.atslega.cpmb.model.Customer;
 import dev.atslega.cpmb.model.Order;
-import dev.atslega.cpmb.model.Product;
 import dev.atslega.cpmb.repository.OrderRepository;
 import dev.atslega.cpmb.util.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -34,7 +31,7 @@ public class OrderService {
         return orders.stream().map(this::mapOrdersToOrderResponse).toList();
     }
 
-    public OrderResponse mapOrdersToOrderResponse(Order order){
+    public OrderResponse mapOrdersToOrderResponse(Order order) {
         OrderResponse orderResponse = new OrderResponse();
         orderResponse.setProducts(order.getProducts().stream().map(productMapper::toResponse).toArray(ProductResponse[]::new));
         orderResponse.setCustomer(order.getCustomer().getId());

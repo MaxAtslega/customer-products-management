@@ -1,6 +1,5 @@
 package dev.atslega.cpmb.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data

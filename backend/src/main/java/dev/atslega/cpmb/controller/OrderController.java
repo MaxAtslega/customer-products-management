@@ -5,7 +5,6 @@ import dev.atslega.cpmb.dto.OrderResponse;
 import dev.atslega.cpmb.model.Company;
 import dev.atslega.cpmb.model.Customer;
 import dev.atslega.cpmb.model.Order;
-import dev.atslega.cpmb.model.User;
 import dev.atslega.cpmb.service.CompanyService;
 import dev.atslega.cpmb.service.CustomerService;
 import dev.atslega.cpmb.service.OrderService;
@@ -14,14 +13,13 @@ import dev.atslega.cpmb.util.EmailAuthenticationToken;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -40,14 +38,14 @@ public class OrderController {
     private CompanyService companyService;
 
     @GetMapping("/")
-    @RolesAllowed( {"ADMIN","USER"})
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<List<OrderResponse>> getAllOrders() {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         return ResponseEntity.ok(orderService.getAllOrders(authentication.getCompany()));
     }
 
     @GetMapping("/{id}")
-    @RolesAllowed( {"ADMIN","USER"})
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<OrderResponse> getOrderById(@PathVariable Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         OrderResponse order = orderService.getOrderById(id, authentication.getCompany());
@@ -55,7 +53,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed( {"ADMIN","USER"})
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<Object> deleteOrderById(@PathVariable Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         orderService.deleteOrder(id, authentication.getCompany());
@@ -63,7 +61,7 @@ public class OrderController {
     }
 
     @PostMapping("/")
-    @RolesAllowed( {"ADMIN","USER"})
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<OrderResponse> createOrder(@RequestBody @Valid OrderRequest request) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         Company company = companyService.getCompanyById(authentication.getCompany()).orElse(null);
@@ -83,7 +81,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    @RolesAllowed( {"ADMIN","USER"})
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<OrderResponse> createOrder(@RequestBody @Valid OrderRequest request, @PathVariable Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 

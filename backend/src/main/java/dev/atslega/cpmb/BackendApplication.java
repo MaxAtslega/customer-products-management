@@ -1,11 +1,6 @@
 package dev.atslega.cpmb;
 
-import dev.atslega.cpmb.model.Company;
-import dev.atslega.cpmb.model.User;
-import dev.atslega.cpmb.service.UserService;
-import dev.atslega.cpmb.model.Role;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
@@ -21,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 public class BackendApplication {
 
+    public static void main(String[] args) {
+        SpringApplication.run(BackendApplication.class, args);
+    }
+
     @GetMapping("/healthy")
     public String home() {
         return "Healthy!";
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(BackendApplication.class, args);
     }
 
     /*@Bean

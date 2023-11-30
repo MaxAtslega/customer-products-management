@@ -44,6 +44,10 @@ public class EmailAuthenticationToken implements Authentication {
         return this.webAuthenticationDetails;
     }
 
+    public void setDetails(WebAuthenticationDetails webAuthenticationDetails) {
+        this.webAuthenticationDetails = webAuthenticationDetails;
+    }
+
     @Override
     public Object getPrincipal() {
         return null;
@@ -62,9 +66,5 @@ public class EmailAuthenticationToken implements Authentication {
     @Override
     public String getName() {
         return null;
-    }
-
-    public void setDetails(WebAuthenticationDetails webAuthenticationDetails) {
-        this.webAuthenticationDetails = webAuthenticationDetails;
     }
 }

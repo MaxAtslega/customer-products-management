@@ -13,7 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.security.cert.CertPath;
 import java.util.Collection;
 import java.util.List;
 
@@ -51,6 +50,14 @@ public class User implements Serializable, UserDetails {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
+    public User(String lastName, String firstName, String email, String password, Role role) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
@@ -83,13 +90,5 @@ public class User implements Serializable, UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public User(String lastName, String firstName, String email, String password, Role role) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.email = email;
-        this.password = password;
-        this.role = role;
     }
 }

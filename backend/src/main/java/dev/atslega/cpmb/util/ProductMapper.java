@@ -2,10 +2,7 @@ package dev.atslega.cpmb.util;
 
 import dev.atslega.cpmb.dto.ProductRequest;
 import dev.atslega.cpmb.dto.ProductResponse;
-import dev.atslega.cpmb.dto.UserRequest;
-import dev.atslega.cpmb.dto.UserResponse;
 import dev.atslega.cpmb.model.Product;
-import dev.atslega.cpmb.model.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
