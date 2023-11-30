@@ -39,11 +39,10 @@ public class UserController {
     @Autowired
     private CompanyService companyService;
     private final UserMapper userMapper;
-    private final AdminMapper adminMapper;
 
-    private final AuthenticationService authenticationService;
 
     @GetMapping("/")
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<List<UserResponse>> getUser() {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         List<User> users = userService.getAllUser(authentication.getCompany());
@@ -53,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/")
-    @RolesAllowed("ADMIN") // needs to enable 'EnableGlobalMethodSecurity' at security class to work
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest request) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
@@ -67,16 +66,16 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed("ADMIN")
-    public ResponseEntity deleteUserById(@PathVariable Long id) {
+    @RolesAllowed({"ADMIN"})
+    public ResponseEntity<Object> deleteUserById(@PathVariable("id") Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         userService.deleteUser(id, authentication.getCompany());
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
-    @RolesAllowed("ADMIN")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    @RolesAllowed({"ADMIN"})
+    public ResponseEntity<UserResponse> getUserById(@PathVariable("id") Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         User user = userService.getUserById(id, authentication.getCompany()).orElse(null);
         var resp = userMapper.toResponse(user);
@@ -84,7 +83,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserRequest request) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         User user = userMapper.toModel(request);

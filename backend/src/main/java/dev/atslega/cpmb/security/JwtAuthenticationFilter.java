@@ -49,11 +49,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
         } catch (JWTVerificationException ex) {
-            ex.printStackTrace();  // log error
+            String errorMessage = "Bearer token verification failed: " + ex.getMessage();
             response.setHeader("error", ex.getMessage());
             response.setStatus(HttpStatus.FORBIDDEN.value());
             Map<String, String> error = new HashMap<>();
-            error.put("error", ex.getMessage());
+            error.put("error", errorMessage);
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(response.getOutputStream(), error);
         }

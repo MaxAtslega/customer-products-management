@@ -51,14 +51,14 @@ public class ProductController {
     @RolesAllowed( {"ADMIN","USER"})
     public ResponseEntity<ProductResponse> getProductById(@PathVariable Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        Product product = productService.getProductById(id, authentication.getCompany()).orElse(null);
+        Product product = productService.getProductById(id, authentication.getCompany());
         var resp = productMapper.toResponse(product);
         return ResponseEntity.ok(resp);
     }
 
     @DeleteMapping("/{id}")
     @RolesAllowed( {"ADMIN","USER"})
-    public ResponseEntity deleteProductById(@PathVariable Long id) {
+    public ResponseEntity<Object>  deleteProductById(@PathVariable Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         productService.deleteProduct(id, authentication.getCompany());
         return ResponseEntity.noContent().build();

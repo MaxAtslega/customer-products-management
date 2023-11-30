@@ -26,9 +26,9 @@ public class ProductService {
         return productRepository.findAll().stream().filter(c -> Objects.equals(c.getCompany().getId(), companyId)).toList();
     }
 
-    public Optional<Product> getProductById(Long id, Long companyId) {
+    public Product getProductById(Long id, Long companyId) {
         abortIfProductDoesNotExist(id, companyId);
-        return productRepository.findById(id).filter(c -> Objects.equals(c.getCompany().getId(), companyId));
+        return productRepository.findById(id).filter(c -> Objects.equals(c.getCompany().getId(), companyId)).orElse(null);
     }
 
     public Product saveProduct(Product product) {

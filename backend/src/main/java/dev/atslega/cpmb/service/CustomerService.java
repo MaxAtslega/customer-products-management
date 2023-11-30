@@ -24,9 +24,9 @@ public class CustomerService {
         return customerRepository.findAll().stream().filter(c -> Objects.equals(c.getCompany().getId(), companyId)).toList();
     }
 
-    public Optional<Customer> getCustomerById(Long id, Long companyId) {
+    public Customer getCustomerById(Long id, Long companyId) {
         abortIfCustomerDoesNotExist(id, companyId);
-        return customerRepository.findById(id).filter(c -> Objects.equals(c.getCompany().getId(), companyId));
+        return customerRepository.findById(id).filter(c -> Objects.equals(c.getCompany().getId(), companyId)).orElse(null);
     }
 
     public Customer saveCustomer(Customer customer) {

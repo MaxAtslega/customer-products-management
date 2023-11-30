@@ -1,37 +1,68 @@
 package dev.atslega.cpmb.service;
 
+import dev.atslega.cpmb.dto.OrderResponse;
+import dev.atslega.cpmb.dto.ProductResponse;
+import dev.atslega.cpmb.exception.ResourceNotFoundException;
 import dev.atslega.cpmb.model.Customer;
 import dev.atslega.cpmb.model.Order;
+import dev.atslega.cpmb.model.Product;
 import dev.atslega.cpmb.repository.OrderRepository;
+import dev.atslega.cpmb.util.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final ProductMapper productMapper;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, ProductMapper productMapper) {
+        this.productMapper = productMapper;
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<OrderResponse> getAllOrders(Long companyId) {
+        List<Order> orders = orderRepository.findAll().stream().filter(c ->
+                Objects.equals(c.getCompany().getId(), companyId)).toList();
+
+        return orders.stream().map(this::mapOrdersToOrderResponse).toList();
     }
 
-    public Optional<Order> getOrderById(Long id) {
-        return orderRepository.findById(id);
+    public OrderResponse mapOrdersToOrderResponse(Order order){
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setProducts(order.getProducts().stream().map(productMapper::toResponse).toArray(ProductResponse[]::new));
+        orderResponse.setCustomer(order.getCustomer().getId());
+        orderResponse.setId(order.getId());
+
+        return orderResponse;
+    }
+
+    public OrderResponse getOrderById(Long id, Long companyId) {
+        abortIfOrderDoesNotExist(id, companyId);
+        return mapOrdersToOrderResponse(orderRepository.findById(id).orElseThrow());
     }
 
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
     }
 
-    public void deleteOrder(Order order) {
-        orderRepository.delete(order);
+    public Order updateOrder(Order order, Long companyId) {
+        abortIfOrderDoesNotExist(order.getId(), companyId);
+        return orderRepository.save(order);
+    }
+
+    public void deleteOrder(Long id, Long companyId) {
+        abortIfOrderDoesNotExist(id, companyId);
+        orderRepository.deleteById(id);
+    }
+
+    private void abortIfOrderDoesNotExist(Long id, Long companyId) {
+        orderRepository.findById(id).filter(c -> Objects.equals(c.getCompany().getId(), companyId)).orElseThrow(() -> new ResourceNotFoundException(Order.class.getSimpleName(), id));
     }
 }
