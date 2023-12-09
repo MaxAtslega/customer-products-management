@@ -39,9 +39,10 @@ public class OrderController {
 
     @GetMapping("/")
     @RolesAllowed({"ADMIN", "USER"})
-    public ResponseEntity<List<OrderResponse>> getAllOrders() {
+    public ResponseEntity<List<OrderResponse>> getAllOrders(@RequestParam(value = "size", required = false, defaultValue = "3") Integer size,
+                                                            @RequestParam(value = "page", required = false, defaultValue = "0") Integer pageNumber) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        return ResponseEntity.ok(orderService.getAllOrders(authentication.getCompany()));
+        return ResponseEntity.ok(orderService.getAllOrders(authentication.getCompany(), size, pageNumber));
     }
 
     @GetMapping("/{id}")

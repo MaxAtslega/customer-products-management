@@ -32,10 +32,11 @@ public class ProductController {
 
     @GetMapping("/")
     @RolesAllowed({"ADMIN", "USER"})
-    public ResponseEntity<List<ProductResponse>> getAllProducts() {
+    public ResponseEntity<List<ProductResponse>> getAllProducts(@RequestParam(value = "size", required = false, defaultValue = "3") Integer size,
+                                                                @RequestParam(value = "page", required = false, defaultValue = "0") Integer pageNumber) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
 
-        List<Product> products = productService.getAllProducts(authentication.getCompany());
+        List<Product> products = productService.getAllProducts(authentication.getCompany(), size, pageNumber);
         var resp = products.stream().map(productMapper::toResponse).toList();
 
         return ResponseEntity.ok(resp);

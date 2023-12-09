@@ -5,6 +5,7 @@ import dev.atslega.cpmb.exception.ResourceNotFoundException;
 import dev.atslega.cpmb.model.User;
 import dev.atslega.cpmb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,8 +23,9 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public List<User> getAllUser(Long companyId) {
-        return userRepository.findAll().stream().filter(c -> Objects.equals(c.getCompany().getId(), companyId)).toList();
+    public List<User> getAllUser(Long companyId, Integer size, Integer pageNumber) {
+        Pageable page = Pageable.ofSize(size).withPage(pageNumber);
+        return userRepository.findAll(page).stream().filter(c -> Objects.equals(c.getCompany().getId(), companyId)).toList();
     }
 
     public Optional<User> getUserById(Long id, Long companyId) {

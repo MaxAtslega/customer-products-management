@@ -7,6 +7,7 @@ import dev.atslega.cpmb.model.Order;
 import dev.atslega.cpmb.repository.OrderRepository;
 import dev.atslega.cpmb.util.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,8 +25,9 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public List<OrderResponse> getAllOrders(Long companyId) {
-        List<Order> orders = orderRepository.findAll().stream().filter(c ->
+    public List<OrderResponse> getAllOrders(Long companyId, Integer size, Integer pageNumber) {
+        Pageable page = Pageable.ofSize(size).withPage(pageNumber);
+        List<Order> orders = orderRepository.findAll(page).stream().filter(c ->
                 Objects.equals(c.getCompany().getId(), companyId)).toList();
 
         return orders.stream().map(this::mapOrdersToOrderResponse).toList();

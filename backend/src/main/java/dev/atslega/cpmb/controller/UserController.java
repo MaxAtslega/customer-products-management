@@ -32,9 +32,10 @@ public class UserController {
 
     @GetMapping("/")
     @RolesAllowed({"ADMIN"})
-    public ResponseEntity<List<UserResponse>> getUser() {
+    public ResponseEntity<List<UserResponse>> getUser(@RequestParam(value = "size", required = false, defaultValue = "3") Integer size,
+                                                      @RequestParam(value = "page", required = false, defaultValue = "0") Integer pageNumber) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        List<User> users = userService.getAllUser(authentication.getCompany());
+        List<User> users = userService.getAllUser(authentication.getCompany(), size, pageNumber);
         var resp = users.stream().map(userMapper::toResponse).toList();
 
         return ResponseEntity.ok(resp);

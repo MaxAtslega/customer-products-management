@@ -35,9 +35,10 @@ public class CustomerController {
 
     @GetMapping("/")
     @RolesAllowed({"ADMIN", "USER"})
-    public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
+    public ResponseEntity<List<CustomerResponse>> getAllCustomers(@RequestParam(value = "size", required = false, defaultValue = "3") Integer size,
+                                                                  @RequestParam(value = "page", required = false, defaultValue = "0") Integer pageNumber) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        List<Customer> customers = customerService.getAllCustomers(authentication.getCompany());
+        List<Customer> customers = customerService.getAllCustomers(authentication.getCompany(), size, pageNumber);
         var resp = customers.stream().map(customerMapper::toResponse).toList();
 
         return ResponseEntity.ok(resp);
