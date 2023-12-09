@@ -33,7 +33,6 @@ public class Main extends Application {
         toolkit = Toolkit.getDefaultToolkit();
         screenSize = toolkit.getScreenSize();
 
-
         // Initialize the manager for the primaryStage to handle various stage operations
         primaryStageManager = new StageManager(primaryStage);
 
