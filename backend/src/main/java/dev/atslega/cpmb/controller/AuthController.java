@@ -15,6 +15,7 @@ import dev.atslega.cpmb.util.UserMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,10 @@ public class AuthController {
     private final UserMapper userMapper;
     private final AdminMapper adminMapper;
     private final AuthenticationService authenticationService;
+
+    @Value("${disableRegister:false}")
+    private boolean disableRegister;
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -44,6 +49,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@RequestBody @Valid AdminRequest request) {
+        if (disableRegister) return ResponseEntity.badRequest().build();
+
         User user = adminMapper.toModel(request);
         Company company = new Company(request.getCompany_name(), request.getCompany_address());
         company = companyService.saveCompany(company);
