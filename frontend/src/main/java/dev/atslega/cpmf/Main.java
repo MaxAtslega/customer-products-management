@@ -15,8 +15,8 @@ import java.util.Objects;
 public class Main extends Application {
 
     public static StageManager primaryStageManager;
-    public static Scene sceneLogin, sceneLoadScreen, sceneWorkspace;
-    public static TempStorage tempStorage = new TempStorage();
+    public static Scene sceneLogin, sceneRegistration, sceneWorkspace;
+
     Toolkit toolkit;
     Dimension screenSize;
 
@@ -39,7 +39,7 @@ public class Main extends Application {
 
         // Load different scenes for the application
         sceneLogin = sceneLoginLoader();
-        sceneLoadScreen = sceneLoadScreenLoader();
+        sceneRegistration = sceneRegistrationLoader();
         sceneWorkspace = sceneWorkspaceLoader();
 
         // Configure primary stage properties
@@ -47,7 +47,7 @@ public class Main extends Application {
         primaryStageManager.setStageIcon(new Image(Objects.requireNonNull(getClass().getResource("cpm.png")).openStream()));
 
         primaryStageManager.setStageCenter();
-        primaryStageManager.setStageScene(sceneWorkspace);
+        primaryStageManager.setStageScene(sceneLogin);
         //primaryStageManager.setStageResizable(false);
 
         primaryStageManager.setStageMinHeight(AppStyles.WINDOW_HEIGHT);
@@ -63,10 +63,10 @@ public class Main extends Application {
         return new Scene(login.load(), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
     }
 
-    public Scene sceneLoadScreenLoader() throws IOException {
-        URL loadScreenURL = getClass().getResource("loadScreen.fxml");
-        FXMLLoader load = new FXMLLoader(loadScreenURL);
-        return new Scene(load.load(), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
+    public Scene sceneRegistrationLoader() throws IOException {
+        URL loginURL = getClass().getResource("registration.fxml");
+        FXMLLoader login = new FXMLLoader(loginURL);
+        return new Scene(login.load(), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
     }
 
     public Scene sceneWorkspaceLoader() {

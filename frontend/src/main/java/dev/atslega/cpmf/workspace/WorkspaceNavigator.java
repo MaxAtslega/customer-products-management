@@ -1,6 +1,7 @@
 package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.AppStyles;
+import dev.atslega.cpmf.Main;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -141,10 +142,7 @@ public class WorkspaceNavigator extends VBox {
     private void setupLogoutEventHandlers(Button button) {
         button.setOnMouseEntered(event -> updateTextColor(button, Color.valueOf(AppStyles.DEFAULT_TEXT_COLOR.replace("#", ""))));
         button.setOnMouseExited(event -> updateTextColor(button, Color.valueOf(AppStyles.INACTIVE_TEXT_COLOR.replace("#", ""))));
-        button.setOnMouseClicked(event -> {
-            // TODO: Logout
-            System.out.println("TODO: Logout");
-        });
+        button.setOnMouseClicked(event -> Main.primaryStageManager.setStageScene(Main.sceneLogin));
     }
 
     private void updateTextColor(Button button, Color color) {

@@ -25,13 +25,6 @@ public class BackendApplication {
         return "Healthy!";
     }
 
-    /*@Bean
-    CommandLineRunner run(UserService userService) {
-        return args -> {  // inserting data after application is up
-            userService.saveUser(new User("Admin", "Admin", "admin@enterprise.com", "12345678", Role.ADMIN));
-        };
-    }*/
-
     @Bean
     public ModelMapper getModelMapper() {
         var mapper = new ModelMapper();

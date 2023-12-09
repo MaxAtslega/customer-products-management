@@ -1,52 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.Reflection?>
-<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Line?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" xmlns="http://javafx.com/javafx/20"
+          fx:controller="dev.atslega.cpmf.controller.LoginController">
+    <ImageView fx:id="background" GridPane.columnIndex="0" GridPane.rowIndex="0"
+               GridPane.columnSpan="3"/>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.atslega.cpmf.controller.LoginController">
-    <ImageView fx:id="background"/>
-    <Pane layoutX="355.0" layoutY="140.0" prefHeight="320.0" prefWidth="250.0" style="-fx-background-color: rgba(0, 0, 0, 0.3);">
-        <effect>
-            <DropShadow color="#000000" />
-        </effect>
-        <children>
-            <Label alignment="CENTER" layoutX="74.0" layoutY="14.0" maxHeight="41.0" maxWidth="104.0" minHeight="41.0" minWidth="104.0" prefHeight="41.0" prefWidth="104.0" text="Sign In" textFill="#f2f2f2">
-                <font>
-                    <Font name="Serif Bold Italic" size="28.0" />
-                </font>
-                <effect>
-                    <Reflection fraction="0.5" />
-                </effect>
-            </Label>
-            <Line endX="52.0" endY="-1.52587890625E-5" layoutX="123.0" layoutY="55.0" startX="-49.5999755859375" startY="-1.52587890625E-5" stroke="#fff9f9" />
-            <Label layoutX="38.0" layoutY="95.0" style="-fx-text-fill: white;" text="Username" />
-            <TextField fx:id="usernameTextField" layoutX="38.0" layoutY="115.0" prefHeight="30.0" prefWidth="175.0" style="-fx-background-color: transparent; -fx-border-color: #000000; -fx-border-width: 2px; -fx-text-fill: white;">
-                <font>
-                    <Font name="Calibri Bold" size="14.0" />
-                </font></TextField>
-            <Label fx:id="usernameFailure" visible="false" text="hello" layoutX="38" layoutY="145" prefHeight="10" prefWidth="175"
-                   style="-fx-text-fill: red;"/>
-            <Label layoutX="38.0" layoutY="160.0" style="-fx-text-fill: white;" text="Password" />
-            <TextField fx:id="passwordTextField" layoutX="38" layoutY="180" prefHeight="30" prefWidth="175" style="-fx-background-color: transparent; -fx-border-color: #000000; -fx-border-width: 2px; -fx-text-fill: white; " visible="false" />
-            <PasswordField fx:id="passwordField" layoutX="38.0" layoutY="180.0" prefHeight="30.0" prefWidth="175.0" style="-fx-background-color: transparent; -fx-border-color: #000000; -fx-border-width: 2px; -fx-text-fill: white;">
-                <font>
-                    <Font name="Calibri Bold" size="14.0" />
-                </font></PasswordField>
-            <ImageView fx:id="eye" layoutX="184.5" layoutY="183"/>
-            <Button layoutX="183" layoutY="180" onAction="#toggleVisibility" prefHeight="30" prefWidth="30" style="-fx-background-color: transparent;"/>
-            <Label fx:id="passwordFailure" visible="false" text="hello" layoutX="38" layoutY="215" prefHeight="10" prefWidth="175"
-                   style="-fx-text-fill: red;"/>
-            <Button fx:id="sendToServer" layoutX="79.0" layoutY="254.0" onAction="#sendTo" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent; -fx-border-color: #000000; -fx-border-width: 3px; -fx-text-fill: white;" text="Sign In" />
-        </children>
-    </Pane>
-</AnchorPane>
+    <columnConstraints>
+        <ColumnConstraints percentWidth="30"/>
+        <ColumnConstraints percentWidth="40"/>
+        <ColumnConstraints percentWidth="30"/>
+    </columnConstraints>
+
+
+    <VBox alignment="CENTER" spacing="10" style="-fx-background-color: rgba(0, 0, 0, 0.6);">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+
+        <Label alignment="CENTER" text="Sign In" textFill="#f2f2f2">
+            <font>
+                <Font name="Roboto" size="28.0"/>
+            </font>
+        </Label>
+        <VBox>
+            <Label text="E-Mail" style="-fx-text-fill: white;"/>
+            <TextField fx:id="emailTextField"
+                       style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px; -fx-text-fill: white;"/>
+            <Label fx:id="emailFailure" visible="false" text="hello" style="-fx-text-fill: red;"/>
+        </VBox>
+        <VBox>
+            <Label text="Password" style="-fx-text-fill: white;"/>
+            <HBox fx:id="passwordFieldContainer">
+                <TextField fx:id="passwordTextField" HBox.hgrow="ALWAYS"
+                           style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px 0px 1px 1px; -fx-text-fill: white;"
+                           visible="false"/>
+                <PasswordField fx:id="passwordField" HBox.hgrow="ALWAYS"
+                               style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px 0px 1px 1px; -fx-text-fill: white;"/>
+                <Button fx:id="eye"/>
+            </HBox>
+
+            <Label fx:id="passwordFailure" visible="false" text="hello" style="-fx-text-fill: red;"/>
+        </VBox>
+        <Button text="Sign In" onAction="#login"
+                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px; -fx-text-fill: white;"/>
+
+        <Label text="or" style="-fx-text-fill: white;"/>
+
+        <Button text="Sign Up" onAction="#registration"
+                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-text-fill: #ffffff;"/>
+
+    </VBox>
+
+</GridPane>
