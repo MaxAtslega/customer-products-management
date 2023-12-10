@@ -34,7 +34,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
+            String errorMessage = "Authorization header is missing or invalid";
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            Map<String, String> error = new HashMap<>();
+            error.put("error", errorMessage);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
             return;
         }
         try {
@@ -49,7 +55,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (JWTVerificationException ex) {
             String errorMessage = "Bearer token verification failed: " + ex.getMessage();
-            response.setHeader("error", ex.getMessage());
             response.setStatus(HttpStatus.FORBIDDEN.value());
             Map<String, String> error = new HashMap<>();
             error.put("error", errorMessage);
