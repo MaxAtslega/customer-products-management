@@ -2,6 +2,31 @@
 A JavaFX-based application for managing customer and product information. 
 This project is a solution for retail operations, designed to streamline the management of products, orders, and customer information. It offers a user-friendly interface that allows retail staff to efficiently add and manage product inventories, track orders, and maintain detailed customer profiles. This project was created during my academic school years as part of my coursework.
 
+## Table of Contents
+- [Technical Architecture](#technical-architecture)
+   - [System Architecture](#system-architecture)
+   - [Directory Structure](#directory-structure)
+- [Setup and Installation](#setup-and-installation)
+   - [Prerequisites](#prerequisites)
+   - [Project Setup](#project-setup)
+   - [Backend Setup](#backend-setup)
+   - [Configuration](#configuration)
+   - [Frontend Installation](#frontend-installation)
+   - [Troubleshooting](#troubleshooting)
+- [Additional Resources](#additional-resources)
+- [API Documentation](#api-documentation)
+   - [Overview](#overview)
+   - [Swagger UI](#swagger-ui)
+   - [Authentication](#authentication)
+   - [User Management](#user-management)
+   - [Product Management](#product-management)
+   - [Order Management](#order-management)
+   - [Customer Management](#customer-management)
+   - [Health Check](#health-check)
+   - [Error Handling](#error-handling)
+   - [Data Models](#data-models)
+- [Project Team](#project-team)
+
 ## Technical Architecture
 ### System Architecture
 - **Frontend**: JavaFX-based user interface.
