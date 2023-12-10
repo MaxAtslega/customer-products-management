@@ -9,6 +9,8 @@ module dev.atslega.cpmf {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
     requires java.desktop;
+    requires java.net.http;
+    requires com.fasterxml.jackson.databind;
 
     opens dev.atslega.cpmf to javafx.fxml;
     exports dev.atslega.cpmf;

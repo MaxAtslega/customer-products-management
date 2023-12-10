@@ -28,6 +28,8 @@
             </font>
         </Label>
 
+        <Label fx:id="registrationFailure" visible="false" text="Registration Failed. Please try later again." style="-fx-text-fill: red;"/>
+
         <HBox spacing="10">
             <!-- First Name -->
             <VBox>

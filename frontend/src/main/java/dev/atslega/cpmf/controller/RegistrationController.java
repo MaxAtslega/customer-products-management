@@ -15,7 +15,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.SVGPath;
+import java.net.URI;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.concurrent.Executors;
 import java.io.IOException;
 import java.net.URL;
 
@@ -47,7 +54,7 @@ public class RegistrationController {
     @FXML
     private TextField lastNameTextField, firstNameTextField, companyNameTextField, companyAddressTextField;
     @FXML
-    private Label lastNameFailure, firstNameFailure, companyNameFailure, companyAddressFailure;
+    private Label lastNameFailure, firstNameFailure, companyNameFailure, companyAddressFailure, registrationFailure;
 
     private boolean isPasswordFieldVisible = true;
 
@@ -160,8 +167,71 @@ public class RegistrationController {
         setFailureLabel(companyAddressFailure, !isCompanyAddressValid, "Invalid company address");
 
         if (isLastNameValid && isFirstNameValid && isEmailValid && isPasswordValid && isCompanyNameValid && isCompanyAddressValid) {
-            Main.primaryStageManager.setStageScene(Main.sceneLogin);
+            Executors.newSingleThreadExecutor().execute(() -> sendRegistrationRequest(lastName, firstName, email, password, companyName, companyAddress));
         }
+    }
+
+    private void sendRegistrationRequest(String lastName, String firstName, String email, String password, String companyName, String companyAddress) {
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/api/v1/auth/register"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(
+                            "{\"lastName\":\"" + lastName + "\", \"firstName\":\"" + firstName + "\", \"email\":\"" + email + "\", \"password\":\"" + password + "\", \"company_name\":\"" + companyName + "\", \"company_address\":\"" + companyAddress + "\"}"
+                    ))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 201) {
+                javafx.application.Platform.runLater(() -> {
+                    clearInputFields();
+                    Main.primaryStageManager.setStageScene(Main.sceneLogin);
+                });
+            } else {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode node = mapper.readTree(response.body());
+                // if node is null, then the response body is empty
+                if  (node == null || node.isEmpty() || node.get("message") == null) {
+                    javafx.application.Platform.runLater(() -> {
+                        registrationFailure.setText("Registration failed. Please try later again.");
+                        registrationFailure.setVisible(true);
+                    });
+                    return;
+                }
+
+                String errorMessage = node.get("message").asText();
+
+                javafx.application.Platform.runLater(() -> {
+                    registrationFailure.setText(errorMessage);
+                    registrationFailure.setVisible(true);
+                });
+            }
+        } catch (IOException | InterruptedException e) {
+            javafx.application.Platform.runLater(() -> {
+                registrationFailure.setText("Registration failed. Please try later again.");
+                registrationFailure.setVisible(true);
+            });
+        }
+    }
+
+    private void clearInputFields() {
+        lastNameTextField.setText("");
+        firstNameTextField.setText("");
+        emailTextField.setText("");
+        passwordField.setText("");
+        passwordTextField.setText(""); // if you're using a visible password field as well
+        companyNameTextField.setText("");
+        companyAddressTextField.setText("");
+        // Clear any error messages as well
+        lastNameFailure.setVisible(false);
+        firstNameFailure.setVisible(false);
+        emailFailure.setVisible(false);
+        passwordFailure.setVisible(false);
+        companyNameFailure.setVisible(false);
+        companyAddressFailure.setVisible(false);
+        registrationFailure.setVisible(false);
     }
 
     private void setFailureLabel(Label label, boolean visible, String text) {
