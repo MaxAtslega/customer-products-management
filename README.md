@@ -62,7 +62,20 @@ Create docker image:
 ```shell
   docker-compose build
 ```
+### Configuration
 
+#### Disabling User Registration
+
+To disable the user registration feature in the backend, set an environment variable. This is useful for restricting new user access.
+
+1. **Set the Environment Variable:**
+    - Name: `DISABLE_REGISTRATION`
+    - Value: `true` to disable registration.
+
+For Unix/Linux/MacOS:
+```bash
+export DISABLE_REGISTRATION=true
+```
 
 ### Frontend Installation
 Instructions for installing and running the JavaFX frontend, detailing system prerequisites and configuration steps.
