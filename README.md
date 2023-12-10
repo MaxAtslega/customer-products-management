@@ -153,7 +153,7 @@ Responses for erroneous requests include a detailed `ErrorResponse` schema.
 ### Data Models
 The API uses specific request and response schemas for different operations.
 
-## Authors
+## Project Team
 - Max Atslega: Project Lead, Responsible for both Backend & Frontend development. [GitHub Profile](https://github.com/MaxAtslega)
 - Lasse Hüls: Specializing in Frontend development. [GitHub Profile](https://github.com/lay002)
 - Leon Enns: A Frontend developer.
