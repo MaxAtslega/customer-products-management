@@ -35,6 +35,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id);
     }
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(User.class.getSimpleName(), email));
+    }
+
     public User saveUser(User user) {
         if (userRepository.existsByEmail(user.getEmail()))
             throw new ResourceAlreadyExistsException("User", user.getEmail());

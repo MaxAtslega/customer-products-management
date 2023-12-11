@@ -50,6 +50,17 @@ public class UserController {
         return ResponseEntity.ok(resp);
     }
 
+    @GetMapping("/me")
+    @RolesAllowed({"ADMIN", "USER"})
+    @Operation(summary = "Get user data",
+            description = "Fetch the data of the currently logged in user.")
+    public ResponseEntity<UserResponse> getMyUser() {
+        EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.getUserByEmail(authentication.getUserEmail());
+
+        return ResponseEntity.ok(userMapper.toResponse(user));
+    }
+
     @PostMapping("/")
     @RolesAllowed({"ADMIN"})
     @Operation(summary = "Create New User",
