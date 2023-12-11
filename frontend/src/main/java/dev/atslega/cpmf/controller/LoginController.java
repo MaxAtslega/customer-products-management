@@ -261,7 +261,7 @@ public class LoginController {
 
     private UserData fetchUser(HttpClient client, String token) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/v1/users/?size=1"))
+                .uri(URI.create("http://localhost:8080/api/v1/users/me"))
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
                 .GET()
@@ -271,9 +271,7 @@ public class LoginController {
 
         if (response.statusCode() == 200) {
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(response.body());
-            JsonNode userNode = rootNode.get(0); // Get the first user in the array
-            return objectMapper.treeToValue(userNode, UserData.class);
+            return objectMapper.readValue(response.body(), UserData.class);
         }
         return null;
     }

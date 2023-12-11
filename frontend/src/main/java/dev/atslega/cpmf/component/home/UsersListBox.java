@@ -39,7 +39,7 @@ public class UsersListBox extends VBox {
     public UsersListBox(WorkspacePattern workspacePattern) throws ExecutionException, InterruptedException, JsonProcessingException {
         this.workspacePattern = workspacePattern;
 
-        totalPages = (int) Math.ceil((((double) workspacePattern.getUserData().getCompany().getUserCount() - 1)) / 4);
+        totalPages = (int) Math.ceil((((double) workspacePattern.getUserData().getCompany().getUserCount())) / 4);
 
         this.paginationBar = new PaginationBar(1);
 
