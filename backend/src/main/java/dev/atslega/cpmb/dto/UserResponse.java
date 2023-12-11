@@ -12,4 +12,10 @@ public class UserResponse {
     private String firstName;
 
     private String email;
+
+    private String role;
+
+    private String companyName;
+
+    private String companyAddress;
 }

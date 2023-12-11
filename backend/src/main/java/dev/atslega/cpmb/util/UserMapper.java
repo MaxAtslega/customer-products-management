@@ -22,6 +22,18 @@ public class UserMapper {
     }
 
     public UserResponse toResponse(User user) {
-        return mapper.map(user, UserResponse.class);
+        String companyName = user.getCompany() != null ? user.getCompany().getCompanyName() : null;
+        String companyAddress = user.getCompany() != null ? user.getCompany().getCompanyAddress(): null;
+
+        UserResponse response = new UserResponse();
+        response.setId(user.getId());
+        response.setLastName(user.getLastName());
+        response.setFirstName(user.getFirstName());
+        response.setEmail(user.getEmail());
+        response.setRole(user.getRole().name());
+        response.setCompanyName(companyName);
+        response.setCompanyAddress(companyAddress);
+
+        return response;
     }
 }
