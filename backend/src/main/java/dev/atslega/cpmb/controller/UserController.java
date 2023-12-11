@@ -38,9 +38,9 @@ public class UserController {
     private CompanyService companyService;
 
     @GetMapping("/")
-    @RolesAllowed({"ADMIN"})
+    @RolesAllowed({"ADMIN", "USER"})
     @Operation(summary = "Retrieve All Users",
-            description = "Fetch a list of all users, with pagination options. Accessible only by admin users.")
+            description = "Fetch a list of all users, with pagination options.")
     public ResponseEntity<List<UserResponse>> getUser(@RequestParam(value = "size", required = false, defaultValue = "3") Integer size,
                                                       @RequestParam(value = "page", required = false, defaultValue = "0") Integer pageNumber) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
@@ -80,9 +80,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @RolesAllowed({"ADMIN"})
+    @RolesAllowed({"ADMIN", "USER"})
     @Operation(summary = "Retrieve User by ID",
-            description = "Find and return a specific user using their unique ID. Accessible only by admin users.")
+            description = "Find and return a specific user using their unique ID.")
     public ResponseEntity<UserResponse> getUserById(@PathVariable("id") Long id) {
         EmailAuthenticationToken authentication = (EmailAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         User user = userService.getUserById(id, authentication.getCompany()).orElse(null);

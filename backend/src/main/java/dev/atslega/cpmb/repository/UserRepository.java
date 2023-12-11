@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
 
     Page<User> findByCompanyId(Long companyId, Pageable pageable);
+
+    long countByCompanyId(Long id);
 }

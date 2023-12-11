@@ -7,4 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Page<Customer> findByCompanyId(Long companyId, Pageable pageable);
+
+    Customer findFirstByCompanyIdOrderByCreatedAtDesc(Long companyId);
+
+    long countByCompanyId(Long id);
 }
