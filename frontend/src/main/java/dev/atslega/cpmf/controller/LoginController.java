@@ -175,6 +175,8 @@ public class LoginController {
     }
 
     private void sendLoginRequest(String email, String password) {
+        TokenUtils.deleteToken();
+
         try {
             HttpClient client = HttpClient.newHttpClient();
             String requestBody = "{\"email\":\"" + email + "\", \"password\":\"" + password + "\"}";
@@ -255,14 +257,17 @@ public class LoginController {
                         stageManager.setStageScene(stageManager.getWorkspaceScene(user));
                     });
                 } else {
+                    TokenUtils.deleteToken();
                     loginFailure.setText("Login failed.");
                     loginFailure.setVisible(true);
                 }
             } else {
+                TokenUtils.deleteToken();
                 loginFailure.setText("Login failed.");
                 loginFailure.setVisible(true);
             }
         } catch (Exception e) {
+            TokenUtils.deleteToken();
             loginFailure.setText("Login failed.");
             loginFailure.setVisible(true);
         }

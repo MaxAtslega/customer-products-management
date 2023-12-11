@@ -1,6 +1,7 @@
 package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.AppStyles;
+import dev.atslega.cpmf.util.TokenUtils;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -146,10 +147,12 @@ public class WorkspaceNavigator extends VBox {
         button.setOnMouseExited(event -> updateTextColor(button, Color.valueOf(AppStyles.INACTIVE_TEXT_COLOR.replace("#", ""))));
         button.setOnMouseClicked(event -> {
             try {
+                TokenUtils.deleteToken();
                 this.workspacePattern.getStageManager().setStageScene(this.workspacePattern.getStageManager().getLoginScene());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
         });
     }
 

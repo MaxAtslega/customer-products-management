@@ -44,11 +44,11 @@ public class WorkspaceListFlowPane extends FlowPane {
         int totalPages = (int) Math.ceil((double) totalProducts / maxProductsPerPage);
         workspaceListFramework.setTotalPages(totalPages);
 
-        workspaceListFramework.getBtnBack().setDisable(currentPage <= 1);
-        workspaceListFramework.getBtnBack().setCursor(currentPage <= 1 ? Cursor.DEFAULT : Cursor.HAND);
+        workspaceListFramework.getPaginationBar().getBtnBack().setDisable(currentPage <= 1);
+        workspaceListFramework.getPaginationBar().getBtnBack().setCursor(currentPage <= 1 ? Cursor.DEFAULT : Cursor.HAND);
 
-        workspaceListFramework.getBtnNext().setDisable(currentPage >= totalPages);
-        workspaceListFramework.getBtnNext().setCursor(currentPage >= totalPages ? Cursor.DEFAULT : Cursor.HAND);
+        workspaceListFramework.getPaginationBar().getBtnNext().setDisable(currentPage >= totalPages);
+        workspaceListFramework.getPaginationBar().getBtnNext().setCursor(currentPage >= totalPages ? Cursor.DEFAULT : Cursor.HAND);
     }
 
     private int calculateMaxProducts(double width, double height) {

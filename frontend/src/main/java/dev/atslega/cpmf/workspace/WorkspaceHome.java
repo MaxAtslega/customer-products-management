@@ -1,6 +1,7 @@
 package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.AppStyles;
+import dev.atslega.cpmf.component.Title;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
@@ -29,11 +30,6 @@ public class WorkspaceHome extends VBox {
         contentVBox.setStyle("-fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR);
         contentVBox.setPadding(new Insets(AppStyles.GAP_SIZE));
 
-        Text headerTitle = new Text("Home");
-        headerTitle.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_H1));
-        headerTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
-        headerTitle.setFill(Color.WHITE);
-
         FlowPane statsFlowPane = createStatsFlowPane();
         FlowPane informationFlowPane = createInformationFlowPane();
 
@@ -44,7 +40,7 @@ public class WorkspaceHome extends VBox {
 
         VBox userFlowPane = createUsersPane();
 
-        contentVBox.getChildren().addAll(headerTitle, statsFlowPane, informationFlowPane, userManagementTitle, userFlowPane);
+        contentVBox.getChildren().addAll(new Title("Home"), statsFlowPane, informationFlowPane, userManagementTitle, userFlowPane);
         scrollPane.setContent(contentVBox);
 
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
