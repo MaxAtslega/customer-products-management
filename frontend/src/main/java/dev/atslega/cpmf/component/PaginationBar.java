@@ -20,7 +20,7 @@ public class PaginationBar extends HBox {
         btnBack.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
 
         btnNext = new Button(">");
-        btnNext.setCursor(Cursor.HAND);
+        btnNext.setCursor(Cursor.DEFAULT);
         btnNext.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
 
         labelCurrentPage = new Label("Page: " + currentPage);

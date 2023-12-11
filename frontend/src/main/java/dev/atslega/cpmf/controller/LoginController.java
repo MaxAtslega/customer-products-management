@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.StageManager;
-import dev.atslega.cpmf.model.User;
+import dev.atslega.cpmf.model.Company;
+import dev.atslega.cpmf.model.UserData;
 import dev.atslega.cpmf.util.TokenUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
@@ -234,43 +235,74 @@ public class LoginController {
     }
 
     private void handleSuccessfulLogin(String token) {
-        try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:8080/api/v1/users/?size=1"))
-                    .header("Authorization", "Bearer " + token)
-                    .header("Content-Type", "application/json")
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode rootNode = objectMapper.readTree(response.body());
-                JsonNode userNode = rootNode.get(0); // Get the first user in the array
-
-                if (userNode != null) {
-                    User user = objectMapper.treeToValue(userNode, User.class);
-                    user.setToken(token);
-                    javafx.application.Platform.runLater(() -> {
-                        stageManager.setStageScene(stageManager.getWorkspaceScene(user));
-                    });
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                UserData userData = fetchUser(client, token);
+                if (userData != null) {
+                    Company company = fetchCompany(client, token);
+                    if (company != null) {
+                        userData.setToken(token);
+                        userData.setCompany(company);
+                        javafx.application.Platform.runLater(() -> {
+                            stageManager.setStageScene(stageManager.getWorkspaceScene(userData));
+                        });
+                    } else {
+                        handleLoginFailure();
+                    }
                 } else {
-                    TokenUtils.deleteToken();
-                    loginFailure.setText("Login failed.");
-                    loginFailure.setVisible(true);
+                    handleLoginFailure();
                 }
-            } else {
-                TokenUtils.deleteToken();
-                loginFailure.setText("Login failed.");
-                loginFailure.setVisible(true);
+            } catch (Exception e) {
+                handleLoginFailure();
             }
-        } catch (Exception e) {
-            TokenUtils.deleteToken();
+        });
+    }
+
+    private UserData fetchUser(HttpClient client, String token) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/v1/users/?size=1"))
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(response.body());
+            JsonNode userNode = rootNode.get(0); // Get the first user in the array
+            return objectMapper.treeToValue(userNode, UserData.class);
+        }
+        return null;
+    }
+
+    private Company fetchCompany(HttpClient client, String token) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/v1/company/"))
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(response.body(), Company.class);
+        }
+
+        System.out.println(response.body());
+        return null;
+    }
+
+    private void handleLoginFailure() {
+        TokenUtils.deleteToken();
+        javafx.application.Platform.runLater(() -> {
             loginFailure.setText("Login failed.");
             loginFailure.setVisible(true);
-        }
+        });
     }
 
 

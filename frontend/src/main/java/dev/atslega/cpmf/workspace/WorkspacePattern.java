@@ -3,21 +3,21 @@ package dev.atslega.cpmf.workspace;
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.StageManager;
 import dev.atslega.cpmf.component.WorkspaceHeader;
-import dev.atslega.cpmf.model.User;
+import dev.atslega.cpmf.model.UserData;
 import javafx.scene.layout.BorderPane;
 
 public class WorkspacePattern extends BorderPane {
     private final StageManager stageManager;
     private WorkspaceNavigator workspaceNavigator;
-    private final User user;
+    private final UserData userData;
 
-    public WorkspacePattern(StageManager stageManager, User user) {
+    public WorkspacePattern(StageManager stageManager, UserData userData) {
         this.stageManager = stageManager;
-        this.user = user;
+        this.userData = userData;
 
         workspaceNavigator = new WorkspaceNavigator(this, AppStyles.SIDEBAR_WIDTH);
 
-        // set top [User, Toolbar, Program-Info]
+        // set top [UserData, Toolbar, Program-Info]
         setTop(new WorkspaceHeader(this, AppStyles.SIDEBAR_WIDTH));
 
         // set Center [Home, Costumer, Products,short´s,calendar] (switch function)
@@ -27,8 +27,8 @@ public class WorkspacePattern extends BorderPane {
         setLeft(workspaceNavigator);
     }
 
-    public User getUser() {
-        return user;
+    public UserData getUserData() {
+        return userData;
     }
 
     public StageManager getStageManager() {

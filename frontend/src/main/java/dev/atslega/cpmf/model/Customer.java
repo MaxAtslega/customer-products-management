@@ -3,38 +3,32 @@ package dev.atslega.cpmf.model;
 
 public class Customer {
 
-    // Getter-Methoden
+    private Long id;
     private String firstName;
     private String lastName;
-    private String id;
-    private String mail;
-    private String phoneNumber;
-    private String address;
-    private String companyName;
+    private String email;
 
-    public Customer(String firstName, String lastName, String id, String mail, String phoneNumber, String address, String companyName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Customer() {}
+
+    public Customer(Long id, String firstName, String lastName, String email) {
         this.id = id;
-        this.mail = mail;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.companyName = companyName;
+        this.firstName = firstName;
+        this.lastName= lastName;
+        this.email = email;
     }
 
-    public String getID() {
+    public Long getId() {
         return id;
     }
 
-    public void setID(String iD) {
-        this.id = iD;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    // Setter-Methoden
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -47,40 +41,22 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public String getId() {
-        return id;
+    public String getEmail() {
+        return email;
     }
 
-    public String getMail() {
-        return mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
 

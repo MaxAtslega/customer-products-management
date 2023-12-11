@@ -1,8 +1,11 @@
 package dev.atslega.cpmf.workspace;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.component.Title;
 import dev.atslega.cpmf.component.home.UsersListBox;
+import dev.atslega.cpmf.model.Company;
+import dev.atslega.cpmf.model.Order;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
@@ -12,12 +15,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.util.Objects;
+import java.util.concurrent.ExecutionException;
+
 public class WorkspaceHome extends VBox {
 
     private final WorkspacePattern workspacePattern;
+    private final Company company;
 
     public WorkspaceHome(WorkspacePattern workspacePattern) {
         this.workspacePattern = workspacePattern;
+        this.company = workspacePattern.getUserData().getCompany();
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToWidth(true);
@@ -39,9 +47,22 @@ public class WorkspaceHome extends VBox {
         userManagementTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
         userManagementTitle.setFill(Color.WHITE);
 
-        VBox userFlowPane = new UsersListBox();
+        contentVBox.getChildren().addAll(new Title("Home"), statsFlowPane, informationFlowPane, userManagementTitle);
 
-        contentVBox.getChildren().addAll(new Title("Home"), statsFlowPane, informationFlowPane, userManagementTitle, userFlowPane);
+        if (Objects.equals(workspacePattern.getUserData().getRole(), "ADMIN")) {
+            VBox userFlowPane = null;
+            try {
+                userFlowPane = new UsersListBox(workspacePattern);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            contentVBox.getChildren().add(userFlowPane);
+        }
+
         scrollPane.setContent(contentVBox);
 
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
@@ -65,9 +86,9 @@ public class WorkspaceHome extends VBox {
         });
 
         // Create and add boxes to the statsFlowPane
-        VBox customersBox = createStatsBox("Customers", "100", Color.valueOf("EA3D2F"));
-        VBox productsBox = createStatsBox("Products", "800", Color.valueOf("367BF5"));
-        VBox ordersBox = createStatsBox("Orders", "1.009", Color.valueOf("2FA84F"));
+        VBox customersBox = createStatsBox("Customers", company.getCustomerCount() + "", Color.valueOf("EA3D2F"));
+        VBox productsBox = createStatsBox("Products", company.getProductCount() + "", Color.valueOf("367BF5"));
+        VBox ordersBox = createStatsBox("Orders", company.getOrderCount() + "", Color.valueOf("2FA84F"));
 
 
         statsFlowPane.getChildren().addAll(customersBox, productsBox, ordersBox);
@@ -129,24 +150,24 @@ public class WorkspaceHome extends VBox {
         titleLabel.setFont(Font.font("Quicksand", FontWeight.BOLD, 18));
         titleLabel.setFill(Color.WHITE);
 
-        Text nameLabel = new Text("Name: " + workspacePattern.getUser().getLastName() + ", "
-                + workspacePattern.getUser().getFirstName());
+        Text nameLabel = new Text("Name: " + workspacePattern.getUserData().getLastName() + ", "
+                + workspacePattern.getUserData().getFirstName());
         nameLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         nameLabel.setFill(Color.WHITE);
 
-        Text emailLabel = new Text("Email: " + workspacePattern.getUser().getEmail());
+        Text emailLabel = new Text("Email: " + workspacePattern.getUserData().getEmail());
         emailLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         emailLabel.setFill(Color.WHITE);
 
-        Text roleLabel = new Text("Role: " + workspacePattern.getUser().getRole());
+        Text roleLabel = new Text("Role: " + workspacePattern.getUserData().getRole());
         roleLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         roleLabel.setFill(Color.WHITE);
 
-        Text companyLabel = new Text("Company: " + workspacePattern.getUser().getCompanyName());
+        Text companyLabel = new Text("Company: " + company.getCompanyName());
         companyLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         companyLabel.setFill(Color.WHITE);
 
-        Text companyAddressLabel = new Text("Company Address: " + workspacePattern.getUser().getCompanyAddress());
+        Text companyAddressLabel = new Text("Company Address: " + company.getCompanyAddress());
         companyAddressLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         companyAddressLabel.setFill(Color.WHITE);
 
@@ -165,24 +186,47 @@ public class WorkspaceHome extends VBox {
         titleLabel.setFont(Font.font("Quicksand", FontWeight.BOLD, 18));
         titleLabel.setFill(Color.WHITE);
 
-        Text nameLabel = new Text("Latest Product: Dyson Vacuum cleaner");
+        Text nameLabel = new Text("Latest Product: " + (company.getLatestProduct() != null ?
+                company.getLatestProduct().getProductName() : "null"));
+
         nameLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         nameLabel.setFill(Color.WHITE);
 
-        Text emailLabel = new Text("Last Customer: Lasse");
+        Text emailLabel = new Text();
+        if (company.getLatestCustomer() != null) {
+            emailLabel.setText("Last Customer: " + company.getLatestCustomer().getFirstName() + " " + company.getLatestCustomer().getLastName());
+        } else {
+            emailLabel.setText("Last Customer: null");
+        }
+
         emailLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         emailLabel.setFill(Color.WHITE);
 
-        Text roleLabel = new Text("Last Order: Order #10 by Lasse");
+        Text roleLabel = getRoleLabelText();
         roleLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         roleLabel.setFill(Color.WHITE);
 
-        Text companyLabel = new Text("User Count: 4");
+        Text companyLabel = new Text("UserData Count: "+ company.getUserCount());
         companyLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         companyLabel.setFill(Color.WHITE);
 
         vbox.getChildren().addAll(titleLabel, nameLabel, emailLabel, roleLabel, companyLabel);
 
         return vbox;
+    }
+
+    private Text getRoleLabelText() {
+        Text roleLabel;
+        Order latestOrder = company.getLatestOrder();
+
+        if (latestOrder == null || latestOrder.getCustomer() == null) {
+            roleLabel = new Text("Last Order: null");
+        } else {
+            String customerId = String.valueOf(latestOrder.getId());
+            String customerFirstName = latestOrder.getCustomer().getFirstName();
+            String customerLastName = latestOrder.getCustomer().getLastName();
+            roleLabel = new Text("Last Order: Order #" + customerId + " by " + customerFirstName + " " + customerLastName);
+        }
+        return roleLabel;
     }
 }

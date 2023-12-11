@@ -23,28 +23,27 @@ public class ProductContentPane extends Pane {
         setCursor(Cursor.HAND);
         this.product = product;
 
-        //Label in front (name, Id , inventory,price)
         Label nameF = creatLabelWithOutCopyAction("Name:", 10);
-        Label nameFront = creatLabelWithOutCopyAction(product.getName(), 30);
+        Label nameFront = creatLabelWithOutCopyAction(product.getProductName(), 30);
         Label iDF = creatLabelWithOutCopyAction("ID:", 50);
-        Label iDFront = creatLabelWithOutCopyAction(product.getID(), 70);
+        Label iDFront = creatLabelWithOutCopyAction(product.getId() + "", 70);
         Label inventoryF = creatLabelWithOutCopyAction("Inventory:", 90);
-        Label inventoryFront = creatLabelWithOutCopyAction(String.valueOf(product.getInventory()), 110);
+        Label inventoryFront = creatLabelWithOutCopyAction(String.valueOf(product.getStockQuantity()), 110);
         Label priceF = creatLabelWithOutCopyAction("Price:", 130);
         Label priceFront = creatLabelWithOutCopyAction(String.valueOf(product.getPrice()), 150);
         //Label in back (all but without description)
-        Label nameB = creatLabel("Name: " + product.getName(), 10);
+        Label nameB = creatLabel("Name: " + product.getProductName(), 10);
         nameB.setVisible(false);
-        Label iDB = creatLabel("ID: " + product.getID(), 30);
+        Label iDB = creatLabel("ID: " + product.getId(), 30);
         iDB.setVisible(false);
         Label manufacturerB = creatLabel("Manufacturer: \n" + product.getManufacturer(), 50);
         manufacturerB.setVisible(false);
-        Label inventoryB = creatLabel("Inventory: " + product.getInventory(), 90);
+        Label inventoryB = creatLabel("Inventory: " + product.getStockQuantity(), 90);
         inventoryB.setVisible(false);
         Label priceB = creatLabel("Price: " + product.getPrice() + "€", 110);
         priceB.setVisible(false);
         //Label for description
-        Label descriptionI = creatLabel("Description: " + product.getDescription(), 10);
+        Label descriptionI = creatLabel("Description: " + product.getProductName(), 10);
         descriptionI.setWrapText(true);
         descriptionI.setVisible(false);
 

@@ -73,7 +73,7 @@ public class WorkspaceHeader extends VBox {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         // Username text
-        Text account = new Text(workspacePattern.getUser().getLastName() + ", " + workspacePattern.getUser().getFirstName());
+        Text account = new Text(workspacePattern.getUserData().getLastName() + ", " + workspacePattern.getUserData().getFirstName());
         account.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         account.setStyle("-fx-font-weight: bold");
         account.setFill(Paint.valueOf(AppStyles.DEFAULT_TEXT_COLOR));

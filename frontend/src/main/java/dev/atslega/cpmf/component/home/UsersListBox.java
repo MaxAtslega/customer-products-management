@@ -1,7 +1,12 @@
 package dev.atslega.cpmf.component.home;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.component.PaginationBar;
+import dev.atslega.cpmf.model.User;
+import dev.atslega.cpmf.workspace.WorkspacePattern;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.layout.HBox;
@@ -13,49 +18,70 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 public class UsersListBox extends VBox {
 
     private final PaginationBar paginationBar;
     private VBox userPane;
 
     private int currentPage = 1;
-    private int totalPages = 1;
+    private int totalPages;
 
-    public UsersListBox() {
+    private final WorkspacePattern workspacePattern;
+
+    public UsersListBox(WorkspacePattern workspacePattern) throws ExecutionException, InterruptedException, JsonProcessingException {
+        this.workspacePattern = workspacePattern;
+
+        totalPages = (int) Math.ceil((((double) workspacePattern.getUserData().getCompany().getUserCount() - 1)) / 4);
+
         this.paginationBar = new PaginationBar(1);
-        paginationBar.getBtnBack().setOnAction(e -> changePage(-1));
-        paginationBar.getBtnNext().setOnAction(e -> changePage(1));
 
-        userPane = createUsersPane();
+        if((workspacePattern.getUserData().getCompany().getUserCount() - 1) > 0){
+            paginationBar.getBtnBack().setOnAction(e -> changePage(-1));
+            paginationBar.getBtnNext().setOnAction(e -> changePage(1));
 
-        getChildren().addAll(userPane, paginationBar);
+            userPane = createUsersPane();
+            getChildren().add(userPane);
+        }
+
+        getChildren().add(paginationBar);
     }
 
     private void changePage(int page) {
         currentPage = Math.max(1, Math.min(totalPages, currentPage + page));
         paginationBar.getLabelCurrentPage().setText("Page: " + currentPage);
-        userPane = createUsersPane();
+        try {
+            userPane = createUsersPane();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private VBox createUsersPane() {
+    private VBox createUsersPane() throws ExecutionException, InterruptedException, JsonProcessingException {
         VBox usersPane = new VBox();
 
-        // Create and add boxes to the usersPane
-        VBox user1 = createUserBox("1", "Lasse Hüls", "hüls@atslega.de");
-        VBox user2 = createUserBox("2", "Murma Kleis", "kleis@atslega.de");
-        VBox user3 = createUserBox("3", "Stefan Test", "test@atslega.de");
-        VBox user4 = createUserBox("4", "Samuel Beis", "beis@atslega.de");
+        List<User> users = fetchAllUsers(currentPage-1, 4);
 
-        usersPane.getChildren().addAll(user1, user2, user3, user4);
-
-        setTotalPages(currentPage + 1);
+        for (User user : users) {
+            usersPane.getChildren().add(createUserBox(user.getId() + "", user.getFirstName() + " " + user.getLastName(), user.getEmail()));
+        }
 
         getPaginationBar().getBtnBack().setDisable(currentPage <= 1);
         getPaginationBar().getBtnBack().setCursor(currentPage <= 1 ? Cursor.DEFAULT : Cursor.HAND);
 
         getPaginationBar().getBtnNext().setDisable(currentPage >= totalPages);
         getPaginationBar().getBtnNext().setCursor(currentPage >= totalPages ? Cursor.DEFAULT : Cursor.HAND);
-
 
         return usersPane;
     }
@@ -65,25 +91,47 @@ public class UsersListBox extends VBox {
         vBox.setPadding(new Insets(AppStyles.GAP_SIZE));
         vBox.setSpacing(5);
         vBox.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
-        VBox.setMargin(vBox, new Insets(10, 0, 0, 0));
+        VBox.setMargin(vBox, new Insets(AppStyles.GAP_SIZE, 0, 0, 0));
 
         HBox hBox = new HBox();
 
         Text title = new Text(id + " - " + name + " - " + email);
-        title.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
-        title.setFill(Color.WHITE);
+        title.setFont(Font.font(AppStyles.FONT_FAMILY, AppStyles.TEXT_NORMAL));
+        title.setFill(Color.valueOf(AppStyles.DEFAULT_TEXT_COLOR));
 
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         Text titleLabel = new Text("Show");
-        titleLabel.setFont(Font.font("Quicksand", FontWeight.BOLD, 16));
-        titleLabel.setFill(Color.WHITE);
+        titleLabel.setFont(Font.font(AppStyles.FONT_FAMILY, FontWeight.BOLD, AppStyles.TEXT_NORMAL));
+        titleLabel.setFill(Color.valueOf(AppStyles.DEFAULT_TEXT_COLOR));
 
         hBox.getChildren().addAll(title, spacer, titleLabel);
         vBox.getChildren().add(hBox);
 
         return vBox;
+    }
+
+    public List<User> fetchAllUsers(int page, int size) throws ExecutionException, InterruptedException, JsonProcessingException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/v1/users/" + "?page=" + page + "&size=" + size))
+                .header("Authorization", "Bearer " + workspacePattern.getUserData().getToken())
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        CompletableFuture<HttpResponse<String>> responseFuture =
+                client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
+        HttpResponse<String> response = responseFuture.get();
+
+        if (response.statusCode() == 200) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(response.body(), new TypeReference<List<User>>() {});
+        } else {
+            return null;
+        }
     }
 
     public void setTotalPages(int totalPages) {

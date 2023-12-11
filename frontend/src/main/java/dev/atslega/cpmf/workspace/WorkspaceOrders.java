@@ -1,6 +1,5 @@
 package dev.atslega.cpmf.workspace;
 
-import dev.atslega.cpmf.TempStorage;
 import dev.atslega.cpmf.component.workspace.list.WorkspaceListFramework;
 import dev.atslega.cpmf.model.Product;
 import dev.atslega.cpmf.panes.ProductContentPane;
@@ -18,10 +17,7 @@ public class WorkspaceOrders extends WorkspaceListFramework {
     private static List<Pane> initializePaneList() {
         List<Pane> paneList = new ArrayList<>();
 
-        TempStorage tempStorage = new TempStorage();
-        for (Product product : tempStorage.productList) {
-            paneList.add(new ProductContentPane(product));
-        }
+        paneList.add(new ProductContentPane(new Product(1L, "Product 1", "Description 1", 100, 10, "Manufacturer 1")));
 
         return paneList;
     }

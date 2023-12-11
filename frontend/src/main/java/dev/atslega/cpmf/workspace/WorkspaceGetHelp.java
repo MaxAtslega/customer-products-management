@@ -45,7 +45,7 @@ public class WorkspaceGetHelp extends VBox {
 
         faqLink.setOnAction(e -> openFAQPage());
 
-        Label userGuide = createLabel("User Guides and Tutorials: Explore our comprehensive guides and tutorials for step-by-step instructions.");
+        Label userGuide = createLabel("UserData Guides and Tutorials: Explore our comprehensive guides and tutorials for step-by-step instructions.");
 
         Label supportForum = createLabel("Support Forum: Join the community in our forum. Share your experiences and get advice.");
 

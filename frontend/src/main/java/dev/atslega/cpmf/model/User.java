@@ -12,14 +12,7 @@ public class User {
 
     private String role;
 
-    private String companyName;
-
-    private String companyAddress;
-
-    private String token;
-
-    public User() {
-    }
+    public User() {}
 
     public long getId() {
         return id;
@@ -59,41 +52,5 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getCompanyAddress() {
-        return companyAddress;
-    }
-
-    public void setCompanyAddress(String companyAddress) {
-        this.companyAddress = companyAddress;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", lastName='" + lastName +
-                ", firstName='" + firstName +
-                ", email='" + email +
-                ", companyName='" + companyName +
-                ", companyAddress='" + companyAddress +
-                '}';
     }
 }

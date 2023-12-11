@@ -2,7 +2,7 @@ package dev.atslega.cpmf;
 
 import dev.atslega.cpmf.controller.LoginController;
 import dev.atslega.cpmf.controller.RegistrationController;
-import dev.atslega.cpmf.model.User;
+import dev.atslega.cpmf.model.UserData;
 import dev.atslega.cpmf.workspace.WorkspacePattern;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -88,8 +88,8 @@ public class StageManager {
         return new Scene(loader.load(), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
     }
 
-    public Scene getWorkspaceScene(User user) {
-        return new Scene(new WorkspacePattern(this, user), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
+    public Scene getWorkspaceScene(UserData userData) {
+        return new Scene(new WorkspacePattern(this, userData), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
     }
 }
 

@@ -1,38 +1,62 @@
 package dev.atslega.cpmf.model;
 
 public class Product {
-    private String name;
-    private String iD;
+    private Long id;
+    private String productName;
+    private String category;
+    private long price;
+    private int stockQuantity;
     private String manufacturer;
-    private String description;
-    private int inventory;
-    private double price;
 
-    public Product(String name, String iD, String manufacturer, String description, int inventory, double price) {
-        this.name = name;
-        this.iD = iD;
+    public Product() {}
+
+    public Product(Long id, String productName, String category, long price, int stockQuantity, String manufacturer) {
+        this.id = id;
+        this.productName = productName;
+        this.category = category;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
         this.manufacturer = manufacturer;
-        this.description = description;
-        this.inventory = inventory;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
         this.price = price;
     }
 
-    // Getter-Methoden
-    public String getName() {
-        return name;
+    public int getStockQuantity() {
+        return stockQuantity;
     }
 
-    // Setter-Methoden
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getID() {
-        return iD;
-    }
-
-    public void setID(String iD) {
-        this.iD = iD;
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     public String getManufacturer() {
@@ -43,28 +67,16 @@ public class Product {
         this.manufacturer = manufacturer;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(int inventory) {
-        this.inventory = inventory;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", stockQuantity=" + stockQuantity +
+                ", manufacturer='" + manufacturer + '\'' +
+                '}';
     }
 }
 

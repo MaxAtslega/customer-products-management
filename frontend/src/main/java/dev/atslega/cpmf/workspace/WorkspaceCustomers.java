@@ -1,6 +1,5 @@
 package dev.atslega.cpmf.workspace;
 
-import dev.atslega.cpmf.TempStorage;
 import dev.atslega.cpmf.component.workspace.list.WorkspaceListFramework;
 import dev.atslega.cpmf.model.Customer;
 import dev.atslega.cpmf.panes.CustomerContentPane;
@@ -18,10 +17,8 @@ public class WorkspaceCustomers extends WorkspaceListFramework {
     private static List<Pane> initializePaneList() {
         List<Pane> paneList = new ArrayList<>();
 
-        TempStorage tempStorage = new TempStorage();
-        for (Customer customer : tempStorage.customerList) {
-            paneList.add(new CustomerContentPane(customer));
-        }
+        paneList.add(new CustomerContentPane(new Customer(1L, "Customer 1", "Customer 1", "test@gamil.com")));
+
 
         return paneList;
     }
