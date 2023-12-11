@@ -60,7 +60,7 @@ public class CompanyService {
         companyResponse.setCustomerCount(customerRepository.countByCompanyId(id));
         companyResponse.setOrderCount(orderRepository.countByCompanyId(id));
         companyResponse.setProductCount(productRepository.countByCompanyId(id));
-        companyResponse.setUserCount(userRepository.countByCompanyId(id)-1);
+        companyResponse.setUserCount(userRepository.countByCompanyId(id) - 1);
 
         Optional<Customer> latestCustomerOpt = customerRepository.findFirstByCompanyIdOrderByCreatedAtDesc(id);
         if (latestCustomerOpt.isPresent()) {
