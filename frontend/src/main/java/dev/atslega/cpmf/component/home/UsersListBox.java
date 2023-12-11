@@ -13,7 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class UsersList extends VBox {
+public class UsersListBox extends VBox {
 
     private final PaginationBar paginationBar;
     private VBox userPane;
@@ -21,7 +21,7 @@ public class UsersList extends VBox {
     private int currentPage = 1;
     private int totalPages = 1;
 
-    public UsersList() {
+    public UsersListBox() {
         this.paginationBar = new PaginationBar(1);
         paginationBar.getBtnBack().setOnAction(e -> changePage(-1));
         paginationBar.getBtnNext().setOnAction(e -> changePage(1));

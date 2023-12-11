@@ -2,7 +2,7 @@ package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.component.Title;
-import dev.atslega.cpmf.component.home.UsersList;
+import dev.atslega.cpmf.component.home.UsersListBox;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
@@ -39,7 +39,7 @@ public class WorkspaceHome extends VBox {
         userManagementTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
         userManagementTitle.setFill(Color.WHITE);
 
-        VBox userFlowPane = new UsersList();
+        VBox userFlowPane = new UsersListBox();
 
         contentVBox.getChildren().addAll(new Title("Home"), statsFlowPane, informationFlowPane, userManagementTitle, userFlowPane);
         scrollPane.setContent(contentVBox);
