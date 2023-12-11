@@ -1,4 +1,4 @@
-package dev.atslega.cpmf.component.workspaceList;
+package dev.atslega.cpmf.component.workspace.list;
 
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.workspace.WorkspacePattern;

@@ -2,6 +2,7 @@ package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.component.Title;
+import dev.atslega.cpmf.component.home.UsersList;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
@@ -38,7 +39,7 @@ public class WorkspaceHome extends VBox {
         userManagementTitle.setStyle("-fx-font-weight: bold; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
         userManagementTitle.setFill(Color.WHITE);
 
-        VBox userFlowPane = createUsersPane();
+        VBox userFlowPane = new UsersList();
 
         contentVBox.getChildren().addAll(new Title("Home"), statsFlowPane, informationFlowPane, userManagementTitle, userFlowPane);
         scrollPane.setContent(contentVBox);
@@ -96,21 +97,6 @@ public class WorkspaceHome extends VBox {
         informationFlowPane.getChildren().addAll(companyBox, currentStatsBox);
 
         return informationFlowPane;
-    }
-
-    private VBox createUsersPane() {
-        VBox usersPane = new VBox();
-
-        // Create and add boxes to the usersPane
-        VBox user1 = createUserBox("1", "Lasse Hüls", "hüls@atslega.de");
-        VBox user2 = createUserBox("2", "Murma Kleis", "kleis@atslega.de");
-        VBox user3 = createUserBox("3", "Stefan Test", "test@atslega.de");
-        VBox user4 = createUserBox("4", "Samuel Beis", "beis@atslega.de");
-
-
-        usersPane.getChildren().addAll(user1, user2, user3, user4);
-
-        return usersPane;
     }
 
 
@@ -198,31 +184,5 @@ public class WorkspaceHome extends VBox {
         vbox.getChildren().addAll(titleLabel, nameLabel, emailLabel, roleLabel, companyLabel);
 
         return vbox;
-    }
-
-    private VBox createUserBox(String id, String name, String email) {
-        VBox vBox = new VBox();
-        vBox.setPadding(new Insets(AppStyles.GAP_SIZE));
-        vBox.setSpacing(5);
-        vBox.setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR + "; -fx-background-radius: 5;");
-        VBox.setMargin(vBox, new Insets(10, 0, 0, 0));
-
-        HBox hBox = new HBox();
-
-        Text title = new Text(id + " - " + name + " - " + email);
-        title.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
-        title.setFill(Color.WHITE);
-
-        Pane spacer = new Pane();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        Text titleLabel = new Text("Show");
-        titleLabel.setFont(Font.font("Quicksand", FontWeight.BOLD, 16));
-        titleLabel.setFill(Color.WHITE);
-
-        hBox.getChildren().addAll(title, spacer, titleLabel);
-        vBox.getChildren().add(hBox);
-
-        return vBox;
     }
 }

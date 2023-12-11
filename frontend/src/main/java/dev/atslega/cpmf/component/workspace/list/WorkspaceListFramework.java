@@ -1,4 +1,4 @@
-package dev.atslega.cpmf.component.workspaceList;
+package dev.atslega.cpmf.component.workspace.list;
 
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.component.PaginationBar;
@@ -39,8 +39,8 @@ public class WorkspaceListFramework extends BorderPane {
     }
 
 
-    private void changePage(int delta) {
-        currentPage = Math.max(1, Math.min(totalPages, currentPage + delta));
+    private void changePage(int page) {
+        currentPage = Math.max(1, Math.min(totalPages, currentPage + page));
         paginationBar.getLabelCurrentPage().setText("Page: " + currentPage);
         this.setCenter(new WorkspaceListFlowPane(workspacePattern, this));
     }

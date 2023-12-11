@@ -1,7 +1,7 @@
 package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.TempStorage;
-import dev.atslega.cpmf.component.workspaceList.WorkspaceListFramework;
+import dev.atslega.cpmf.component.workspace.list.WorkspaceListFramework;
 import dev.atslega.cpmf.model.Customer;
 import dev.atslega.cpmf.panes.CustomerContentPane;
 import javafx.scene.layout.Pane;
