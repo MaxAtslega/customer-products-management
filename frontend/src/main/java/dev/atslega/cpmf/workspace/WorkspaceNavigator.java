@@ -1,7 +1,6 @@
 package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.AppStyles;
-import dev.atslega.cpmf.Main;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -15,6 +14,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class WorkspaceNavigator extends VBox {
@@ -23,9 +23,11 @@ public class WorkspaceNavigator extends VBox {
     private static final Insets BUTTON_PADDING = new Insets(AppStyles.GAP_SIZE, AppStyles.GAP_SIZE * 2, AppStyles.GAP_SIZE, AppStyles.GAP_SIZE * 2);
     private static final Insets BUTTON_MARGIN = new Insets(AppStyles.GAP_SIZE, AppStyles.GAP_SIZE, 0, AppStyles.GAP_SIZE);
     private final int sidebarWidth;
+    private final WorkspacePattern workspacePattern;
     private Button lastClickedButton = null;
 
-    public WorkspaceNavigator(int sidebarWidth) {
+    public WorkspaceNavigator(WorkspacePattern workspacePattern, int sidebarWidth) {
+        this.workspacePattern = workspacePattern;
         this.sidebarWidth = sidebarWidth;
 
         setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR);
@@ -142,7 +144,13 @@ public class WorkspaceNavigator extends VBox {
     private void setupLogoutEventHandlers(Button button) {
         button.setOnMouseEntered(event -> updateTextColor(button, Color.valueOf(AppStyles.DEFAULT_TEXT_COLOR.replace("#", ""))));
         button.setOnMouseExited(event -> updateTextColor(button, Color.valueOf(AppStyles.INACTIVE_TEXT_COLOR.replace("#", ""))));
-        button.setOnMouseClicked(event -> Main.primaryStageManager.setStageScene(Main.sceneLogin));
+        button.setOnMouseClicked(event -> {
+            try {
+                this.workspacePattern.getStageManager().setStageScene(this.workspacePattern.getStageManager().getLoginScene());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void updateTextColor(Button button, Color color) {
@@ -163,7 +171,7 @@ public class WorkspaceNavigator extends VBox {
             Region region = (Region) ((HBox) lastClickedButton.getGraphic()).getChildren().get(0);
             region.setStyle("-fx-background-color: " + AppStyles.INACTIVE_TEXT_COLOR + ";");
 
-            WorkspacePattern.setCenter(workspaceEnum);
+            this.workspacePattern.setCenter(workspaceEnum);
         }
         lastClickedButton = clickedButton;
 

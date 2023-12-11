@@ -1,7 +1,7 @@
 package dev.atslega.cpmf.controller;
 
 import dev.atslega.cpmf.AppStyles;
-import dev.atslega.cpmf.Main;
+import dev.atslega.cpmf.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -18,6 +18,7 @@ import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.Executors;
 
 public class LoginController {
 
@@ -43,7 +44,10 @@ public class LoginController {
     private Label emailFailure, passwordFailure;
     private Region eyeSvgShape;
 
-    public LoginController() {
+    private StageManager stageManager;
+
+    public LoginController(StageManager stageManager) {
+        this.stageManager = stageManager;
         background0 = loadImage();
     }
 
@@ -62,13 +66,11 @@ public class LoginController {
     private Image loadImage() {
         URL url = getClass().getResource("Images/Mountains960x600.png");
         if (url == null) {
-            // Log error or handle it appropriately
             return null;
         }
         try {
             return new Image(url.openStream());
         } catch (IOException e) {
-            // Log and handle exception
             return null;
         }
     }
@@ -149,73 +151,34 @@ public class LoginController {
 
     @FXML
     void login() {
-        String username = emailTextField.getText();
+        String email = emailTextField.getText();
         String password = isPasswordFieldVisible ? passwordField.getText() : passwordTextField.getText();
 
-        CredentialValidationResult validationResult = validateCredentials(username, password);
-        handleCredentialValidation(validationResult);
+        boolean isEmailValid = !email.isEmpty();
+        boolean isPasswordValid = !password.isEmpty();
+
+        setFailureLabel(emailFailure, !isEmailValid, "Invalid email");
+        setFailureLabel(passwordFailure, !isPasswordValid, "Invalid password");
+
+        if (isEmailValid && isPasswordValid) {
+            Executors.newSingleThreadExecutor().execute(() -> sendLoginRequest(email, password));
+        }
     }
+
+    private void sendLoginRequest(String email, String password) {
+        stageManager.setStageScene(stageManager.getWorkspaceScene());
+        stageManager.setStageCenter();
+    }
+
 
     @FXML
-    void registration() {
-        Main.primaryStageManager.setStageScene(Main.sceneRegistration);
+    void registration() throws IOException {
+        stageManager.setStageScene(stageManager.getRegistrationScene());
     }
 
-    private void handleCredentialValidation(CredentialValidationResult validationResult) {
-        switch (validationResult) {
-            case SUCCESS:
-                proceedToNextScene();
-                break;
-            case MISSING_USERNAME:
-                showEmailError(ERROR_ENTER_USERNAME, true);
-                break;
-            case MISSING_PASSWORD:
-                showPasswordError(ERROR_ENTER_PASSWORD, true);
-                break;
-            case MISSING_BOTH:
-                showEmailError(ERROR_ENTER_USERNAME, true);
-                showPasswordError(ERROR_ENTER_PASSWORD, true);
-                break;
-        }
-    }
 
-    private void proceedToNextScene() {
-        clearErrorMessages();
-        Main.primaryStageManager.setStageScene(Main.sceneWorkspace);
-        Main.primaryStageManager.setStageCenter();
-    }
-
-    private void clearErrorMessages() {
-        showEmailError("", false);
-        showPasswordError("", false);
-    }
-
-    private void showPasswordError(String message, boolean visible) {
-        passwordFailure.setText(message);
-        passwordFailure.setVisible(visible);
-    }
-
-    private void showEmailError(String message, boolean visible) {
-        emailFailure.setText(message);
-        emailFailure.setVisible(visible);
-    }
-
-    private CredentialValidationResult validateCredentials(String username, String password) {
-        boolean usernameEmpty = username.isEmpty();
-        boolean passwordEmpty = password.isEmpty();
-
-        if (usernameEmpty && passwordEmpty) {
-            return CredentialValidationResult.MISSING_BOTH;
-        } else if (usernameEmpty) {
-            return CredentialValidationResult.MISSING_USERNAME;
-        } else if (passwordEmpty) {
-            return CredentialValidationResult.MISSING_PASSWORD;
-        } else {
-            return CredentialValidationResult.SUCCESS;
-        }
-    }
-
-    private enum CredentialValidationResult {
-        SUCCESS, MISSING_USERNAME, MISSING_PASSWORD, MISSING_BOTH
+    private void setFailureLabel(Label label, boolean visible, String text) {
+        label.setText(text);
+        label.setVisible(visible);
     }
 }

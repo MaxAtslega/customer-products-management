@@ -5,7 +5,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" xmlns="http://javafx.com/javafx/20"
           fx:controller="dev.atslega.cpmf.controller.RegistrationController">
     <ImageView fx:id="background" GridPane.columnIndex="0" GridPane.rowIndex="0"
@@ -28,7 +27,8 @@
             </font>
         </Label>
 
-        <Label fx:id="registrationFailure" visible="false" text="Registration Failed. Please try later again." style="-fx-text-fill: red;"/>
+        <Label fx:id="registrationFailure" visible="false" text="Registration Failed. Please try later again."
+               style="-fx-text-fill: red;"/>
 
         <HBox spacing="10">
             <!-- First Name -->

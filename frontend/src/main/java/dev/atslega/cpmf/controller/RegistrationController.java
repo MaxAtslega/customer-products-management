@@ -1,7 +1,9 @@
 package dev.atslega.cpmf.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.atslega.cpmf.AppStyles;
-import dev.atslega.cpmf.Main;
+import dev.atslega.cpmf.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -15,16 +17,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.SVGPath;
-import java.net.URI;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.Executors;
-import java.io.IOException;
-import java.net.URL;
 
 public class RegistrationController {
 
@@ -58,7 +58,10 @@ public class RegistrationController {
 
     private boolean isPasswordFieldVisible = true;
 
-    public RegistrationController() throws IOException {
+    private StageManager stageManager;
+
+    public RegistrationController(StageManager stageManager) throws IOException {
+        this.stageManager = stageManager;
         background0 = loadImage();
     }
 
@@ -138,8 +141,8 @@ public class RegistrationController {
     }
 
     @FXML
-    void login() {
-        Main.primaryStageManager.setStageScene(Main.sceneLogin);
+    void login() throws IOException {
+        stageManager.setStageScene(stageManager.getLoginScene());
     }
 
     @FXML
@@ -186,14 +189,17 @@ public class RegistrationController {
 
             if (response.statusCode() == 201) {
                 javafx.application.Platform.runLater(() -> {
-                    clearInputFields();
-                    Main.primaryStageManager.setStageScene(Main.sceneLogin);
+                    try {
+                        stageManager.setStageScene(stageManager.getLoginScene());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
             } else {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode node = mapper.readTree(response.body());
                 // if node is null, then the response body is empty
-                if  (node == null || node.isEmpty() || node.get("message") == null) {
+                if (node == null || node.isEmpty() || node.get("message") == null) {
                     javafx.application.Platform.runLater(() -> {
                         registrationFailure.setText("Registration failed. Please try later again.");
                         registrationFailure.setVisible(true);
@@ -214,24 +220,6 @@ public class RegistrationController {
                 registrationFailure.setVisible(true);
             });
         }
-    }
-
-    private void clearInputFields() {
-        lastNameTextField.setText("");
-        firstNameTextField.setText("");
-        emailTextField.setText("");
-        passwordField.setText("");
-        passwordTextField.setText(""); // if you're using a visible password field as well
-        companyNameTextField.setText("");
-        companyAddressTextField.setText("");
-        // Clear any error messages as well
-        lastNameFailure.setVisible(false);
-        firstNameFailure.setVisible(false);
-        emailFailure.setVisible(false);
-        passwordFailure.setVisible(false);
-        companyNameFailure.setVisible(false);
-        companyAddressFailure.setVisible(false);
-        registrationFailure.setVisible(false);
     }
 
     private void setFailureLabel(Label label, boolean visible, String text) {
