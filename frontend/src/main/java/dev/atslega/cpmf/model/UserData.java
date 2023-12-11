@@ -16,7 +16,8 @@ public class UserData {
 
     private Company company;
 
-    public UserData() {}
+    public UserData() {
+    }
 
     public UserData(long id, String lastName, String firstName, String email, String role, String token) {
         this.id = id;

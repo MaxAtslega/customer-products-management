@@ -8,8 +8,8 @@ import javafx.scene.layout.BorderPane;
 
 public class WorkspacePattern extends BorderPane {
     private final StageManager stageManager;
-    private WorkspaceNavigator workspaceNavigator;
     private final UserData userData;
+    private WorkspaceNavigator workspaceNavigator;
 
     public WorkspacePattern(StageManager stageManager, UserData userData) {
         this.stageManager = stageManager;

@@ -8,7 +8,8 @@ public class Product {
     private int stockQuantity;
     private String manufacturer;
 
-    public Product() {}
+    public Product() {
+    }
 
     public Product(Long id, String productName, String category, long price, int stockQuantity, String manufacturer) {
         this.id = id;

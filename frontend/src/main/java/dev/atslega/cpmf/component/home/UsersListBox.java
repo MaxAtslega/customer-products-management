@@ -29,12 +29,10 @@ import java.util.concurrent.ExecutionException;
 public class UsersListBox extends VBox {
 
     private final PaginationBar paginationBar;
+    private final WorkspacePattern workspacePattern;
     private VBox userPane;
-
     private int currentPage = 1;
     private int totalPages;
-
-    private final WorkspacePattern workspacePattern;
 
     public UsersListBox(WorkspacePattern workspacePattern) throws ExecutionException, InterruptedException, JsonProcessingException {
         this.workspacePattern = workspacePattern;
@@ -43,7 +41,7 @@ public class UsersListBox extends VBox {
 
         this.paginationBar = new PaginationBar(1);
 
-        if((workspacePattern.getUserData().getCompany().getUserCount() - 1) > 0){
+        if ((workspacePattern.getUserData().getCompany().getUserCount() - 1) > 0) {
             paginationBar.getBtnBack().setOnAction(e -> changePage(-1));
             paginationBar.getBtnNext().setOnAction(e -> changePage(1));
 
@@ -71,7 +69,7 @@ public class UsersListBox extends VBox {
     private VBox createUsersPane() throws ExecutionException, InterruptedException, JsonProcessingException {
         VBox usersPane = new VBox();
 
-        List<User> users = fetchAllUsers(currentPage-1, 4);
+        List<User> users = fetchAllUsers(currentPage - 1, 4);
 
         for (User user : users) {
             usersPane.getChildren().add(createUserBox(user.getId() + "", user.getFirstName() + " " + user.getLastName(), user.getEmail()));
@@ -128,7 +126,8 @@ public class UsersListBox extends VBox {
 
         if (response.statusCode() == 200) {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(response.body(), new TypeReference<List<User>>() {});
+            return objectMapper.readValue(response.body(), new TypeReference<List<User>>() {
+            });
         } else {
             return null;
         }

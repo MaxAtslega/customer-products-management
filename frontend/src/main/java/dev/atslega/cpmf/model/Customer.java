@@ -8,12 +8,13 @@ public class Customer {
     private String lastName;
     private String email;
 
-    public Customer() {}
+    public Customer() {
+    }
 
     public Customer(Long id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
-        this.lastName= lastName;
+        this.lastName = lastName;
         this.email = email;
     }
 

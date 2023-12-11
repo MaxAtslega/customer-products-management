@@ -9,7 +9,9 @@ import dev.atslega.cpmf.model.Order;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -206,7 +208,7 @@ public class WorkspaceHome extends VBox {
         roleLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         roleLabel.setFill(Color.WHITE);
 
-        Text companyLabel = new Text("UserData Count: "+ company.getUserCount());
+        Text companyLabel = new Text("UserData Count: " + company.getUserCount());
         companyLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         companyLabel.setFill(Color.WHITE);
 

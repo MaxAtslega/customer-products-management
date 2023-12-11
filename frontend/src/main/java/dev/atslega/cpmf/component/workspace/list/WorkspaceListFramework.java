@@ -14,12 +14,10 @@ public class WorkspaceListFramework extends BorderPane {
 
     private final int totalProducts;
     private final List<Pane> paneList;
+    private final PaginationBar paginationBar;
+    private final WorkspacePattern workspacePattern;
     private int currentPage = 1;
     private int totalPages = 1;
-
-    private final PaginationBar paginationBar;
-
-    private final WorkspacePattern workspacePattern;
 
     public WorkspaceListFramework(WorkspacePattern workspacePattern, List<Pane> paneList, String title) {
         this.workspacePattern = workspacePattern;

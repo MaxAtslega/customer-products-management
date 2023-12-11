@@ -13,7 +13,8 @@ public class Company {
     private long productCount;
     private long userCount;
 
-    public Company() {}
+    public Company() {
+    }
 
     public Company(String companyName, String companyAddress, Product latestProduct, Customer latestCustomer, Order latestOrder, long customerCount, long orderCount, long productCount, long userCount) {
         this.companyName = companyName;

@@ -39,16 +39,16 @@ public class StageManager {
         stage.setMinHeight(height);
     }
 
-    public void setStageScene(Scene scene) {
-        stage.setScene(scene);
-    }
-
     public Stage getStage() {
         return stage;
     }
 
     public Scene getStageScene() {
         return stage.getScene();
+    }
+
+    public void setStageScene(Scene scene) {
+        stage.setScene(scene);
     }
 
     public void setStageIcon(Image icon) {
