@@ -1,6 +1,6 @@
 # Customer Products Management
 A JavaFX-based application for managing customer and product information. 
-This project is a solution for retail operations, designed to streamline the management of products, orders, and customer information. It offers a user-friendly interface that allows retail staff to efficiently add and manage product inventories, track orders, and maintain detailed customer profiles. This project was created during my academic school years as part of my coursework.
+This project is a solution for retail operations, designed to streamline the management of products, orders, and customer information. It offers a userData-friendly interface that allows retail staff to efficiently add and manage product inventories, track orders, and maintain detailed customer profiles. This project was created during my academic school years as part of my coursework.
 
 ## Table of Contents
 - [Technical Architecture](#technical-architecture)
