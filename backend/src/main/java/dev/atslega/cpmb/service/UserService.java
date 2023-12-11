@@ -2,6 +2,7 @@ package dev.atslega.cpmb.service;
 
 import dev.atslega.cpmb.exception.ResourceAlreadyExistsException;
 import dev.atslega.cpmb.exception.ResourceNotFoundException;
+import dev.atslega.cpmb.model.Role;
 import dev.atslega.cpmb.model.User;
 import dev.atslega.cpmb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +29,11 @@ public class UserService implements UserDetailsService {
     public List<User> getAllUser(Long companyId, Integer size, Integer pageNumber) {
         Pageable page = PageRequest.of(pageNumber, size);
 
-        return userRepository.findByCompanyId(companyId, page).toList();
+        List<User> users = userRepository.findByCompanyId(companyId, page).toList();
+
+        return users.stream()
+                .filter(user -> user.getRole() != Role.ADMIN)
+                .collect(Collectors.toList());
     }
 
     public Optional<User> getUserById(Long id, Long companyId) {
