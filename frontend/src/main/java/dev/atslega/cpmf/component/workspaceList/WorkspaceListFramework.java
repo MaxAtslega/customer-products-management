@@ -1,6 +1,7 @@
-package dev.atslega.cpmf.components.workspaceList;
+package dev.atslega.cpmf.component.workspaceList;
 
 import dev.atslega.cpmf.AppStyles;
+import dev.atslega.cpmf.workspace.WorkspacePattern;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -25,13 +26,15 @@ public class WorkspaceListFramework extends BorderPane {
     private int currentPage = 1;
     private int totalPages = 1;
 
+    private final WorkspacePattern workspacePattern;
 
-    public WorkspaceListFramework(List<Pane> paneList, String title) {
+    public WorkspaceListFramework(WorkspacePattern workspacePattern, List<Pane> paneList, String title) {
+        this.workspacePattern = workspacePattern;
         this.paneList = paneList;
         this.totalProducts = paneList.size();
 
         this.setTop(createTitle(title));
-        this.setCenter(new WorkspaceListFlowPane(this));
+        this.setCenter(new WorkspaceListFlowPane(workspacePattern, this));
         this.setBottom(createPaginationBar());
     }
 
@@ -39,7 +42,7 @@ public class WorkspaceListFramework extends BorderPane {
     private void changePage(int delta) {
         currentPage = Math.max(1, Math.min(totalPages, currentPage + delta));
         lblCurrentPage.setText("Page: " + currentPage);
-        this.setCenter(new WorkspaceListFlowPane(this));
+        this.setCenter(new WorkspaceListFlowPane(workspacePattern, this));
     }
 
     private HBox createTitle(String title) {

@@ -12,7 +12,11 @@ import javafx.scene.text.Text;
 
 public class WorkspaceHome extends VBox {
 
-    public WorkspaceHome() {
+    private final WorkspacePattern workspacePattern;
+
+    public WorkspaceHome(WorkspacePattern workspacePattern) {
+        this.workspacePattern = workspacePattern;
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
@@ -143,23 +147,28 @@ public class WorkspaceHome extends VBox {
         titleLabel.setFont(Font.font("Quicksand", FontWeight.BOLD, 18));
         titleLabel.setFill(Color.WHITE);
 
-        Text nameLabel = new Text("Name: Max Atslega");
+        Text nameLabel = new Text("Name: " + workspacePattern.getUser().getLastName() + ", "
+                + workspacePattern.getUser().getFirstName());
         nameLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         nameLabel.setFill(Color.WHITE);
 
-        Text emailLabel = new Text("Email: max@atslega.de");
+        Text emailLabel = new Text("Email: " + workspacePattern.getUser().getEmail());
         emailLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         emailLabel.setFill(Color.WHITE);
 
-        Text roleLabel = new Text("Role: Admin");
+        Text roleLabel = new Text("Role: " + workspacePattern.getUser().getRole());
         roleLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         roleLabel.setFill(Color.WHITE);
 
-        Text companyLabel = new Text("Company: Atslega Media GmbH");
+        Text companyLabel = new Text("Company: " + workspacePattern.getUser().getCompanyName());
         companyLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         companyLabel.setFill(Color.WHITE);
 
-        vbox.getChildren().addAll(titleLabel, nameLabel, emailLabel, roleLabel, companyLabel);
+        Text companyAddressLabel = new Text("Company Address: " + workspacePattern.getUser().getCompanyAddress());
+        companyAddressLabel.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
+        companyAddressLabel.setFill(Color.WHITE);
+
+        vbox.getChildren().addAll(titleLabel, nameLabel, emailLabel, roleLabel, companyLabel, companyAddressLabel);
 
         return vbox;
     }

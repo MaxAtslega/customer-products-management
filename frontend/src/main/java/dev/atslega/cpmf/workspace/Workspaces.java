@@ -21,15 +21,15 @@ public enum Workspaces {
         this.icon = icon;
     }
 
-    public Pane getPane() {
+    public Pane getPane(WorkspacePattern workspacePattern) {
         return switch (this) {
-            case PRODUCTS -> new WorkspaceProducts();
-            case CUSTOMERS -> new WorkspaceCustomers();
-            case ORDERS -> new WorkspaceOrders();
+            case PRODUCTS -> new WorkspaceProducts(workspacePattern);
+            case CUSTOMERS -> new WorkspaceCustomers(workspacePattern);
+            case ORDERS -> new WorkspaceOrders(workspacePattern);
             case CALENDAR -> new WorkspaceCalendar();
             case SETTINGS -> new WorkspaceSettings();
             case GET_HELP -> new WorkspaceGetHelp();
-            default -> new WorkspaceHome();
+            default -> new WorkspaceHome(workspacePattern);
         };
     }
 

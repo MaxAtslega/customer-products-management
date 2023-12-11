@@ -1,4 +1,4 @@
-package dev.atslega.cpmf.components;
+package dev.atslega.cpmf.component;
 
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.workspace.WorkspacePattern;
@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 
 public class WorkspaceHeader extends VBox {
 
-    public WorkspaceHeader(String username, int sidebarWidth) {
+    public WorkspaceHeader(WorkspacePattern workspacePattern, int sidebarWidth) {
         setPadding(new Insets(0, AppStyles.GAP_SIZE, 0, 0));
         setStyle("-fx-background-color: " + AppStyles.SECONDARY_BACKGROUND_COLOR);
         setPrefHeight(50);
@@ -57,12 +57,12 @@ public class WorkspaceHeader extends VBox {
         closeButton.setStyle("-fx-font-size: 11; -fx-font-weight: bold; -fx-background-color: transparent;");
 
         closeButton.setOnMouseClicked(event -> {
-            if (WorkspacePattern.getBackPlate().getLeft() != null) {
+            if (workspacePattern.getLeft() != null) {
                 closeButtonSvgPath.setContent("M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z");
             } else {
                 closeButtonSvgPath.setContent("M120-240v-80h520v80H120Zm664-40L584-480l200-200 56 56-144 144 144 144-56 56ZM120-440v-80h400v80H120Zm0-200v-80h520v80H120Z");
             }
-            WorkspacePattern.toggleNavigator();
+            workspacePattern.toggleNavigator();
         });
 
         closeButton.setOnMouseEntered(event -> updateTextColor(closeButton, Color.valueOf(AppStyles.DEFAULT_TEXT_COLOR)));
@@ -73,7 +73,7 @@ public class WorkspaceHeader extends VBox {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         // Username text
-        Text account = new Text(username);
+        Text account = new Text(workspacePattern.getUser().getLastName() + ", " + workspacePattern.getUser().getFirstName());
         account.setFont(Font.font("Roboto", AppStyles.TEXT_NORMAL));
         account.setStyle("-fx-font-weight: bold");
         account.setFill(Paint.valueOf(AppStyles.DEFAULT_TEXT_COLOR));

@@ -22,9 +22,9 @@ module dev.atslega.cpmf {
     opens dev.atslega.cpmf.panes to javafx.fxml;
     exports dev.atslega.cpmf.controller;
     opens dev.atslega.cpmf.controller to javafx.fxml;
-    exports dev.atslega.cpmf.components.workspaceList;
-    opens dev.atslega.cpmf.components.workspaceList to javafx.fxml;
-    exports dev.atslega.cpmf.components;
-    opens dev.atslega.cpmf.components to javafx.fxml;
+    exports dev.atslega.cpmf.component.workspaceList;
+    opens dev.atslega.cpmf.component.workspaceList to javafx.fxml;
+    exports dev.atslega.cpmf.component;
+    opens dev.atslega.cpmf.component to javafx.fxml;
 
 }

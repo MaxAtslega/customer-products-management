@@ -5,8 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" xmlns="http://javafx.com/javafx/20"
-          fx:controller="dev.atslega.cpmf.controller.LoginController">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" xmlns="http://javafx.com/javafx/20">
     <ImageView fx:id="background" GridPane.columnIndex="0" GridPane.rowIndex="0"
                GridPane.columnSpan="3"/>
 
@@ -27,6 +26,10 @@
                 <Font name="Roboto" size="28.0"/>
             </font>
         </Label>
+
+        <Label fx:id="loginFailure" visible="false" text="Login Failed. Please try later again."
+               style="-fx-text-fill: red;"/>
+
         <VBox>
             <Label text="E-Mail" style="-fx-text-fill: white;"/>
             <TextField fx:id="emailTextField"

@@ -1,7 +1,11 @@
 package dev.atslega.cpmf.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.atslega.cpmf.AppStyles;
 import dev.atslega.cpmf.StageManager;
+import dev.atslega.cpmf.model.User;
+import dev.atslega.cpmf.util.TokenUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -17,7 +21,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.concurrent.Executors;
 
 public class LoginController {
@@ -41,7 +49,7 @@ public class LoginController {
     @FXML
     private TextField passwordTextField, emailTextField;
     @FXML
-    private Label emailFailure, passwordFailure;
+    private Label emailFailure, passwordFailure, loginFailure;
     private Region eyeSvgShape;
 
     private StageManager stageManager;
@@ -80,6 +88,7 @@ public class LoginController {
         configureBackground();
         configurePasswordField();
         configureEyeButton();
+        checkTokenAndHandleLogin();
     }
 
     private void configureBackground() {
@@ -166,8 +175,97 @@ public class LoginController {
     }
 
     private void sendLoginRequest(String email, String password) {
-        stageManager.setStageScene(stageManager.getWorkspaceScene());
-        stageManager.setStageCenter();
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            String requestBody = "{\"email\":\"" + email + "\", \"password\":\"" + password + "\"}";
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/api/v1/auth/login"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                // Parse JSON to get the token
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode rootNode = objectMapper.readTree(response.body());
+                String token = rootNode.path("token").asText();
+
+                javafx.application.Platform.runLater(() -> {
+                    TokenUtils.saveToken(token);
+                    handleSuccessfulLogin(token);
+                });
+            } else {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode node = mapper.readTree(response.body());
+                // if node is null, then the response body is empty
+                if (node == null || node.isEmpty() || node.get("message") == null) {
+                    javafx.application.Platform.runLater(() -> {
+                        loginFailure.setText("Login failed.");
+                        loginFailure.setVisible(true);
+                    });
+                    return;
+                }
+
+                String errorMessage = node.get("message").asText();
+
+                javafx.application.Platform.runLater(() -> {
+                    loginFailure.setText(errorMessage);
+                    loginFailure.setVisible(true);
+                });
+            }
+        } catch (Exception e) {
+            javafx.application.Platform.runLater(() -> {
+                loginFailure.setText("Login failed.");
+                loginFailure.setVisible(true);
+            });
+        }
+    }
+
+    private void checkTokenAndHandleLogin() {
+        String token = TokenUtils.readToken();
+        if (token != null && !token.isEmpty()) {
+            handleSuccessfulLogin(token);
+        }
+    }
+
+    private void handleSuccessfulLogin(String token) {
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/api/v1/users/?size=1"))
+                    .header("Authorization", "Bearer " + token)
+                    .header("Content-Type", "application/json")
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode rootNode = objectMapper.readTree(response.body());
+                JsonNode userNode = rootNode.get(0); // Get the first user in the array
+
+                if (userNode != null) {
+                    User user = objectMapper.treeToValue(userNode, User.class);
+                    user.setToken(token);
+                    javafx.application.Platform.runLater(() -> {
+                        stageManager.setStageScene(stageManager.getWorkspaceScene(user));
+                    });
+                } else {
+                    loginFailure.setText("Login failed.");
+                    loginFailure.setVisible(true);
+                }
+            } else {
+                loginFailure.setText("Login failed.");
+                loginFailure.setVisible(true);
+            }
+        } catch (Exception e) {
+            loginFailure.setText("Login failed.");
+            loginFailure.setVisible(true);
+        }
     }
 
 

@@ -1,6 +1,8 @@
 package dev.atslega.cpmf;
 
 import dev.atslega.cpmf.controller.LoginController;
+import dev.atslega.cpmf.controller.RegistrationController;
+import dev.atslega.cpmf.model.User;
 import dev.atslega.cpmf.workspace.WorkspacePattern;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -41,6 +43,14 @@ public class StageManager {
         stage.setScene(scene);
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Scene getStageScene() {
+        return stage.getScene();
+    }
+
     public void setStageIcon(Image icon) {
         stage.getIcons().add(icon);
     }
@@ -72,14 +82,14 @@ public class StageManager {
         URL loginURL = getClass().getResource("registration.fxml");
         FXMLLoader loader = new FXMLLoader(loginURL);
 
-        LoginController loginController = new LoginController(this);
+        RegistrationController loginController = new RegistrationController(this);
         loader.setController(loginController);
 
         return new Scene(loader.load(), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
     }
 
-    public Scene getWorkspaceScene() {
-        return new Scene(new WorkspacePattern(this), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
+    public Scene getWorkspaceScene(User user) {
+        return new Scene(new WorkspacePattern(this, user), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
     }
 }
 
