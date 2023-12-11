@@ -5,6 +5,7 @@ import dev.atslega.cpmb.dto.ProductResponse;
 import dev.atslega.cpmb.exception.ResourceNotFoundException;
 import dev.atslega.cpmb.model.Order;
 import dev.atslega.cpmb.repository.OrderRepository;
+import dev.atslega.cpmb.util.CustomerMapper;
 import dev.atslega.cpmb.util.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,10 +20,12 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductMapper productMapper;
+    private final CustomerMapper customerMapper;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, ProductMapper productMapper) {
+    public OrderService(OrderRepository orderRepository, ProductMapper productMapper, CustomerMapper customerMapper) {
         this.productMapper = productMapper;
+        this.customerMapper = customerMapper;
         this.orderRepository = orderRepository;
     }
 
@@ -38,7 +41,7 @@ public class OrderService {
     public OrderResponse mapOrdersToOrderResponse(Order order) {
         OrderResponse orderResponse = new OrderResponse();
         orderResponse.setProducts(order.getProducts().stream().map(productMapper::toResponse).toArray(ProductResponse[]::new));
-        orderResponse.setCustomer(order.getCustomer().getId());
+        orderResponse.setCustomer(customerMapper.toResponse(order.getCustomer()));
         orderResponse.setId(order.getId());
 
         return orderResponse;

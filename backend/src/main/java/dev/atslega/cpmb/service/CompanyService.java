@@ -5,7 +5,9 @@ import dev.atslega.cpmb.dto.OrderResponse;
 import dev.atslega.cpmb.dto.ProductResponse;
 import dev.atslega.cpmb.exception.ResourceAlreadyExistsException;
 import dev.atslega.cpmb.model.Company;
+import dev.atslega.cpmb.model.Customer;
 import dev.atslega.cpmb.model.Order;
+import dev.atslega.cpmb.model.Product;
 import dev.atslega.cpmb.repository.*;
 import dev.atslega.cpmb.util.CustomerMapper;
 import dev.atslega.cpmb.util.ProductMapper;
@@ -60,10 +62,26 @@ public class CompanyService {
         companyResponse.setProductCount(productRepository.countByCompanyId(id));
         companyResponse.setUserCount(userRepository.countByCompanyId(id));
 
-        companyResponse.setLatestCustomer(customerMapper.toResponse(customerRepository.findFirstByCompanyIdOrderByCreatedAtDesc(id)));
-        companyResponse.setLatestOrder(mapOrdersToOrderResponse(orderRepository.findFirstByCompanyIdOrderByCreatedAtDesc(id)));
-        companyResponse.setLatestProduct(productMapper.toResponse(productRepository.findFirstByCompanyIdOrderByCreatedAtDesc(id)));
+        Optional<Customer> latestCustomerOpt = customerRepository.findFirstByCompanyIdOrderByCreatedAtDesc(id);
+        if (latestCustomerOpt.isPresent()) {
+            companyResponse.setLatestCustomer(customerMapper.toResponse(latestCustomerOpt.get()));
+        } else {
+            companyResponse.setLatestCustomer(null);
+        }
 
+        Optional<Order> latestOrderOpt = orderRepository.findFirstByCompanyIdOrderByCreatedAtDesc(id);
+        if (latestOrderOpt.isPresent()) {
+            companyResponse.setLatestOrder(mapOrdersToOrderResponse(latestOrderOpt.get()));
+        } else {
+            companyResponse.setLatestOrder(null);
+        }
+
+        Optional<Product> latestProductOpt = productRepository.findFirstByCompanyIdOrderByCreatedAtDesc(id);
+        if (latestProductOpt.isPresent()) {
+            companyResponse.setLatestProduct(productMapper.toResponse(latestProductOpt.get()));
+        } else {
+            companyResponse.setLatestProduct(null);
+        }
 
         return companyResponse;
     }
@@ -71,7 +89,7 @@ public class CompanyService {
     public OrderResponse mapOrdersToOrderResponse(Order order) {
         OrderResponse orderResponse = new OrderResponse();
         orderResponse.setProducts(order.getProducts().stream().map(productMapper::toResponse).toArray(ProductResponse[]::new));
-        orderResponse.setCustomer(order.getCustomer().getId());
+        orderResponse.setCustomer(customerMapper.toResponse(order.getCustomer()));
         orderResponse.setId(order.getId());
 
         return orderResponse;

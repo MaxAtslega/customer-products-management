@@ -7,7 +7,7 @@ public class OrderResponse {
 
     private Long id;
 
-    private Long customer;
+    private CustomerResponse customer;
 
     private ProductResponse[] products;
 }
