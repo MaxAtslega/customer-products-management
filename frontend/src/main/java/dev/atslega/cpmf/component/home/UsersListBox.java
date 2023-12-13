@@ -41,7 +41,7 @@ public class UsersListBox extends VBox {
 
         this.paginationBar = new PaginationBar(1);
 
-        if ((workspacePattern.getUserData().getCompany().getUserCount() - 1) > 0) {
+        if (workspacePattern.getUserData().getCompany().getUserCount() > 0) {
             paginationBar.getBtnBack().setOnAction(e -> changePage(-1));
             paginationBar.getBtnNext().setOnAction(e -> changePage(1));
 
