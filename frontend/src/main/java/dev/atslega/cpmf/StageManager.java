@@ -1,8 +1,16 @@
 package dev.atslega.cpmf;
 
+import dev.atslega.cpmf.controller.LoginController;
+import dev.atslega.cpmf.controller.RegistrationController;
+import dev.atslega.cpmf.model.UserData;
+import dev.atslega.cpmf.workspace.WorkspacePattern;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
 
 public class StageManager {
     private final Stage stage;
@@ -31,6 +39,14 @@ public class StageManager {
         stage.setMinHeight(height);
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Scene getStageScene() {
+        return stage.getScene();
+    }
+
     public void setStageScene(Scene scene) {
         stage.setScene(scene);
     }
@@ -49,6 +65,31 @@ public class StageManager {
 
     public void setStageMaximized() {
         stage.setMaximized(true);
+    }
+
+
+    public Scene getLoginScene() throws IOException {
+        URL loginURL = this.getClass().getResource("login.fxml");
+        FXMLLoader loader = new FXMLLoader(loginURL);
+
+        LoginController loginController = new LoginController(this);
+        loader.setController(loginController);
+
+        return new Scene(loader.load(), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
+    }
+
+    public Scene getRegistrationScene() throws IOException {
+        URL loginURL = getClass().getResource("registration.fxml");
+        FXMLLoader loader = new FXMLLoader(loginURL);
+
+        RegistrationController loginController = new RegistrationController(this);
+        loader.setController(loginController);
+
+        return new Scene(loader.load(), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
+    }
+
+    public Scene getWorkspaceScene(UserData userData) {
+        return new Scene(new WorkspacePattern(this, userData), AppStyles.WINDOW_WIDTH, AppStyles.WINDOW_HEIGHT);
     }
 }
 

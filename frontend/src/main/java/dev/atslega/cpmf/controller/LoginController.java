@@ -1,108 +1,317 @@
 package dev.atslega.cpmf.controller;
 
-import dev.atslega.cpmf.Main;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.atslega.cpmf.AppStyles;
+import dev.atslega.cpmf.StageManager;
+import dev.atslega.cpmf.model.Company;
+import dev.atslega.cpmf.model.UserData;
+import dev.atslega.cpmf.util.TokenUtils;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.concurrent.Executors;
 
 public class LoginController {
 
-    private final Image background0, eye1, eye2;
-    @FXML
-    private ImageView eye, background;
+    private static final String ERROR_ENTER_USERNAME = "Enter a Username";
+    private static final String ERROR_ENTER_PASSWORD = "Enter a Password";
+    private final Image background0;
+
     @FXML
     private PasswordField passwordField;
     @FXML
-    private TextField passwordTextField, usernameTextField;
+    private GridPane rootPane;
     @FXML
-    private Label usernameFailure, passwordFailure;
+    private ImageView background;
+    @FXML
+    private Button eye;
+
     private boolean isPasswordFieldVisible = true;
-
-    public LoginController() throws IOException {
-        background0 = loadImage("Images/Mountains960x600.png");
-        eye1 = loadImage("Images/eyeOpen.png");
-        eye2 = loadImage("Images/eyeClose.png");
-    }
-
-    private Image loadImage(String path) throws IOException {
-        URL url = getClass().getResource(path);
-
-        assert url != null;
-        return new Image(url.openStream());
-    }
-
-    public void initialize() {
-        background.setImage(background0);
-        eye.setImage(eye1);
-    }
-
     @FXML
-    void toggleVisibility() {
-        isPasswordFieldVisible = !isPasswordFieldVisible;
-        if (isPasswordFieldVisible) {
-            syncPasswordFields(passwordTextField, passwordField, eye1);
-        } else {
-            syncPasswordFields(passwordField, passwordTextField, eye2);
+    private HBox passwordFieldContainer;
+    @FXML
+    private TextField passwordTextField, emailTextField;
+    @FXML
+    private Label emailFailure, passwordFailure, loginFailure;
+    private Region eyeSvgShape;
+
+    private StageManager stageManager;
+
+    public LoginController(StageManager stageManager) {
+        this.stageManager = stageManager;
+        background0 = loadImage();
+    }
+
+    private static SVGPath getOpenEyeSvg() {
+        SVGPath svgPath = new SVGPath();
+        svgPath.setContent("M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"); // Set the SVG path dat
+        return svgPath;
+    }
+
+    private static SVGPath getCloseEyeSvg() {
+        SVGPath svgPath = new SVGPath();
+        svgPath.setContent("m644-428-58-58q9-47-27-88t-93-32l-58-58q17-8 34.5-12t37.5-4q75 0 127.5 52.5T660-500q0 20-4 37.5T644-428Zm128 126-58-56q38-29 67.5-63.5T832-500q-50-101-143.5-160.5T480-720q-29 0-57 4t-55 12l-62-62q41-17 84-25.5t90-8.5q151 0 269 83.5T920-500q-23 59-60.5 109.5T772-302Zm20 246L624-222q-35 11-70.5 16.5T480-200q-151 0-269-83.5T40-500q21-53 53-98.5t73-81.5L56-792l56-56 736 736-56 56ZM222-624q-29 26-53 57t-41 67q50 101 143.5 160.5T480-280q20 0 39-2.5t39-5.5l-36-38q-11 3-21 4.5t-21 1.5q-75 0-127.5-52.5T300-500q0-11 1.5-21t4.5-21l-84-82Zm319 93Zm-151 75Z"); // Set the SVG path dat
+        return svgPath;
+    }
+
+    private Image loadImage() {
+        URL url = getClass().getResource("Images/Mountains960x600.png");
+        if (url == null) {
+            return null;
+        }
+        try {
+            return new Image(url.openStream());
+        } catch (IOException e) {
+            return null;
         }
     }
 
-    private void syncPasswordFields(TextField from, TextField to, Image eyeImage) {
+    @FXML
+    public void initialize() {
+        configureBackground();
+        configurePasswordField();
+        configureEyeButton();
+        checkTokenAndHandleLogin();
+    }
+
+    private void configureBackground() {
+        background.fitWidthProperty().bind(rootPane.widthProperty());
+        background.fitHeightProperty().bind(rootPane.heightProperty());
+        background.setImage(background0);
+    }
+
+    private void configurePasswordField() {
+        passwordFieldContainer.setPrefHeight(24);
+        passwordFieldContainer.setMaxHeight(24);
+        passwordTextField.setManaged(false);
+    }
+
+    private void configureEyeButton() {
+        SVGPath eyeSvgPath = getOpenEyeSvg();
+        eyeSvgShape = createEyeSvgShape(eyeSvgPath);
+
+        StackPane stackPane = new StackPane(eyeSvgShape);
+        configureStackPane(stackPane);
+
+        eye.setCursor(Cursor.HAND);
+        configureEyeButtonStyle();
+        eye.setGraphic(stackPane);
+        eye.setOnMouseClicked(event -> toggleVisibility());
+    }
+
+    private void configureEyeButtonStyle() {
+        eye.setPrefHeight(30);
+        eye.setMaxHeight(30);
+        eye.setStyle("-fx-font-weight: bold; -fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px 1px 1px 0px;");
+    }
+
+    private void configureStackPane(StackPane stackPane) {
+        stackPane.setMinSize(20, 15);
+        stackPane.setPrefSize(20, 15);
+        stackPane.setMaxSize(20, 15);
+    }
+
+    private Region createEyeSvgShape(SVGPath svgPath) {
+        Region region = new Region();
+        region.setShape(svgPath);
+        region.setMinSize(20, 15);
+        region.setPrefSize(20, 15);
+        region.setMaxSize(20, 15);
+        region.setStyle("-fx-background-color: " + AppStyles.DEFAULT_TEXT_COLOR + ";");
+        return region;
+    }
+
+    @FXML
+    private void toggleVisibility() {
+        isPasswordFieldVisible = !isPasswordFieldVisible;
+        syncPasswordFields();
+    }
+
+    private void syncPasswordFields() {
+        TextField from = isPasswordFieldVisible ? passwordTextField : passwordField;
+        TextField to = isPasswordFieldVisible ? passwordField : passwordTextField;
+        SVGPath svgPath = isPasswordFieldVisible ? getOpenEyeSvg() : getCloseEyeSvg();
+
         to.setText(from.getText());
         from.setVisible(false);
+        from.setManaged(false);
+
         to.setVisible(true);
-        eye.setImage(eyeImage);
+        to.setManaged(true);
+        eyeSvgShape.setShape(svgPath);
     }
 
     @FXML
-    void sendTo() {
-        String username = usernameTextField.getText();
+    void login() {
+        String email = emailTextField.getText();
         String password = isPasswordFieldVisible ? passwordField.getText() : passwordTextField.getText();
 
-        int failureCode = getFailure(username, password);
-        handleFailure(failureCode);
-    }
+        boolean isEmailValid = !email.isEmpty();
+        boolean isPasswordValid = !password.isEmpty();
 
-    private void handleFailure(int code) {
-        switch (code) {
-            case 0 -> changeScenes();
-            case 1 -> setUsernameFailure("Enter a Username", true);
-            case 2 -> setPasswordFailure("Enter a Password", true);
-            case 3 -> setBothFailures();
-            // other cases...
+        setFailureLabel(emailFailure, !isEmailValid, "Invalid email");
+        setFailureLabel(passwordFailure, !isPasswordValid, "Invalid password");
+
+        if (isEmailValid && isPasswordValid) {
+            Executors.newSingleThreadExecutor().execute(() -> sendLoginRequest(email, password));
         }
     }
 
-    private void changeScenes() {
-        setUsernameFailure("", false);
-        setPasswordFailure("", false);
-        Main.primaryStageManager.setStageScene(Main.sceneLoadScreen);
-        Main.primaryStageManager.setStageCenter();
+    private void sendLoginRequest(String email, String password) {
+        TokenUtils.deleteToken();
+
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            String requestBody = "{\"email\":\"" + email + "\", \"password\":\"" + password + "\"}";
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:8080/api/v1/auth/login"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                // Parse JSON to get the token
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode rootNode = objectMapper.readTree(response.body());
+                String token = rootNode.path("token").asText();
+
+                javafx.application.Platform.runLater(() -> {
+                    TokenUtils.saveToken(token);
+                    handleSuccessfulLogin(token);
+                });
+            } else {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode node = mapper.readTree(response.body());
+                // if node is null, then the response body is empty
+                if (node == null || node.isEmpty() || node.get("message") == null) {
+                    javafx.application.Platform.runLater(() -> {
+                        loginFailure.setText("Login failed.");
+                        loginFailure.setVisible(true);
+                    });
+                    return;
+                }
+
+                String errorMessage = node.get("message").asText();
+
+                javafx.application.Platform.runLater(() -> {
+                    loginFailure.setText(errorMessage);
+                    loginFailure.setVisible(true);
+                });
+            }
+        } catch (Exception e) {
+            javafx.application.Platform.runLater(() -> {
+                loginFailure.setText("Login failed.");
+                loginFailure.setVisible(true);
+            });
+        }
     }
 
-    private void setBothFailures() {
-        setUsernameFailure("Enter a Username", true);
-        setPasswordFailure("Enter a Password", true);
+    private void checkTokenAndHandleLogin() {
+        String token = TokenUtils.readToken();
+        if (token != null && !token.isEmpty()) {
+            handleSuccessfulLogin(token);
+        }
     }
 
-    private void setPasswordFailure(String text, boolean visible) {
-        passwordFailure.setText(text);
-        passwordFailure.setVisible(visible);
+    private void handleSuccessfulLogin(String token) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                UserData userData = fetchUser(client, token);
+                if (userData != null) {
+                    Company company = fetchCompany(client, token);
+                    if (company != null) {
+                        userData.setToken(token);
+                        userData.setCompany(company);
+                        javafx.application.Platform.runLater(() -> {
+                            stageManager.setStageScene(stageManager.getWorkspaceScene(userData));
+                        });
+                    } else {
+                        handleLoginFailure();
+                    }
+                } else {
+                    handleLoginFailure();
+                }
+            } catch (Exception e) {
+                handleLoginFailure();
+            }
+        });
     }
 
-    private void setUsernameFailure(String text, boolean visible) {
-        usernameFailure.setText(text);
-        usernameFailure.setVisible(visible);
+    private UserData fetchUser(HttpClient client, String token) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/v1/users/me"))
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(response.body(), UserData.class);
+        }
+        return null;
     }
 
-    private int getFailure(String username, String password) {
-        if (username.isEmpty()) return password.isEmpty() ? 3 : 1;
-        return password.isEmpty() ? 2 : 0;
+    private Company fetchCompany(HttpClient client, String token) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/v1/company/"))
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(response.body(), Company.class);
+        }
+
+        System.out.println(response.body());
+        return null;
     }
 
+    private void handleLoginFailure() {
+        TokenUtils.deleteToken();
+        javafx.application.Platform.runLater(() -> {
+            loginFailure.setText("Login failed.");
+            loginFailure.setVisible(true);
+        });
+    }
+
+
+    @FXML
+    void registration() throws IOException {
+        stageManager.setStageScene(stageManager.getRegistrationScene());
+    }
+
+
+    private void setFailureLabel(Label label, boolean visible, String text) {
+        label.setText(text);
+        label.setVisible(visible);
+    }
 }

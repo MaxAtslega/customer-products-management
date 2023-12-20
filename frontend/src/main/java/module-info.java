@@ -9,6 +9,8 @@ module dev.atslega.cpmf {
     requires org.kordamp.bootstrapfx.core;
     requires com.almasb.fxgl.all;
     requires java.desktop;
+    requires java.net.http;
+    requires com.fasterxml.jackson.databind;
 
     opens dev.atslega.cpmf to javafx.fxml;
     exports dev.atslega.cpmf;
@@ -20,9 +22,9 @@ module dev.atslega.cpmf {
     opens dev.atslega.cpmf.panes to javafx.fxml;
     exports dev.atslega.cpmf.controller;
     opens dev.atslega.cpmf.controller to javafx.fxml;
-    exports dev.atslega.cpmf.components.workspaceList;
-    opens dev.atslega.cpmf.components.workspaceList to javafx.fxml;
-    exports dev.atslega.cpmf.components;
-    opens dev.atslega.cpmf.components to javafx.fxml;
+    exports dev.atslega.cpmf.component.workspace.list;
+    opens dev.atslega.cpmf.component.workspace.list to javafx.fxml;
+    exports dev.atslega.cpmf.component;
+    opens dev.atslega.cpmf.component to javafx.fxml;
 
 }

@@ -35,6 +35,7 @@ configurations {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
 
     implementation('org.controlsfx:controlsfx:11.1.2')
     implementation('com.dlsc.formsfx:formsfx-core:11.6.0') {
@@ -66,5 +67,5 @@ jlinkZip {
 
 javafx {
     version = "20"
-    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.media' ]
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.media']
 }

@@ -49,7 +49,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (JWTVerificationException ex) {
             String errorMessage = "Bearer token verification failed: " + ex.getMessage();
-            response.setHeader("error", ex.getMessage());
             response.setStatus(HttpStatus.FORBIDDEN.value());
             Map<String, String> error = new HashMap<>();
             error.put("error", errorMessage);

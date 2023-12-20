@@ -1,7 +1,7 @@
-package dev.atslega.cpmf.components.workspaceList;
+package dev.atslega.cpmf.component.workspace.list;
 
 import dev.atslega.cpmf.AppStyles;
-import dev.atslega.cpmf.Main;
+import dev.atslega.cpmf.workspace.WorkspacePattern;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.layout.FlowPane;
@@ -9,9 +9,11 @@ import javafx.scene.layout.FlowPane;
 public class WorkspaceListFlowPane extends FlowPane {
 
     private final WorkspaceListFramework workspaceListFramework;
+    private final WorkspacePattern workspacePattern;
 
-    public WorkspaceListFlowPane(WorkspaceListFramework workspaceListFramework) {
+    public WorkspaceListFlowPane(WorkspacePattern workspacePattern, WorkspaceListFramework workspaceListFramework) {
         this.workspaceListFramework = workspaceListFramework;
+        this.workspacePattern = workspacePattern;
 
         setPadding(new Insets(AppStyles.GAP_SIZE));
         setHgap(AppStyles.GAP_SIZE);
@@ -21,12 +23,12 @@ public class WorkspaceListFlowPane extends FlowPane {
         setStyle("-fx-background-color: " + AppStyles.MAIN_BACKGROUND_COLOR);
 
         widthProperty().addListener(e -> updateProducts());
-        Main.sceneWorkspace.heightProperty().addListener(e -> updateProducts());
+        this.workspacePattern.getStageManager().getStageScene().heightProperty().addListener(e -> updateProducts());
     }
 
 
     private void updateProducts() {
-        int maxProductsPerPage = calculateMaxProducts(getWidth(), Main.sceneWorkspace.getHeight() - 120);
+        int maxProductsPerPage = calculateMaxProducts(getWidth(), this.workspacePattern.getStageManager().getStageScene().getHeight() - 120);
 
         int currentPage = workspaceListFramework.getCurrentPage();
         int totalProducts = workspaceListFramework.getTotalProducts();
@@ -42,11 +44,11 @@ public class WorkspaceListFlowPane extends FlowPane {
         int totalPages = (int) Math.ceil((double) totalProducts / maxProductsPerPage);
         workspaceListFramework.setTotalPages(totalPages);
 
-        workspaceListFramework.getBtnBack().setDisable(currentPage <= 1);
-        workspaceListFramework.getBtnBack().setCursor(currentPage <= 1 ? Cursor.DEFAULT : Cursor.HAND);
+        workspaceListFramework.getPaginationBar().getBtnBack().setDisable(currentPage <= 1);
+        workspaceListFramework.getPaginationBar().getBtnBack().setCursor(currentPage <= 1 ? Cursor.DEFAULT : Cursor.HAND);
 
-        workspaceListFramework.getBtnNext().setDisable(currentPage >= totalPages);
-        workspaceListFramework.getBtnNext().setCursor(currentPage >= totalPages ? Cursor.DEFAULT : Cursor.HAND);
+        workspaceListFramework.getPaginationBar().getBtnNext().setDisable(currentPage >= totalPages);
+        workspaceListFramework.getPaginationBar().getBtnNext().setCursor(currentPage >= totalPages ? Cursor.DEFAULT : Cursor.HAND);
     }
 
     private int calculateMaxProducts(double width, double height) {

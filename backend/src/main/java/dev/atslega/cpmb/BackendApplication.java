@@ -1,5 +1,7 @@
 package dev.atslega.cpmb;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,28 +11,14 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @SpringBootApplication
+@OpenAPIDefinition(info = @Info(title = "Customer Products Management API", version = "1.0", description = "Customer Products Management"))
 public class BackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
     }
-
-    @GetMapping("/healthy")
-    public String home() {
-        return "Healthy!";
-    }
-
-    /*@Bean
-    CommandLineRunner run(UserService userService) {
-        return args -> {  // inserting data after application is up
-            userService.saveUser(new User("Admin", "Admin", "admin@enterprise.com", "12345678", Role.ADMIN));
-        };
-    }*/
 
     @Bean
     public ModelMapper getModelMapper() {

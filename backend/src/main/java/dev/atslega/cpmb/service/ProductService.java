@@ -4,6 +4,8 @@ import dev.atslega.cpmb.exception.ResourceNotFoundException;
 import dev.atslega.cpmb.model.Product;
 import dev.atslega.cpmb.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +21,10 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts(Long companyId) {
-        return productRepository.findAll().stream().filter(c -> Objects.equals(c.getCompany().getId(), companyId)).toList();
+    public List<Product> getAllProducts(Long companyId, Integer size, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, size);
+
+        return productRepository.findByCompanyId(companyId, page).toList();
     }
 
     public Product getProductById(Long id, Long companyId) {

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane" xmlns="http://javafx.com/javafx/20">
+    <ImageView fx:id="background" GridPane.columnIndex="0" GridPane.rowIndex="0"
+               GridPane.columnSpan="3"/>
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="30"/>
+        <ColumnConstraints percentWidth="40"/>
+        <ColumnConstraints percentWidth="30"/>
+    </columnConstraints>
+
+    <VBox alignment="CENTER" spacing="10" style="-fx-background-color: rgba(0, 0, 0, 0.6);">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+
+        <Label alignment="CENTER" text="Sign Up" textFill="#f2f2f2">
+            <font>
+                <Font name="Roboto" size="28.0"/>
+            </font>
+        </Label>
+
+        <Label fx:id="registrationFailure" visible="false" text="Registration Failed. Please try later again."
+               style="-fx-text-fill: red;"/>
+
+        <HBox spacing="10">
+            <!-- First Name -->
+            <VBox>
+                <Label text="First Name" style="-fx-text-fill: white;"/>
+                <TextField fx:id="firstNameTextField"
+                           style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px; -fx-text-fill: white;"/>
+                <Label fx:id="firstNameFailure" visible="false" text="Invalid first name" style="-fx-text-fill: red;"/>
+            </VBox>
+
+            <!-- Last Name -->
+            <VBox>
+                <Label text="Last Name" style="-fx-text-fill: white;"/>
+                <TextField fx:id="lastNameTextField"
+                           style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px; -fx-text-fill: white;"/>
+                <Label fx:id="lastNameFailure" visible="false" text="Invalid last name" style="-fx-text-fill: red;"/>
+            </VBox>
+        </HBox>
+        <!-- E-Mail -->
+        <VBox>
+            <Label text="E-Mail" style="-fx-text-fill: white;"/>
+            <TextField fx:id="emailTextField"
+                       style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px; -fx-text-fill: white;"/>
+            <Label fx:id="emailFailure" visible="false" text="Invalid email" style="-fx-text-fill: red;"/>
+        </VBox>
+        <VBox>
+            <!-- Password -->
+            <Label text="Password" style="-fx-text-fill: white;"/>
+            <HBox fx:id="passwordFieldContainer">
+                <TextField fx:id="passwordTextField" HBox.hgrow="ALWAYS"
+                           style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px 0px 1px 1px; -fx-text-fill: white;"
+                           visible="false"/>
+                <PasswordField fx:id="passwordField" HBox.hgrow="ALWAYS"
+                               style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px 0px 1px 1px; -fx-text-fill: white;"/>
+                <Button fx:id="eye"/>
+            </HBox>
+            <Label fx:id="passwordFailure" visible="false" text="Invalid password" style="-fx-text-fill: red;"/>
+        </VBox>
+        <!-- Company Name -->
+        <VBox>
+            <Label text="Company Name" style="-fx-text-fill: white;"/>
+            <TextField fx:id="companyNameTextField"
+                       style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px; -fx-text-fill: white;"/>
+            <Label fx:id="companyNameFailure" visible="false" text="Invalid company name" style="-fx-text-fill: red;"/>
+        </VBox>
+        <VBox>
+            <!-- Company Address -->
+            <Label text="Company Address" style="-fx-text-fill: white;"/>
+            <TextField fx:id="companyAddressTextField"
+                       style="-fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px; -fx-text-fill: white;"/>
+            <Label fx:id="companyAddressFailure" visible="false" text="Invalid company address"
+                   style="-fx-text-fill: red;"/>
+        </VBox>
+        <Button text="Sign Up" onAction="#registration"
+                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-border-color: #ffffff; -fx-border-width: 1px; -fx-text-fill: white;"/>
+
+        <Label text="or" style="-fx-text-fill: white;"/>
+
+        <Button text="Sign In" onAction="#login"
+                style="-fx-cursor: hand; -fx-background-color: transparent; -fx-text-fill: #ffffff;"/>
+
+    </VBox>
+
+</GridPane>

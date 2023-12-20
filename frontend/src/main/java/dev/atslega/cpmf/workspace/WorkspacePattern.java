@@ -1,42 +1,45 @@
 package dev.atslega.cpmf.workspace;
 
 import dev.atslega.cpmf.AppStyles;
-import dev.atslega.cpmf.components.WorkspaceHeader;
+import dev.atslega.cpmf.StageManager;
+import dev.atslega.cpmf.component.WorkspaceHeader;
+import dev.atslega.cpmf.model.UserData;
 import javafx.scene.layout.BorderPane;
 
-public class WorkspacePattern {
+public class WorkspacePattern extends BorderPane {
+    private final StageManager stageManager;
+    private final UserData userData;
+    private WorkspaceNavigator workspaceNavigator;
 
-    private static final String USERNAME = "Max Atslega";
+    public WorkspacePattern(StageManager stageManager, UserData userData) {
+        this.stageManager = stageManager;
+        this.userData = userData;
 
-    private static BorderPane backPlate;
+        workspaceNavigator = new WorkspaceNavigator(this, AppStyles.SIDEBAR_WIDTH);
 
-    private static WorkspaceNavigator workspaceNavigator;
-
-    public static BorderPane workspace() {
-        backPlate = new BorderPane();
-        workspaceNavigator = new WorkspaceNavigator(AppStyles.SIDEBAR_WIDTH);
-
-        // set top [User, Toolbar, Program-Info]
-        backPlate.setTop(new WorkspaceHeader(USERNAME, AppStyles.SIDEBAR_WIDTH));
+        // set top [UserData, Toolbar, Program-Info]
+        setTop(new WorkspaceHeader(this, AppStyles.SIDEBAR_WIDTH));
 
         // set Center [Home, Costumer, Products,short´s,calendar] (switch function)
-        backPlate.setCenter(Workspaces.HOME.getPane());
+        setCenter(Workspaces.HOME.getPane(this));
 
         // set Left [Tab´s]
-        backPlate.setLeft(workspaceNavigator);
-
-        return backPlate;
+        setLeft(workspaceNavigator);
     }
 
-    public static void setCenter(Workspaces workspace) {
-        backPlate.setCenter(workspace.getPane());
+    public UserData getUserData() {
+        return userData;
     }
 
-    public static BorderPane getBackPlate() {
-        return backPlate;
+    public StageManager getStageManager() {
+        return stageManager;
     }
 
-    public static void toggleNavigator() {
-        backPlate.setLeft(backPlate.getLeft() == null ? workspaceNavigator : null);
+    public void setCenter(Workspaces workspace) {
+        setCenter(workspace.getPane(this));
+    }
+
+    public void toggleNavigator() {
+        setLeft(getLeft() == null ? workspaceNavigator : null);
     }
 }

@@ -24,9 +24,9 @@ public class CustomerContentPane extends Pane {
 
         Label nameTextLabel = creatLabelWithOutCopyAction("Name:", 110);
         Label nameOfCustomer = creatLabelWithOutCopyAction(customer.getLastName() + " " + customer.getFirstName(), 130);
-        Label iDOfCustomer = creatLabelWithOutCopyAction("ID: " + customer.getID(), 150);
+        Label iDOfCustomer = creatLabelWithOutCopyAction("ID: " + customer.getId(), 150);
         Label mailTextLabel = creatLabelWithOutCopyAction("Mail:", 170);
-        Label mailOfCustomer = creatLabelWithOutCopyAction(customer.getMail(), 190);
+        Label mailOfCustomer = creatLabelWithOutCopyAction(customer.getEmail(), 190);
 
         // customer Icon
         Circle circle = new Circle(100, 60, 40, getRandomColor());
@@ -41,39 +41,23 @@ public class CustomerContentPane extends Pane {
         Label backName = creatLabel("Name: " + customer.getLastName() + " " + customer.getFirstName(), 10);
         backName.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
         backName.setVisible(false);
-        Label backID = creatLabel("ID: " + customer.getID(), 30);
+        Label backID = creatLabel("ID: " + customer.getId(), 30);
         backID.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
         backID.setVisible(false);
-        Label backMail = creatLabel("Mail: " + customer.getMail(), 50);
+        Label backMail = creatLabel("Mail: " + customer.getEmail(), 50);
         backMail.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
         backMail.setVisible(false);
-        Label backPhoneNumber = creatLabel("Phonenumber: \n" + customer.getPhoneNumber(), 70);
-        backPhoneNumber.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
-        backPhoneNumber.setVisible(false);
-        Label backAdress = creatLabel("Address: " + customer.getAddress(), 110);
-        backAdress.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
-        backAdress.setVisible(false);
         Label backCompanyName = new Label();
         backCompanyName.setLayoutX(10);
         backCompanyName.setLayoutY(170);
         backCompanyName.setMaxWidth(160);
         backCompanyName.setMinWidth(160);
-        if (customer.getCompanyName().compareTo("") == 0) {
-            backCompanyName.setText("Company: \nPrivate Customer");
-            customerIsCompany = true;
-        } else {
-            backCompanyName.setText("Company: \n" + customer.getCompanyName());
-            customerIsCompany = false;
-        }
+
         backCompanyName.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
         backCompanyName.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 ClipboardContent content = new ClipboardContent();
-                if (!customerIsCompany) {
-                    content.putString(customer.getCompanyName());
-                } else {
-                    content.putString("Private Customer");
-                }
+                content.putString("Private Customer");
                 Clipboard.getSystemClipboard().setContent(content);
             }
         });
@@ -96,8 +80,6 @@ public class CustomerContentPane extends Pane {
                 backName.setVisible(true);
                 backID.setVisible(true);
                 backMail.setVisible(true);
-                backPhoneNumber.setVisible(true);
-                backAdress.setVisible(true);
                 backCompanyName.setVisible(true);
                 //set back style
                 setStyle("-fx-background-radius: 15; -fx-background-color: black;");
@@ -119,8 +101,6 @@ public class CustomerContentPane extends Pane {
                 backName.setVisible(false);
                 backID.setVisible(false);
                 backMail.setVisible(false);
-                backPhoneNumber.setVisible(false);
-                backAdress.setVisible(false);
                 backCompanyName.setVisible(false);
                 //set front style
                 setStyle("-fx-background-radius: 15; -fx-background-color: white;");
@@ -132,7 +112,7 @@ public class CustomerContentPane extends Pane {
         getChildren().add(firstCharLabel);
         getChildren().addAll(nameTextLabel, nameOfCustomer, iDOfCustomer, mailTextLabel, mailOfCustomer);
         //add back
-        getChildren().addAll(backName, backID, backMail, backPhoneNumber, backAdress, backCompanyName);
+        getChildren().addAll(backName, backID, backMail, backCompanyName);
     }
 
     private Label creatLabelWithOutCopyAction(String text, int y) {

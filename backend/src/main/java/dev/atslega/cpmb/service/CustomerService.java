@@ -4,6 +4,8 @@ import dev.atslega.cpmb.exception.ResourceNotFoundException;
 import dev.atslega.cpmb.model.Customer;
 import dev.atslega.cpmb.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +21,10 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public List<Customer> getAllCustomers(Long companyId) {
-        return customerRepository.findAll().stream().filter(c -> Objects.equals(c.getCompany().getId(), companyId)).toList();
+    public List<Customer> getAllCustomers(Long companyId, Integer size, Integer pageNumber) {
+        Pageable page = PageRequest.of(pageNumber, size);
+
+        return customerRepository.findByCompanyId(companyId, page).toList();
     }
 
     public Customer getCustomerById(Long id, Long companyId) {
